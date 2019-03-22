@@ -11,7 +11,6 @@ public class Square {
 
     public Square()
     {
-        //TODO square.
         //TODO Hao do S0-S5, Hadi do A0-A5, Yue do B0-B2
         addTileA();
         addTileB();
@@ -21,6 +20,7 @@ public class Square {
 
     private void addTileA()
     {
+        //TODO : Yue check.
         //S0
         TileA.add(new Tile(TypeTile.HIGHWAY,TypeTile.HIGHWAY,TypeTile.RAILWAY,TypeTile.HIGHWAY,true,"S00"));
         TileA.add(new Tile(TypeTile.HIGHWAY,TypeTile.HIGHWAY,TypeTile.HIGHWAY,TypeTile.RAILWAY,true,"S01"));
@@ -85,10 +85,10 @@ public class Square {
 
     private void addTileB()
     {
-
+        //TODO: Hao check
     }
     private void addTileC()
     {
-
+        //TODO: Hadi check
     }
 }
