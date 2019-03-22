@@ -1,5 +1,6 @@
 package comp1110.ass2.model;
 
+import javax.lang.model.element.TypeElement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,83 +13,112 @@ public class Square {
     public Square()
     {
         //TODO Hao do S0-S5, Hadi do A0-A5, Yue do B0-B2
+        addTileS();
         addTileA();
         addTileB();
-        addTileC();
+
+    }
+
+    private void addTileS()
+    {
+        //checked by Yue
+        //S0
+        TileS.add(new Tile(TypeTile.HIGHWAY,TypeTile.HIGHWAY,TypeTile.RAILWAY,TypeTile.HIGHWAY,true,"S00"));
+        TileS.add(new Tile(TypeTile.HIGHWAY,TypeTile.HIGHWAY,TypeTile.HIGHWAY,TypeTile.RAILWAY,true,"S01"));
+        TileS.add(new Tile(TypeTile.RAILWAY,TypeTile.HIGHWAY,TypeTile.HIGHWAY,TypeTile.HIGHWAY,true,"S02"));
+        TileS.add(new Tile(TypeTile.HIGHWAY,TypeTile.RAILWAY,TypeTile.HIGHWAY,TypeTile.HIGHWAY,true,"S03"));
+        TileS.add(new Tile(TypeTile.HIGHWAY,TypeTile.HIGHWAY,TypeTile.RAILWAY,TypeTile.HIGHWAY,true,"S04"));
+        TileS.add(new Tile(TypeTile.HIGHWAY,TypeTile.HIGHWAY,TypeTile.HIGHWAY,TypeTile.RAILWAY,true,"S05"));
+        TileS.add(new Tile(TypeTile.RAILWAY,TypeTile.HIGHWAY,TypeTile.HIGHWAY,TypeTile.HIGHWAY,true,"S06"));
+        TileS.add(new Tile(TypeTile.HIGHWAY,TypeTile.RAILWAY,TypeTile.HIGHWAY,TypeTile.HIGHWAY,true,"S07"));
+
+        //S1
+        TileS.add(new Tile(TypeTile.HIGHWAY,TypeTile.RAILWAY,TypeTile.RAILWAY,TypeTile.RAILWAY,true,"S10"));
+        TileS.add(new Tile(TypeTile.RAILWAY,TypeTile.HIGHWAY,TypeTile.RAILWAY,TypeTile.RAILWAY,true,"S11"));
+        TileS.add(new Tile(TypeTile.RAILWAY,TypeTile.RAILWAY,TypeTile.HIGHWAY,TypeTile.RAILWAY,true,"S12"));
+        TileS.add(new Tile(TypeTile.RAILWAY,TypeTile.RAILWAY,TypeTile.RAILWAY,TypeTile.HIGHWAY,true,"S13"));
+        TileS.add(new Tile(TypeTile.HIGHWAY,TypeTile.RAILWAY,TypeTile.RAILWAY,TypeTile.RAILWAY,true,"S14"));
+        TileS.add(new Tile(TypeTile.RAILWAY,TypeTile.HIGHWAY,TypeTile.RAILWAY,TypeTile.RAILWAY,true,"S15"));
+        TileS.add(new Tile(TypeTile.RAILWAY,TypeTile.RAILWAY,TypeTile.HIGHWAY,TypeTile.RAILWAY,true,"S16"));
+        TileS.add(new Tile(TypeTile.RAILWAY,TypeTile.RAILWAY,TypeTile.RAILWAY,TypeTile.HIGHWAY,true,"S17"));
+
+        //S2
+        TileS.add(new Tile(TypeTile.HIGHWAY,TypeTile.HIGHWAY,TypeTile.HIGHWAY,TypeTile.HIGHWAY,false,"S20")); // no station
+        TileS.add(new Tile(TypeTile.HIGHWAY,TypeTile.HIGHWAY,TypeTile.HIGHWAY,TypeTile.HIGHWAY,false,"S21"));
+        TileS.add(new Tile(TypeTile.HIGHWAY,TypeTile.HIGHWAY,TypeTile.HIGHWAY,TypeTile.HIGHWAY,false,"S22"));
+        TileS.add(new Tile(TypeTile.HIGHWAY,TypeTile.HIGHWAY,TypeTile.HIGHWAY,TypeTile.HIGHWAY,false,"S23"));
+        TileS.add(new Tile(TypeTile.HIGHWAY,TypeTile.HIGHWAY,TypeTile.HIGHWAY,TypeTile.HIGHWAY,false,"S24"));
+        TileS.add(new Tile(TypeTile.HIGHWAY,TypeTile.HIGHWAY,TypeTile.HIGHWAY,TypeTile.HIGHWAY,false,"S25"));
+        TileS.add(new Tile(TypeTile.HIGHWAY,TypeTile.HIGHWAY,TypeTile.HIGHWAY,TypeTile.HIGHWAY,false,"S26"));
+        TileS.add(new Tile(TypeTile.HIGHWAY,TypeTile.HIGHWAY,TypeTile.HIGHWAY,TypeTile.HIGHWAY,false,"S27"));
+
+        //S3
+        TileS.add(new Tile(TypeTile.RAILWAY,TypeTile.RAILWAY,TypeTile.RAILWAY,TypeTile.RAILWAY,false,"S30")); // no station
+        TileS.add(new Tile(TypeTile.RAILWAY,TypeTile.RAILWAY,TypeTile.RAILWAY,TypeTile.RAILWAY,false,"S31"));
+        TileS.add(new Tile(TypeTile.RAILWAY,TypeTile.RAILWAY,TypeTile.RAILWAY,TypeTile.RAILWAY,false,"S32"));
+        TileS.add(new Tile(TypeTile.RAILWAY,TypeTile.RAILWAY,TypeTile.RAILWAY,TypeTile.RAILWAY,false,"S33"));
+        TileS.add(new Tile(TypeTile.RAILWAY,TypeTile.RAILWAY,TypeTile.RAILWAY,TypeTile.RAILWAY,false,"S34"));
+        TileS.add(new Tile(TypeTile.RAILWAY,TypeTile.RAILWAY,TypeTile.RAILWAY,TypeTile.RAILWAY,false,"S35"));
+        TileS.add(new Tile(TypeTile.RAILWAY,TypeTile.RAILWAY,TypeTile.RAILWAY,TypeTile.RAILWAY,false,"S36"));
+        TileS.add(new Tile(TypeTile.RAILWAY,TypeTile.RAILWAY,TypeTile.RAILWAY,TypeTile.RAILWAY,false,"S37"));
+
+        //S4
+        TileS.add(new Tile(TypeTile.HIGHWAY,TypeTile.RAILWAY,TypeTile.RAILWAY,TypeTile.HIGHWAY,true,"S40"));
+        TileS.add(new Tile(TypeTile.HIGHWAY,TypeTile.HIGHWAY,TypeTile.RAILWAY,TypeTile.RAILWAY,true,"S41"));
+        TileS.add(new Tile(TypeTile.RAILWAY,TypeTile.HIGHWAY,TypeTile.HIGHWAY,TypeTile.RAILWAY,true,"S42"));
+        TileS.add(new Tile(TypeTile.RAILWAY,TypeTile.RAILWAY,TypeTile.HIGHWAY,TypeTile.HIGHWAY,true,"S43"));
+        TileS.add(new Tile(TypeTile.HIGHWAY,TypeTile.HIGHWAY,TypeTile.RAILWAY,TypeTile.RAILWAY,true,"S44"));
+        TileS.add(new Tile(TypeTile.RAILWAY,TypeTile.HIGHWAY,TypeTile.HIGHWAY,TypeTile.RAILWAY,true,"S45"));
+        TileS.add(new Tile(TypeTile.RAILWAY,TypeTile.RAILWAY,TypeTile.HIGHWAY,TypeTile.HIGHWAY,true,"S46"));
+        TileS.add(new Tile(TypeTile.HIGHWAY,TypeTile.RAILWAY,TypeTile.RAILWAY,TypeTile.HIGHWAY,true,"S47"));
+
+        //S5
+        TileS.add(new Tile(TypeTile.HIGHWAY,TypeTile.RAILWAY,TypeTile.HIGHWAY,TypeTile.RAILWAY,true,"S50"));
+        TileS.add(new Tile(TypeTile.RAILWAY,TypeTile.HIGHWAY,TypeTile.RAILWAY,TypeTile.HIGHWAY,true,"S51"));
+        TileS.add(new Tile(TypeTile.HIGHWAY,TypeTile.RAILWAY,TypeTile.HIGHWAY,TypeTile.RAILWAY,true,"S52"));
+        TileS.add(new Tile(TypeTile.RAILWAY,TypeTile.HIGHWAY,TypeTile.RAILWAY,TypeTile.HIGHWAY,true,"S53"));
+        TileS.add(new Tile(TypeTile.HIGHWAY,TypeTile.RAILWAY,TypeTile.HIGHWAY,TypeTile.RAILWAY,true,"S54"));
+        TileS.add(new Tile(TypeTile.RAILWAY,TypeTile.HIGHWAY,TypeTile.RAILWAY,TypeTile.HIGHWAY,true,"S55"));
+        TileS.add(new Tile(TypeTile.HIGHWAY,TypeTile.RAILWAY,TypeTile.HIGHWAY,TypeTile.RAILWAY,true,"S56"));
+        TileS.add(new Tile(TypeTile.RAILWAY,TypeTile.HIGHWAY,TypeTile.RAILWAY,TypeTile.HIGHWAY,true,"S57"));
 
     }
 
     private void addTileA()
     {
-        //TODO : Yue check.
-        //S0
-        TileA.add(new Tile(TypeTile.HIGHWAY,TypeTile.HIGHWAY,TypeTile.RAILWAY,TypeTile.HIGHWAY,true,"S00"));
-        TileA.add(new Tile(TypeTile.HIGHWAY,TypeTile.HIGHWAY,TypeTile.HIGHWAY,TypeTile.RAILWAY,true,"S01"));
-        TileA.add(new Tile(TypeTile.RAILWAY,TypeTile.HIGHWAY,TypeTile.HIGHWAY,TypeTile.HIGHWAY,true,"S02"));
-        TileA.add(new Tile(TypeTile.HIGHWAY,TypeTile.RAILWAY,TypeTile.HIGHWAY,TypeTile.HIGHWAY,true,"S03"));
-        TileA.add(new Tile(TypeTile.HIGHWAY,TypeTile.HIGHWAY,TypeTile.RAILWAY,TypeTile.HIGHWAY,true,"S04"));
-        TileA.add(new Tile(TypeTile.HIGHWAY,TypeTile.HIGHWAY,TypeTile.HIGHWAY,TypeTile.RAILWAY,true,"S05"));
-        TileA.add(new Tile(TypeTile.RAILWAY,TypeTile.HIGHWAY,TypeTile.HIGHWAY,TypeTile.HIGHWAY,true,"S06"));
-        TileA.add(new Tile(TypeTile.HIGHWAY,TypeTile.RAILWAY,TypeTile.HIGHWAY,TypeTile.HIGHWAY,true,"S07"));
-
-        //S1
-        TileA.add(new Tile(TypeTile.HIGHWAY,TypeTile.RAILWAY,TypeTile.RAILWAY,TypeTile.RAILWAY,true,"S10"));
-        TileA.add(new Tile(TypeTile.RAILWAY,TypeTile.HIGHWAY,TypeTile.RAILWAY,TypeTile.RAILWAY,true,"S11"));
-        TileA.add(new Tile(TypeTile.RAILWAY,TypeTile.RAILWAY,TypeTile.HIGHWAY,TypeTile.RAILWAY,true,"S12"));
-        TileA.add(new Tile(TypeTile.RAILWAY,TypeTile.RAILWAY,TypeTile.RAILWAY,TypeTile.HIGHWAY,true,"S13"));
-        TileA.add(new Tile(TypeTile.HIGHWAY,TypeTile.RAILWAY,TypeTile.RAILWAY,TypeTile.RAILWAY,true,"S14"));
-        TileA.add(new Tile(TypeTile.RAILWAY,TypeTile.HIGHWAY,TypeTile.RAILWAY,TypeTile.RAILWAY,true,"S15"));
-        TileA.add(new Tile(TypeTile.RAILWAY,TypeTile.RAILWAY,TypeTile.HIGHWAY,TypeTile.RAILWAY,true,"S16"));
-        TileA.add(new Tile(TypeTile.RAILWAY,TypeTile.RAILWAY,TypeTile.RAILWAY,TypeTile.HIGHWAY,true,"S17"));
-
-        //S2
-        TileA.add(new Tile(TypeTile.HIGHWAY,TypeTile.HIGHWAY,TypeTile.HIGHWAY,TypeTile.HIGHWAY,true,"S20"));
-        TileA.add(new Tile(TypeTile.HIGHWAY,TypeTile.HIGHWAY,TypeTile.HIGHWAY,TypeTile.HIGHWAY,true,"S21"));
-        TileA.add(new Tile(TypeTile.HIGHWAY,TypeTile.HIGHWAY,TypeTile.HIGHWAY,TypeTile.HIGHWAY,true,"S22"));
-        TileA.add(new Tile(TypeTile.HIGHWAY,TypeTile.HIGHWAY,TypeTile.HIGHWAY,TypeTile.HIGHWAY,true,"S23"));
-        TileA.add(new Tile(TypeTile.HIGHWAY,TypeTile.HIGHWAY,TypeTile.HIGHWAY,TypeTile.HIGHWAY,true,"S24"));
-        TileA.add(new Tile(TypeTile.HIGHWAY,TypeTile.HIGHWAY,TypeTile.HIGHWAY,TypeTile.HIGHWAY,true,"S25"));
-        TileA.add(new Tile(TypeTile.HIGHWAY,TypeTile.HIGHWAY,TypeTile.HIGHWAY,TypeTile.HIGHWAY,true,"S26"));
-        TileA.add(new Tile(TypeTile.HIGHWAY,TypeTile.HIGHWAY,TypeTile.HIGHWAY,TypeTile.HIGHWAY,true,"S27"));
-
-        //S3
-        TileA.add(new Tile(TypeTile.RAILWAY,TypeTile.RAILWAY,TypeTile.RAILWAY,TypeTile.RAILWAY,true,"S30"));
-        TileA.add(new Tile(TypeTile.RAILWAY,TypeTile.RAILWAY,TypeTile.RAILWAY,TypeTile.RAILWAY,true,"S31"));
-        TileA.add(new Tile(TypeTile.RAILWAY,TypeTile.RAILWAY,TypeTile.RAILWAY,TypeTile.RAILWAY,true,"S32"));
-        TileA.add(new Tile(TypeTile.RAILWAY,TypeTile.RAILWAY,TypeTile.RAILWAY,TypeTile.RAILWAY,true,"S33"));
-        TileA.add(new Tile(TypeTile.RAILWAY,TypeTile.RAILWAY,TypeTile.RAILWAY,TypeTile.RAILWAY,true,"S34"));
-        TileA.add(new Tile(TypeTile.RAILWAY,TypeTile.RAILWAY,TypeTile.RAILWAY,TypeTile.RAILWAY,true,"S35"));
-        TileA.add(new Tile(TypeTile.RAILWAY,TypeTile.RAILWAY,TypeTile.RAILWAY,TypeTile.RAILWAY,true,"S36"));
-        TileA.add(new Tile(TypeTile.RAILWAY,TypeTile.RAILWAY,TypeTile.RAILWAY,TypeTile.RAILWAY,true,"S37"));
-
-        //S4
-        TileA.add(new Tile(TypeTile.HIGHWAY,TypeTile.RAILWAY,TypeTile.RAILWAY,TypeTile.HIGHWAY,true,"S40"));
-        TileA.add(new Tile(TypeTile.HIGHWAY,TypeTile.HIGHWAY,TypeTile.RAILWAY,TypeTile.RAILWAY,true,"S41"));
-        TileA.add(new Tile(TypeTile.RAILWAY,TypeTile.HIGHWAY,TypeTile.HIGHWAY,TypeTile.RAILWAY,true,"S42"));
-        TileA.add(new Tile(TypeTile.RAILWAY,TypeTile.RAILWAY,TypeTile.HIGHWAY,TypeTile.HIGHWAY,true,"S43"));
-        TileA.add(new Tile(TypeTile.HIGHWAY,TypeTile.HIGHWAY,TypeTile.RAILWAY,TypeTile.RAILWAY,true,"S44"));
-        TileA.add(new Tile(TypeTile.RAILWAY,TypeTile.HIGHWAY,TypeTile.HIGHWAY,TypeTile.RAILWAY,true,"S45"));
-        TileA.add(new Tile(TypeTile.RAILWAY,TypeTile.RAILWAY,TypeTile.HIGHWAY,TypeTile.HIGHWAY,true,"S46"));
-        TileA.add(new Tile(TypeTile.HIGHWAY,TypeTile.RAILWAY,TypeTile.RAILWAY,TypeTile.HIGHWAY,true,"S47"));
-
-        //S5
-        TileA.add(new Tile(TypeTile.HIGHWAY,TypeTile.RAILWAY,TypeTile.HIGHWAY,TypeTile.RAILWAY,true,"S50"));
-        TileA.add(new Tile(TypeTile.RAILWAY,TypeTile.HIGHWAY,TypeTile.RAILWAY,TypeTile.HIGHWAY,true,"S51"));
-        TileA.add(new Tile(TypeTile.HIGHWAY,TypeTile.RAILWAY,TypeTile.HIGHWAY,TypeTile.RAILWAY,true,"S52"));
-        TileA.add(new Tile(TypeTile.RAILWAY,TypeTile.HIGHWAY,TypeTile.RAILWAY,TypeTile.HIGHWAY,true,"S53"));
-        TileA.add(new Tile(TypeTile.HIGHWAY,TypeTile.RAILWAY,TypeTile.HIGHWAY,TypeTile.RAILWAY,true,"S54"));
-        TileA.add(new Tile(TypeTile.RAILWAY,TypeTile.HIGHWAY,TypeTile.RAILWAY,TypeTile.HIGHWAY,true,"S55"));
-        TileA.add(new Tile(TypeTile.HIGHWAY,TypeTile.RAILWAY,TypeTile.HIGHWAY,TypeTile.RAILWAY,true,"S56"));
-        TileA.add(new Tile(TypeTile.RAILWAY,TypeTile.HIGHWAY,TypeTile.RAILWAY,TypeTile.HIGHWAY,true,"S57"));
-
-    }
-
-    private void addTileB()
-    {
         //TODO: Hao check
     }
-    private void addTileC()
+    private void addTileB()
     {
         //TODO: Hadi check
+        //B0
+        TileB.add(new Tile(TypeTile.HIGHWAY,TypeTile.BLOCK,TypeTile.RAILWAY,TypeTile.BLOCK,true,"B00"));
+        TileB.add(new Tile(TypeTile.BLOCK,TypeTile.HIGHWAY,TypeTile.BLOCK,TypeTile.RAILWAY,true,"B01"));
+        TileB.add(new Tile(TypeTile.RAILWAY,TypeTile.BLOCK,TypeTile.HIGHWAY,TypeTile.BLOCK,true,"B02"));
+        TileB.add(new Tile(TypeTile.BLOCK,TypeTile.RAILWAY,TypeTile.BLOCK,TypeTile.HIGHWAY,true,"B03"));
+        TileB.add(new Tile(TypeTile.HIGHWAY,TypeTile.BLOCK,TypeTile.RAILWAY,TypeTile.BLOCK,true,"B04"));
+        TileB.add(new Tile(TypeTile.BLOCK,TypeTile.HIGHWAY,TypeTile.BLOCK,TypeTile.RAILWAY,true,"B05"));
+        TileB.add(new Tile(TypeTile.RAILWAY,TypeTile.BLOCK,TypeTile.HIGHWAY,TypeTile.BLOCK,true,"B06"));
+        TileB.add(new Tile(TypeTile.BLOCK,TypeTile.RAILWAY,TypeTile.BLOCK,TypeTile.HIGHWAY,true,"B07"));
+
+        //B1
+        TileB.add(new Tile(TypeTile.HIGHWAY,TypeTile.RAILWAY,TypeTile.BLOCK,TypeTile.BLOCK,true,"B10"));
+        TileB.add(new Tile(TypeTile.BLOCK,TypeTile.HIGHWAY,TypeTile.RAILWAY,TypeTile.BLOCK,true,"B11"));
+        TileB.add(new Tile(TypeTile.BLOCK,TypeTile.BLOCK,TypeTile.HIGHWAY,TypeTile.RAILWAY,true,"B12"));
+        TileB.add(new Tile(TypeTile.RAILWAY,TypeTile.BLOCK,TypeTile.BLOCK,TypeTile.HIGHWAY,true,"B13"));
+        TileB.add(new Tile(TypeTile.HIGHWAY,TypeTile.BLOCK,TypeTile.BLOCK,TypeTile.RAILWAY,true,"B14"));
+        TileB.add(new Tile(TypeTile.RAILWAY,TypeTile.HIGHWAY,TypeTile.BLOCK,TypeTile.BLOCK,true,"B15"));
+        TileB.add(new Tile(TypeTile.BLOCK,TypeTile.RAILWAY,TypeTile.HIGHWAY,TypeTile.BLOCK,true,"B16"));
+        TileB.add(new Tile(TypeTile.BLOCK,TypeTile.BLOCK,TypeTile.RAILWAY,TypeTile.HIGHWAY,true,"B17"));
+
+        //B2
+        TileB.add(new Tile(TypeTile.HIGHWAY,TypeTile.RAILWAY,TypeTile.HIGHWAY,TypeTile.RAILWAY,false,"B20"));
+        TileB.add(new Tile(TypeTile.RAILWAY,TypeTile.HIGHWAY,TypeTile.RAILWAY,TypeTile.HIGHWAY,false,"B21"));
+        TileB.add(new Tile(TypeTile.HIGHWAY,TypeTile.RAILWAY,TypeTile.HIGHWAY,TypeTile.RAILWAY,false,"B22"));
+        TileB.add(new Tile(TypeTile.RAILWAY,TypeTile.HIGHWAY,TypeTile.RAILWAY,TypeTile.HIGHWAY,false,"B23"));
+        TileB.add(new Tile(TypeTile.HIGHWAY,TypeTile.RAILWAY,TypeTile.HIGHWAY,TypeTile.RAILWAY,false,"B24"));
+        TileB.add(new Tile(TypeTile.RAILWAY,TypeTile.HIGHWAY,TypeTile.RAILWAY,TypeTile.HIGHWAY,false,"B25"));
+        TileB.add(new Tile(TypeTile.HIGHWAY,TypeTile.RAILWAY,TypeTile.HIGHWAY,TypeTile.RAILWAY,false,"B26"));
+        TileB.add(new Tile(TypeTile.RAILWAY,TypeTile.HIGHWAY,TypeTile.RAILWAY,TypeTile.HIGHWAY,false,"B27"));
     }
 }
