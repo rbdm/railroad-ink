@@ -14,5 +14,6 @@ public class Test
     {
         Board board = new Board();
         board.printMap();
+        board.getSquareformSquareString("B3C52");
     }
 }

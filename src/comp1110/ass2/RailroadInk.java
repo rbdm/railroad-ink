@@ -1,5 +1,8 @@
 package comp1110.ass2;
 
+import comp1110.ass2.model.Board;
+import comp1110.ass2.model.Square;
+
 public class RailroadInk {
     /**
      * Determine whether a tile placement string is well-formed:
@@ -15,7 +18,16 @@ public class RailroadInk {
      */
     public static boolean isTilePlacementWellFormed(String tilePlacementString) {
         // FIXME Task 2: determine whether a tile placement is well-formed
-        return false;
+        Board board = new Board();
+        Square square = board.getSquareformSquareString(tilePlacementString);
+        if (square != null)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
 
     /**
