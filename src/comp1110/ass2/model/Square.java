@@ -11,8 +11,9 @@ public class Square
     public TypeTile left;
     public Boolean isStation;
     public String name;
+    public TypeSquare type;
 
-    public Square(TypeTile top, TypeTile right, TypeTile bottom, TypeTile left, Boolean isStation, String name)
+    public Square(TypeTile top, TypeTile right, TypeTile bottom, TypeTile left, Boolean isStation, String name,TypeSquare type)
     {
         this.top = top;
         this.right = right;
@@ -20,6 +21,7 @@ public class Square
         this.left = left;
         this.isStation = isStation;
         this.name = name;
+        this.type = type;
     }
 
 }
