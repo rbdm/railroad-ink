@@ -16,8 +16,6 @@ public class Tile {
         addSquareS();
         addSquareA();
         addSquareB();
-
-
     }
 
     private void addSquareS()
@@ -89,64 +87,64 @@ public class Tile {
     {
         //check by Hao
         //A0
-        squareBList.add(new Square(TypeTile.RAILWAY, TypeTile.BLOCK, TypeTile.BLOCK, TypeTile.RAILWAY, false, "A00", TypeSquare.TILE));
-        squareBList.add(new Square(TypeTile.RAILWAY, TypeTile.RAILWAY, TypeTile.BLOCK, TypeTile.BLOCK, false, "A01", TypeSquare.TILE));
-        squareBList.add(new Square(TypeTile.BLOCK, TypeTile.RAILWAY, TypeTile.RAILWAY, TypeTile.BLOCK, false, "A02", TypeSquare.TILE));
-        squareBList.add(new Square(TypeTile.BLOCK, TypeTile.BLOCK, TypeTile.RAILWAY, TypeTile.RAILWAY, false, "A03", TypeSquare.TILE));
-        squareBList.add(new Square(TypeTile.RAILWAY, TypeTile.RAILWAY, TypeTile.BLOCK, TypeTile.BLOCK, false, "A04", TypeSquare.TILE));
-        squareBList.add(new Square(TypeTile.BLOCK, TypeTile.RAILWAY, TypeTile.RAILWAY, TypeTile.BLOCK, false, "A05", TypeSquare.TILE));
-        squareBList.add(new Square(TypeTile.BLOCK, TypeTile.BLOCK, TypeTile.RAILWAY, TypeTile.RAILWAY, false, "A06", TypeSquare.TILE));
-        squareBList.add(new Square(TypeTile.RAILWAY, TypeTile.BLOCK, TypeTile.BLOCK, TypeTile.RAILWAY, false, "A07", TypeSquare.TILE));
+        squareAList.add(new Square(TypeTile.RAILWAY, TypeTile.BLOCK, TypeTile.BLOCK, TypeTile.RAILWAY, false, "A00", TypeSquare.TILE));
+        squareAList.add(new Square(TypeTile.RAILWAY, TypeTile.RAILWAY, TypeTile.BLOCK, TypeTile.BLOCK, false, "A01", TypeSquare.TILE));
+        squareAList.add(new Square(TypeTile.BLOCK, TypeTile.RAILWAY, TypeTile.RAILWAY, TypeTile.BLOCK, false, "A02", TypeSquare.TILE));
+        squareAList.add(new Square(TypeTile.BLOCK, TypeTile.BLOCK, TypeTile.RAILWAY, TypeTile.RAILWAY, false, "A03", TypeSquare.TILE));
+        squareAList.add(new Square(TypeTile.RAILWAY, TypeTile.RAILWAY, TypeTile.BLOCK, TypeTile.BLOCK, false, "A04", TypeSquare.TILE));
+        squareAList.add(new Square(TypeTile.BLOCK, TypeTile.RAILWAY, TypeTile.RAILWAY, TypeTile.BLOCK, false, "A05", TypeSquare.TILE));
+        squareAList.add(new Square(TypeTile.BLOCK, TypeTile.BLOCK, TypeTile.RAILWAY, TypeTile.RAILWAY, false, "A06", TypeSquare.TILE));
+        squareAList.add(new Square(TypeTile.RAILWAY, TypeTile.BLOCK, TypeTile.BLOCK, TypeTile.RAILWAY, false, "A07", TypeSquare.TILE));
 
         //A1
-        squareBList.add(new Square(TypeTile.RAILWAY, TypeTile.BLOCK, TypeTile.RAILWAY, TypeTile.BLOCK, false, "A10", TypeSquare.TILE));
-        squareBList.add(new Square(TypeTile.BLOCK, TypeTile.RAILWAY, TypeTile.BLOCK, TypeTile.RAILWAY, false, "A11", TypeSquare.TILE));
-        squareBList.add(new Square(TypeTile.RAILWAY, TypeTile.BLOCK, TypeTile.RAILWAY, TypeTile.BLOCK, false, "A12", TypeSquare.TILE));
-        squareBList.add(new Square(TypeTile.BLOCK, TypeTile.RAILWAY, TypeTile.BLOCK, TypeTile.RAILWAY, false, "A13", TypeSquare.TILE));
-        squareBList.add(new Square(TypeTile.RAILWAY, TypeTile.BLOCK, TypeTile.RAILWAY, TypeTile.BLOCK, false, "A14", TypeSquare.TILE));
-        squareBList.add(new Square(TypeTile.BLOCK, TypeTile.RAILWAY, TypeTile.BLOCK, TypeTile.RAILWAY, false, "A15", TypeSquare.TILE));
-        squareBList.add(new Square(TypeTile.RAILWAY, TypeTile.BLOCK, TypeTile.RAILWAY, TypeTile.BLOCK, false, "A16", TypeSquare.TILE));
-        squareBList.add(new Square(TypeTile.BLOCK, TypeTile.RAILWAY, TypeTile.BLOCK, TypeTile.RAILWAY, false, "A17", TypeSquare.TILE));
+        squareAList.add(new Square(TypeTile.RAILWAY, TypeTile.BLOCK, TypeTile.RAILWAY, TypeTile.BLOCK, false, "A10", TypeSquare.TILE));
+        squareAList.add(new Square(TypeTile.BLOCK, TypeTile.RAILWAY, TypeTile.BLOCK, TypeTile.RAILWAY, false, "A11", TypeSquare.TILE));
+        squareAList.add(new Square(TypeTile.RAILWAY, TypeTile.BLOCK, TypeTile.RAILWAY, TypeTile.BLOCK, false, "A12", TypeSquare.TILE));
+        squareAList.add(new Square(TypeTile.BLOCK, TypeTile.RAILWAY, TypeTile.BLOCK, TypeTile.RAILWAY, false, "A13", TypeSquare.TILE));
+        squareAList.add(new Square(TypeTile.RAILWAY, TypeTile.BLOCK, TypeTile.RAILWAY, TypeTile.BLOCK, false, "A14", TypeSquare.TILE));
+        squareAList.add(new Square(TypeTile.BLOCK, TypeTile.RAILWAY, TypeTile.BLOCK, TypeTile.RAILWAY, false, "A15", TypeSquare.TILE));
+        squareAList.add(new Square(TypeTile.RAILWAY, TypeTile.BLOCK, TypeTile.RAILWAY, TypeTile.BLOCK, false, "A16", TypeSquare.TILE));
+        squareAList.add(new Square(TypeTile.BLOCK, TypeTile.RAILWAY, TypeTile.BLOCK, TypeTile.RAILWAY, false, "A17", TypeSquare.TILE));
 
         //A2
-        squareBList.add(new Square(TypeTile.RAILWAY, TypeTile.RAILWAY, TypeTile.RAILWAY, TypeTile.BLOCK, false, "A20", TypeSquare.TILE));
-        squareBList.add(new Square(TypeTile.BLOCK, TypeTile.RAILWAY, TypeTile.RAILWAY, TypeTile.RAILWAY, false, "A21", TypeSquare.TILE));
-        squareBList.add(new Square(TypeTile.RAILWAY, TypeTile.BLOCK, TypeTile.RAILWAY, TypeTile.RAILWAY, false, "A22", TypeSquare.TILE));
-        squareBList.add(new Square(TypeTile.RAILWAY, TypeTile.RAILWAY, TypeTile.BLOCK, TypeTile.RAILWAY, false, "A23", TypeSquare.TILE));
-        squareBList.add(new Square(TypeTile.RAILWAY, TypeTile.BLOCK, TypeTile.RAILWAY, TypeTile.RAILWAY, false, "A24", TypeSquare.TILE));
-        squareBList.add(new Square(TypeTile.RAILWAY, TypeTile.RAILWAY, TypeTile.BLOCK, TypeTile.RAILWAY, false, "A25", TypeSquare.TILE));
-        squareBList.add(new Square(TypeTile.RAILWAY, TypeTile.RAILWAY, TypeTile.RAILWAY, TypeTile.BLOCK, false, "A26", TypeSquare.TILE));
-        squareBList.add(new Square(TypeTile.BLOCK, TypeTile.RAILWAY, TypeTile.RAILWAY, TypeTile.RAILWAY, false, "A27", TypeSquare.TILE));
+        squareAList.add(new Square(TypeTile.RAILWAY, TypeTile.RAILWAY, TypeTile.RAILWAY, TypeTile.BLOCK, false, "A20", TypeSquare.TILE));
+        squareAList.add(new Square(TypeTile.BLOCK, TypeTile.RAILWAY, TypeTile.RAILWAY, TypeTile.RAILWAY, false, "A21", TypeSquare.TILE));
+        squareAList.add(new Square(TypeTile.RAILWAY, TypeTile.BLOCK, TypeTile.RAILWAY, TypeTile.RAILWAY, false, "A22", TypeSquare.TILE));
+        squareAList.add(new Square(TypeTile.RAILWAY, TypeTile.RAILWAY, TypeTile.BLOCK, TypeTile.RAILWAY, false, "A23", TypeSquare.TILE));
+        squareAList.add(new Square(TypeTile.RAILWAY, TypeTile.BLOCK, TypeTile.RAILWAY, TypeTile.RAILWAY, false, "A24", TypeSquare.TILE));
+        squareAList.add(new Square(TypeTile.RAILWAY, TypeTile.RAILWAY, TypeTile.BLOCK, TypeTile.RAILWAY, false, "A25", TypeSquare.TILE));
+        squareAList.add(new Square(TypeTile.RAILWAY, TypeTile.RAILWAY, TypeTile.RAILWAY, TypeTile.BLOCK, false, "A26", TypeSquare.TILE));
+        squareAList.add(new Square(TypeTile.BLOCK, TypeTile.RAILWAY, TypeTile.RAILWAY, TypeTile.RAILWAY, false, "A27", TypeSquare.TILE));
 
         //A3
-        squareBList.add(new Square(TypeTile.HIGHWAY, TypeTile.HIGHWAY, TypeTile.HIGHWAY, TypeTile.BLOCK, false, "A30", TypeSquare.TILE));
-        squareBList.add(new Square(TypeTile.BLOCK, TypeTile.HIGHWAY, TypeTile.HIGHWAY, TypeTile.HIGHWAY, false, "A31", TypeSquare.TILE));
-        squareBList.add(new Square(TypeTile.HIGHWAY, TypeTile.BLOCK, TypeTile.HIGHWAY, TypeTile.HIGHWAY, false, "A32", TypeSquare.TILE));
-        squareBList.add(new Square(TypeTile.HIGHWAY, TypeTile.HIGHWAY, TypeTile.BLOCK, TypeTile.HIGHWAY, false, "A33", TypeSquare.TILE));
-        squareBList.add(new Square(TypeTile.HIGHWAY, TypeTile.BLOCK, TypeTile.HIGHWAY, TypeTile.HIGHWAY, false, "A34", TypeSquare.TILE));
-        squareBList.add(new Square(TypeTile.HIGHWAY, TypeTile.HIGHWAY, TypeTile.BLOCK, TypeTile.HIGHWAY, false, "A35", TypeSquare.TILE));
-        squareBList.add(new Square(TypeTile.HIGHWAY, TypeTile.HIGHWAY, TypeTile.HIGHWAY, TypeTile.BLOCK, false, "A36", TypeSquare.TILE));
-        squareBList.add(new Square(TypeTile.BLOCK, TypeTile.HIGHWAY, TypeTile.HIGHWAY, TypeTile.HIGHWAY, false, "A37", TypeSquare.TILE));
+        squareAList.add(new Square(TypeTile.HIGHWAY, TypeTile.HIGHWAY, TypeTile.HIGHWAY, TypeTile.BLOCK, false, "A30", TypeSquare.TILE));
+        squareAList.add(new Square(TypeTile.BLOCK, TypeTile.HIGHWAY, TypeTile.HIGHWAY, TypeTile.HIGHWAY, false, "A31", TypeSquare.TILE));
+        squareAList.add(new Square(TypeTile.HIGHWAY, TypeTile.BLOCK, TypeTile.HIGHWAY, TypeTile.HIGHWAY, false, "A32", TypeSquare.TILE));
+        squareAList.add(new Square(TypeTile.HIGHWAY, TypeTile.HIGHWAY, TypeTile.BLOCK, TypeTile.HIGHWAY, false, "A33", TypeSquare.TILE));
+        squareAList.add(new Square(TypeTile.HIGHWAY, TypeTile.BLOCK, TypeTile.HIGHWAY, TypeTile.HIGHWAY, false, "A34", TypeSquare.TILE));
+        squareAList.add(new Square(TypeTile.HIGHWAY, TypeTile.HIGHWAY, TypeTile.BLOCK, TypeTile.HIGHWAY, false, "A35", TypeSquare.TILE));
+        squareAList.add(new Square(TypeTile.HIGHWAY, TypeTile.HIGHWAY, TypeTile.HIGHWAY, TypeTile.BLOCK, false, "A36", TypeSquare.TILE));
+        squareAList.add(new Square(TypeTile.BLOCK, TypeTile.HIGHWAY, TypeTile.HIGHWAY, TypeTile.HIGHWAY, false, "A37", TypeSquare.TILE));
 
         //A4
-        squareBList.add(new Square(TypeTile.HIGHWAY, TypeTile.BLOCK, TypeTile.HIGHWAY, TypeTile.BLOCK, false, "A40", TypeSquare.TILE));
-        squareBList.add(new Square(TypeTile.BLOCK, TypeTile.HIGHWAY, TypeTile.BLOCK, TypeTile.HIGHWAY, false, "A41", TypeSquare.TILE));
-        squareBList.add(new Square(TypeTile.HIGHWAY, TypeTile.BLOCK, TypeTile.HIGHWAY, TypeTile.BLOCK, false, "A42", TypeSquare.TILE));
-        squareBList.add(new Square(TypeTile.BLOCK, TypeTile.HIGHWAY, TypeTile.BLOCK, TypeTile.HIGHWAY, false, "A43", TypeSquare.TILE));
-        squareBList.add(new Square(TypeTile.HIGHWAY, TypeTile.BLOCK, TypeTile.HIGHWAY, TypeTile.BLOCK, false, "A44", TypeSquare.TILE));
-        squareBList.add(new Square(TypeTile.BLOCK, TypeTile.HIGHWAY, TypeTile.BLOCK, TypeTile.HIGHWAY, false, "A45", TypeSquare.TILE));
-        squareBList.add(new Square(TypeTile.HIGHWAY, TypeTile.BLOCK, TypeTile.HIGHWAY, TypeTile.BLOCK, false, "A46", TypeSquare.TILE));
-        squareBList.add(new Square(TypeTile.BLOCK, TypeTile.HIGHWAY, TypeTile.BLOCK, TypeTile.HIGHWAY, false, "A47", TypeSquare.TILE));
+        squareAList.add(new Square(TypeTile.HIGHWAY, TypeTile.BLOCK, TypeTile.HIGHWAY, TypeTile.BLOCK, false, "A40", TypeSquare.TILE));
+        squareAList.add(new Square(TypeTile.BLOCK, TypeTile.HIGHWAY, TypeTile.BLOCK, TypeTile.HIGHWAY, false, "A41", TypeSquare.TILE));
+        squareAList.add(new Square(TypeTile.HIGHWAY, TypeTile.BLOCK, TypeTile.HIGHWAY, TypeTile.BLOCK, false, "A42", TypeSquare.TILE));
+        squareAList.add(new Square(TypeTile.BLOCK, TypeTile.HIGHWAY, TypeTile.BLOCK, TypeTile.HIGHWAY, false, "A43", TypeSquare.TILE));
+        squareAList.add(new Square(TypeTile.HIGHWAY, TypeTile.BLOCK, TypeTile.HIGHWAY, TypeTile.BLOCK, false, "A44", TypeSquare.TILE));
+        squareAList.add(new Square(TypeTile.BLOCK, TypeTile.HIGHWAY, TypeTile.BLOCK, TypeTile.HIGHWAY, false, "A45", TypeSquare.TILE));
+        squareAList.add(new Square(TypeTile.HIGHWAY, TypeTile.BLOCK, TypeTile.HIGHWAY, TypeTile.BLOCK, false, "A46", TypeSquare.TILE));
+        squareAList.add(new Square(TypeTile.BLOCK, TypeTile.HIGHWAY, TypeTile.BLOCK, TypeTile.HIGHWAY, false, "A47", TypeSquare.TILE));
 
         //A5
-        squareBList.add(new Square(TypeTile.HIGHWAY, TypeTile.BLOCK, TypeTile.BLOCK, TypeTile.HIGHWAY, false, "A50", TypeSquare.TILE));
-        squareBList.add(new Square(TypeTile.HIGHWAY, TypeTile.HIGHWAY, TypeTile.BLOCK, TypeTile.BLOCK, false, "A51", TypeSquare.TILE));
-        squareBList.add(new Square(TypeTile.BLOCK, TypeTile.HIGHWAY, TypeTile.HIGHWAY, TypeTile.BLOCK, false, "A52", TypeSquare.TILE));
-        squareBList.add(new Square(TypeTile.BLOCK, TypeTile.BLOCK, TypeTile.HIGHWAY, TypeTile.HIGHWAY, false, "A53", TypeSquare.TILE));
-        squareBList.add(new Square(TypeTile.HIGHWAY, TypeTile.HIGHWAY, TypeTile.BLOCK, TypeTile.BLOCK, false, "A54", TypeSquare.TILE));
-        squareBList.add(new Square(TypeTile.BLOCK, TypeTile.HIGHWAY, TypeTile.HIGHWAY, TypeTile.BLOCK, false, "A55", TypeSquare.TILE));
-        squareBList.add(new Square(TypeTile.BLOCK, TypeTile.BLOCK, TypeTile.HIGHWAY, TypeTile.HIGHWAY, false, "A56", TypeSquare.TILE));
-        squareBList.add(new Square(TypeTile.HIGHWAY, TypeTile.BLOCK, TypeTile.BLOCK, TypeTile.HIGHWAY, false, "A57", TypeSquare.TILE));
+        squareAList.add(new Square(TypeTile.HIGHWAY, TypeTile.BLOCK, TypeTile.BLOCK, TypeTile.HIGHWAY, false, "A50", TypeSquare.TILE));
+        squareAList.add(new Square(TypeTile.HIGHWAY, TypeTile.HIGHWAY, TypeTile.BLOCK, TypeTile.BLOCK, false, "A51", TypeSquare.TILE));
+        squareAList.add(new Square(TypeTile.BLOCK, TypeTile.HIGHWAY, TypeTile.HIGHWAY, TypeTile.BLOCK, false, "A52", TypeSquare.TILE));
+        squareAList.add(new Square(TypeTile.BLOCK, TypeTile.BLOCK, TypeTile.HIGHWAY, TypeTile.HIGHWAY, false, "A53", TypeSquare.TILE));
+        squareAList.add(new Square(TypeTile.HIGHWAY, TypeTile.HIGHWAY, TypeTile.BLOCK, TypeTile.BLOCK, false, "A54", TypeSquare.TILE));
+        squareAList.add(new Square(TypeTile.BLOCK, TypeTile.HIGHWAY, TypeTile.HIGHWAY, TypeTile.BLOCK, false, "A55", TypeSquare.TILE));
+        squareAList.add(new Square(TypeTile.BLOCK, TypeTile.BLOCK, TypeTile.HIGHWAY, TypeTile.HIGHWAY, false, "A56", TypeSquare.TILE));
+        squareAList.add(new Square(TypeTile.HIGHWAY, TypeTile.BLOCK, TypeTile.BLOCK, TypeTile.HIGHWAY, false, "A57", TypeSquare.TILE));
     }
 
     private void addSquareB()
@@ -182,6 +180,17 @@ public class Tile {
         squareBList.add(new Square(TypeTile.HIGHWAY,TypeTile.RAILWAY,TypeTile.HIGHWAY,TypeTile.RAILWAY,true,"B26",TypeSquare.TILE));
         squareBList.add(new Square(TypeTile.RAILWAY,TypeTile.HIGHWAY,TypeTile.RAILWAY,TypeTile.HIGHWAY,true,"B27",TypeSquare.TILE));
 
+    }
+
+    public List<Square> getSquareList(char dice)
+    {
+        switch (dice)
+        {
+            case 'A':return squareAList;
+            case 'B':return  squareBList;
+            case 'S':return  squareSList;
+            default:return null;
+        }
     }
 
 }
