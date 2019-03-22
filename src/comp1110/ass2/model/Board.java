@@ -87,7 +87,7 @@ public class Board
      * @param squareString squareString like "B1C54"
      * @return if valid string,return a Square class. if squareString is invalid, return null.
      */
-    public Square getSquareformSquareString(String squareString)
+    public Square getSquareFormSquareString(String squareString)
     {
         if (squareString.length() != 5)
         {
