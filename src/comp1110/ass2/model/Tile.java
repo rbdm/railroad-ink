@@ -87,7 +87,7 @@ public class Tile {
 
     private void addSquareA()
     {
-        //TODO: Hao check
+        //check by Hao
         //A0
         squareBList.add(new Square(TypeTile.RAILWAY, TypeTile.BLOCK, TypeTile.BLOCK, TypeTile.RAILWAY, false, "A00", TypeSquare.TILE));
         squareBList.add(new Square(TypeTile.RAILWAY, TypeTile.RAILWAY, TypeTile.BLOCK, TypeTile.BLOCK, false, "A01", TypeSquare.TILE));
