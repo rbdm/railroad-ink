@@ -143,4 +143,59 @@ public class Board
         return square;
 
     }
+
+    public boolean areConnectedSquares(String tilePlacementStringA, String tilePlacementStringB) {
+        char rowA = tilePlacementStringA.charAt(2);
+        char colA = tilePlacementStringA.charAt(3);
+        char rowB = tilePlacementStringB.charAt(2);
+        char colB = tilePlacementStringB.charAt(3);
+        Square squareA = getSquareFormSquareString(tilePlacementStringA);
+        Square squareB = getSquareFormSquareString(tilePlacementStringB);
+        //determine whether A and B are neighbours
+        if (rowA != rowB && colA != colB) {
+            return false;
+        } else {
+            if (rowA == rowB) {
+                if (colB - colA == 1) {  //A is on the left of B
+                    if (squareA.right == squareB.left && squareA.right != TypeTile.BLOCK) {
+                        return true;
+                    } else {
+                        return false;
+                    }
+                } else if (colA - colB == 1) {  //A is on the right of B
+                    if (squareA.left == squareB.right && squareA.left != TypeTile.BLOCK) {
+                        return true;
+                    } else {
+                        return false;
+                    }
+                } else {
+                    return false;
+                }
+            } else if (colA == colB) {
+                if (rowA - rowB == 1) {  //A is below B
+                    if (squareA.top == squareB.bottom && squareA.top != TypeTile.BLOCK) {
+                        return true;
+                    } else {
+                        return false;
+                    }
+                } else if (rowB - rowA == 1) {  //A is above B
+                    if (squareA.bottom == squareB.top && squareA.bottom != TypeTile.BLOCK) {
+                        return true;
+                    } else {
+                        return false;
+                    }
+                } else {
+                    return false;
+                }
+            }
+        }
+        return false;
+    }
+
+    public PositionPoint getPositionFromString(String tilePlacementString){
+        int row = tilePlacementString.charAt(2)-'A'+1;
+        int col = tilePlacementString.charAt(3)-'0'+1;
+        PositionPoint pp = new PositionPoint(row,col);
+        return pp;
+    }
 }
