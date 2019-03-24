@@ -1,5 +1,8 @@
 package comp1110.ass2.model;
 
+
+import javafx.scene.image.ImageView;
+
 import java.util.List;
 
 public class Board
@@ -7,12 +10,16 @@ public class Board
     private static final int MAX_HEIGHT = 9;
     private static final int MAX_WITDH = 9;
     private Square[][] map = new Square[MAX_HEIGHT][MAX_WITDH];
+    public ImageView[][] imageViews = new ImageView[MAX_HEIGHT][MAX_WITDH];
 
     public Board()
     {
         InitialMap();
     }
-
+    public Square[][] getMap()
+    {
+        return map;
+    }
     private void InitialMap()
     {
         //set all to EMPTY
@@ -198,4 +205,6 @@ public class Board
         PositionPoint pp = new PositionPoint(row,col);
         return pp;
     }
+
+
 }

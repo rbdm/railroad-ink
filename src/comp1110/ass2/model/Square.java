@@ -14,6 +14,7 @@ public class Square
     public TypeSquare type;
     public PositionPoint positionPoint=new PositionPoint(-1,-1);
 
+
     public Square(TypeTile top, TypeTile right, TypeTile bottom, TypeTile left, Boolean isOverpass, String name,TypeSquare type)
     {
         this.top = top;
@@ -24,5 +25,6 @@ public class Square
         this.name = name;
         this.type = type;
     }
+
 
 }
