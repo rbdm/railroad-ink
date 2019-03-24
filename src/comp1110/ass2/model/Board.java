@@ -56,6 +56,11 @@ public class Board
 
     }
 
+    /**
+     * print the current state of map, which is similar to boardString but include information about
+     * wall, exit and empty square
+     */
+
     public void printMap()
     {
         for (int i = 0; i < MAX_HEIGHT; i++)
@@ -83,21 +88,21 @@ public class Board
     }
 
     /**
-     * transfer SquareString to Square
-     * @param squareString squareString like "B1C54"
-     * @return if valid string,return a Square class. if squareString is invalid, return null.
+     * transfer a tilePlacementString (i.e. SquareString) to Square
+     * @param tilePlacementString is like "B1C54"
+     * @return if valid string, return an instance of Square class. if tilePlacementString is invalid, return null.
      */
-    public Square getSquareFormSquareString(String squareString)
+    public Square getSquareFormSquareString(String tilePlacementString)
     {
-        if (squareString.length() != 5)
+        if (tilePlacementString.length() != 5)
         {
             return null;
         }
-        char dice = squareString.charAt(0);
-        char face = squareString.charAt(1);
-        char row = squareString.charAt(2);
-        char col = squareString.charAt(3);
-        char orientation = squareString.charAt(4);
+        char dice = tilePlacementString.charAt(0);
+        char face = tilePlacementString.charAt(1);
+        char row = tilePlacementString.charAt(2);
+        char col = tilePlacementString.charAt(3);
+        char orientation = tilePlacementString.charAt(4);
         Tile tile = new Tile();
         if (dice != 'A' && dice != 'B' && dice != 'S')
         {
