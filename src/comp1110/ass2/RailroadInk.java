@@ -42,7 +42,19 @@ public class RailroadInk {
      */
     public static boolean isBoardStringWellFormed(String boardString) {
         // FIXME Task 3: determine whether a board string is well-formed
-        return false;
+        if (boardString == null || boardString.length() == 0 || boardString.length() % 5 != 0) return false;
+        int specialTileLimit = 2;
+        for (int i = 0; i < boardString.length(); i += 5)
+        {
+            String tilePlacementString = boardString.substring(i, i + 5);
+            if ( ! isTilePlacementWellFormed(tilePlacementString)) return false;
+            else if (tilePlacementString.charAt(0) == 'S')
+            {
+                specialTileLimit -= 1;
+                if (specialTileLimit < 0) return false;
+            }
+        }
+        return true;
     }
 
 
@@ -82,7 +94,22 @@ public class RailroadInk {
      */
     public static boolean isValidPlacementSequence(String boardString) {
         // FIXME Task 6: determine whether the given placement sequence is valid
-        return false;
+        if ( ! isBoardStringWellFormed(boardString)) return false;
+        Board board = new Board();
+
+        for (int i = 0; i < boardString.length(); i += 5)
+        {
+            String tilePlacementStringA = boardString.substring(i, i + 5);
+            boolean connected = false;
+            if (board.isConnectedWithExit(tilePlacementStringA)) connected = true;
+            for (int j = i - 5; j >= 0; j -= 5)
+            {
+                String tilePlacementStringB = boardString.substring(j, j + 5);
+                if (board.areConnectedSquares(tilePlacementStringA, tilePlacementStringB)) connected = true;
+            }
+            if ( ! connected) return false;
+        }
+        return true;
     }
 
     /**
