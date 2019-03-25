@@ -5,13 +5,37 @@ import java.util.List;
 
 public class Square
 {
+    /**
+     * top TileType
+     */
     public TypeTile top;
+    /**
+     * right TileType
+     */
     public TypeTile right;
+    /**
+     * bottom TileType
+     */
     public TypeTile bottom;
+    /**
+     * left TileType
+     */
     public TypeTile left;
+    /**
+     * is the center overpass?
+     */
     public Boolean isOverpass;
+    /**
+     * Square name such as A0
+     */
     public String name;
+    /**
+     * Square Type
+     */
     public TypeSquare type;
+    /**
+     * Square position
+     */
     public PositionPoint positionPoint=new PositionPoint(-1,-1);
 
 

@@ -8,7 +8,13 @@ package comp1110.ass2.model;
  */
 public class PositionPoint
 {
+    /**
+     * position x
+     */
     private int x;
+    /**
+     * position y;
+     */
     private int y;
 
     public PositionPoint(int x,int y)
