@@ -12,6 +12,9 @@ public class Board
     private Square[][] map = new Square[MAX_HEIGHT][MAX_WITDH];
     public ImageView[][] imageViews = new ImageView[MAX_HEIGHT][MAX_WITDH];
 
+    /**
+     * constructor of Board
+     */
     public Board()
     {
         InitialMap();
@@ -20,6 +23,10 @@ public class Board
     {
         return map;
     }
+
+    /**
+     * InitialMap with railway, highway exits and wall and empty block.
+     */
     private void InitialMap()
     {
         //set all to EMPTY
@@ -67,7 +74,6 @@ public class Board
      * print the current state of map, which is similar to boardString but include information about
      * wall, exit and empty square
      */
-
     public void printMap()
     {
         for (int i = 0; i < MAX_HEIGHT; i++)
@@ -151,6 +157,12 @@ public class Board
 
     }
 
+    /**
+     * judge if two squaresa are connected?
+     * @param tilePlacementStringA SquareString A
+     * @param tilePlacementStringB SquareString B
+     * @return are connected?
+     */
     public boolean areConnectedSquares(String tilePlacementStringA, String tilePlacementStringB) {
         char rowA = tilePlacementStringA.charAt(2);
         char colA = tilePlacementStringA.charAt(3);
@@ -199,11 +211,16 @@ public class Board
         return false;
     }
 
+    /**
+     * get titleString's Position
+     * @param tilePlacementString tilteString like 'A0B00'
+     * @return PositionPoint x,y
+     */
     public PositionPoint getPositionFromString(String tilePlacementString){
         int row = tilePlacementString.charAt(2)-'A'+1;
         int col = tilePlacementString.charAt(3)-'0'+1;
-        PositionPoint pp = new PositionPoint(row,col);
-        return pp;
+        PositionPoint positionPoint = new PositionPoint(row,col);
+        return positionPoint;
     }
 
 
