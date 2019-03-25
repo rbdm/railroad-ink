@@ -3,6 +3,7 @@ package comp1110.ass2.model;
 
 import javafx.scene.image.ImageView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Board
@@ -212,6 +213,35 @@ public class Board
     }
 
     /**
+     * judge if a square is connected to an exit
+     * @param tilePlacementString SquareString
+     * @return iff connected returns true
+     */
+    public Boolean isConnectedWithExit(String tilePlacementString) {
+        int row = Character.getNumericValue(tilePlacementString.charAt(2)) - 9;
+        int col = Character.getNumericValue(tilePlacementString.charAt(3)) + 1;
+        Square tile = getSquareFormSquareString(tilePlacementString);
+
+        if (row == 1) {
+            if (col != 2 && col != 4 && col != 6) return false;
+            return (tile.top == map[row - 1][col].bottom);
+        }
+        else if (row == 7) {
+            if (col != 2 && col != 4 && col != 6) return false;
+            return (tile.bottom == map[row + 1][col].top);
+        }
+        else if (col == 1) {
+            if (row != 2 && row != 4 && row != 6) return false;
+            return (tile.left == map[row][col - 1].right);
+        }
+        else if (col == 7) {
+            if (row != 2 && row != 4 && row != 6) return false;
+            return (tile.right == map[row][col + 1].left);
+        }
+        return false;
+    }
+
+    /**
      * get titleString's Position
      * @param tilePlacementString tilteString like 'A0B00'
      * @return PositionPoint x,y
@@ -222,6 +252,5 @@ public class Board
         PositionPoint positionPoint = new PositionPoint(row,col);
         return positionPoint;
     }
-
 
 }
