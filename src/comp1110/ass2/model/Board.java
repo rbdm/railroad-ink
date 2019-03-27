@@ -253,4 +253,68 @@ public class Board
         return positionPoint;
     }
 
+    /**
+     * Judge if a tile placement is valid in the current board state. Similar to Task 6 but for a single placement.
+     * it judges whether it is true or not by placing the square on the map,
+     * then checks all direction of valid and invalid connections.
+     * @param square a placement square
+     * @return true if there is a valid connection and there is no invalid connection to the placed tile.
+     */
+    public Boolean isValidPlacement(Square square) {
+
+        return false;
+    }
+
+    /**
+     * Counts how many exits are currently connected.
+     * Would be used for tasks related to score generating.
+     * does not take any parameters, counts using the current map variable
+     * @param
+     * @return number of connected exits
+     */
+    public int countConnectedExits() {
+        int connectedExits = 0;
+
+        return connectedExits;
+    }
+
+    /**
+     * Counts how many dead ends are there in the board.
+     * Would be used for tasks related to score generating.
+     * does not take any parameters, counts using the current map variable
+     * @param
+     * @return number of dead ends.
+     */
+    public int countDeadEnds() {
+        int deadEnds = 0;
+
+        return deadEnds;
+    }
+
+    /**
+     * Counts the longest distance with railway type in the current board.
+     * Would be used for tasks related to score generating.
+     * does not take any parameters, counts using the current map variable
+     * @param
+     * @return longest distance of typeTile RAILWAY
+     */
+    public int getLongestRailway() {
+        int longestRailway = 0;
+
+        return longestRailway;
+    }
+
+    /**
+     * Counts the longest distance with highway type in the current board.
+     * Would be used for tasks related to score generating.
+     * does not take any parameters, counts using the current map variable
+     * @param
+     * @return longest distance with typeTile HIGHWAY
+     */
+    public int getLongestHighway() {
+        int longestHighway = 0;
+
+        return longestHighway;
+    }
+
 }
