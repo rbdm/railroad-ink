@@ -212,6 +212,7 @@ public class Board
         return false;
     }
 
+
     /**
      * judge if a square is connected to an exit
      * @param tilePlacementString SquareString
@@ -254,6 +255,20 @@ public class Board
     }
 
     /**
+     * Judge if two tile is illegally placed, that is
+     * when A=UP.bottom=Railway and B=Down.Top=Highway, return true
+     * @param A
+     * @param B
+     * @return boolean
+     */
+
+    public boolean isIllegal(TypeTile A, TypeTile B){
+        if (A==TypeTile.HIGHWAY && B==TypeTile.RAILWAY){return true;}
+        else if (A==TypeTile.RAILWAY && B==TypeTile.HIGHWAY){return true;}
+        else {return false;}
+    }
+
+    /**
      * Judge if a tile placement is valid in the current board state. Similar to Task 6 but for a single placement.
      * it judges whether it is true or not by placing the square on the map,
      * then checks all direction of valid and invalid connections.
@@ -261,8 +276,23 @@ public class Board
      * @return true if there is a valid connection and there is no invalid connection to the placed tile.
      */
     public Boolean isValidPlacement(Square square) {
+        Square upS = map[square.positionPoint.getX()-1][square.positionPoint.getY()];
+        Square rightS = map[square.positionPoint.getX()-1][square.positionPoint.getY()+1];
+        Square downS = map[square.positionPoint.getX()+1][square.positionPoint.getY()];
+        Square leftS = map[square.positionPoint.getX()][square.positionPoint.getY()-1];
 
-        return false;
+        if (isIllegal(upS.bottom,square.top) || isIllegal(rightS.left,square.right) ||
+        isIllegal(downS.top,square.bottom) || isIllegal(leftS.right,square.left)){
+            return false;
+        }
+        else {
+            if (upS.bottom==square.top && square.top!=TypeTile.BLOCK){ return true; }
+            else if (rightS.left==square.right && square.right!=TypeTile.BLOCK){return true;}
+            else if (downS.top==square.bottom && square.bottom!=TypeTile.BLOCK){return true;}
+            else if (leftS.right==square.left && square.left!=TypeTile.BLOCK){return true;}
+            else {return false;}
+        }
+
     }
 
     /**
