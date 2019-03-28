@@ -122,7 +122,17 @@ public class RailroadInk {
      */
     public static String generateDiceRoll() {
         // FIXME Task 7: generate a dice roll
-        return "";
+        Double a1 = Math.random()*6;
+        int rollOne = a1.intValue();
+        Double a2 = Math.random()*6;
+        int rollTwo = a2.intValue();
+        Double a3 = Math.random()*6;
+        int rollThree = a3.intValue();
+        Double b = Math.random()*3;
+        int rollFour = b.intValue();
+        String roll = "A"+Integer.toString(rollOne)+"A"+Integer.toString(rollTwo)+
+                "A"+Integer.toString(rollThree)+"B"+Integer.toString(rollFour);
+        return roll;
     }
 
     /**
