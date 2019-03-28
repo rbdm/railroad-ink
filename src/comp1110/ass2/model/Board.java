@@ -277,23 +277,26 @@ public class Board
      * @return true if there is a valid connection and there is no invalid connection to the placed tile.
      */
     public Boolean isValidPlacement(Square square) {
-        Square upS = map[square.positionPoint.getX()-1][square.positionPoint.getY()];
-        Square rightS = map[square.positionPoint.getX()-1][square.positionPoint.getY()+1];
-        Square downS = map[square.positionPoint.getX()+1][square.positionPoint.getY()];
-        Square leftS = map[square.positionPoint.getX()][square.positionPoint.getY()-1];
-
-        if (isIllegal(upS.bottom,square.top) || isIllegal(rightS.left,square.right) ||
-        isIllegal(downS.top,square.bottom) || isIllegal(leftS.right,square.left)){
-            return false;
-        }
+        if (square.positionPoint==new PositionPoint (-1,-1)){return false;}
         else {
-            if (upS.bottom==square.top && square.top!=TypeTile.BLOCK){ return true; }
-            else if (rightS.left==square.right && square.right!=TypeTile.BLOCK){return true;}
-            else if (downS.top==square.bottom && square.bottom!=TypeTile.BLOCK){return true;}
-            else if (leftS.right==square.left && square.left!=TypeTile.BLOCK){return true;}
-            else {return false;}
-        }
+            Square upS = map[square.positionPoint.getX()-1][square.positionPoint.getY()];
+            Square rightS = map[square.positionPoint.getX()-1][square.positionPoint.getY()+1];
+            Square downS = map[square.positionPoint.getX()+1][square.positionPoint.getY()];
+            Square leftS = map[square.positionPoint.getX()][square.positionPoint.getY()-1];
 
+            if (isIllegal(upS.bottom,square.top) || isIllegal(rightS.left,square.right) ||
+                    isIllegal(downS.top,square.bottom) || isIllegal(leftS.right,square.left)){
+                return false;
+            }
+            else {
+                if (upS.bottom==square.top && square.top!=TypeTile.BLOCK){ return true; }
+                else if (rightS.left==square.right && square.right!=TypeTile.BLOCK){return true;}
+                else if (downS.top==square.bottom && square.bottom!=TypeTile.BLOCK){return true;}
+                else if (leftS.right==square.left && square.left!=TypeTile.BLOCK){return true;}
+                else {return false;}
+            }
+        }
+        
     }
 
     /**
