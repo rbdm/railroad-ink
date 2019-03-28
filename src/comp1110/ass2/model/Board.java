@@ -12,6 +12,7 @@ public class Board
     private static final int MAX_WITDH = 9;
     private Square[][] map = new Square[MAX_HEIGHT][MAX_WITDH];
     public ImageView[][] imageViews = new ImageView[MAX_HEIGHT][MAX_WITDH];
+    public List<List<Square>> squareClusters= new ArrayList<List<Square>>();
 
     /**
      * constructor of Board
@@ -289,6 +290,17 @@ public class Board
         int deadEnds = 0;
 
         return deadEnds;
+    }
+
+    /**
+     * cluster the exit .
+     * List<List<Square>> squareClusters
+     * use deep first method.
+     *
+     */
+    private void getCluster()
+    {
+     ;
     }
 
     /**
