@@ -277,7 +277,7 @@ public class Board
      * @return true if there is a valid connection and there is no invalid connection to the placed tile.
      */
     public Boolean isValidPlacement(Square square) {
-        if (square.positionPoint==new PositionPoint (-1,-1)){return false;}
+        if (square.positionPoint.getX()==-1 && square.positionPoint.getY()==-1){return false;}
         else {
             Square upS = map[square.positionPoint.getX()-1][square.positionPoint.getY()];
             Square rightS = map[square.positionPoint.getX()-1][square.positionPoint.getY()+1];
