@@ -26,24 +26,15 @@ public class RouteUtil
         NONE
     }
 
-    public class SquareRoute{
-        private Square square;
-        public int longestRailWayLength = -1;
-        public int longestHighWayLength = -1;
-        public List<Square> longestRailWayRoute = new ArrayList<>();
-        public List<Square> longestHighWayRoute = new ArrayList<>();
-    }
 
-    public SquareRoute[][]squareRoutes;
-    public SquareRoute[][] FindSquareLongestRoute(Square[][]map,int height,int width)
+    public static Square[][] FindSquareLongestRoute(Square[][]map,int height,int width)
     {
-        squareRoutes = new SquareRoute[height][width];
+        Square[][] squares = new Square[height][width];
         for(int i=0;i<height;i++)
         {
             for(int j=0;j<width;j++)
             {
-                squareRoutes[i][j]=new SquareRoute();
-                squareRoutes[i][j].square = map[i][j];
+                squares[i][j] = map[i][j];
             }
         }
 
@@ -51,25 +42,22 @@ public class RouteUtil
         {
             for(int j=1;j<width-1;j++)
             {
-                int maxlength = oneStep(i,j,0,TypeTile.HIGHWAY,Direction.NONE);
-                squareRoutes[i][j].longestHighWayLength=maxlength;
+                int maxlength = oneStep(squares,i,j,0,TypeTile.HIGHWAY,Direction.NONE);
+                squares[i][j].longestHighWayRouteLength=maxlength;
             }
         }
         for(int i=1;i<height-1;i++)
         {
             for(int j=1;j<width-1;j++)
             {
-                int maxlength = oneStep(i,j,0,TypeTile.RAILWAY,Direction.NONE);
-                squareRoutes[i][j].longestRailWayLength=maxlength;
+                int maxlength = oneStep(squares,i,j,0,TypeTile.RAILWAY,Direction.NONE);
+                squares[i][j].longestRailWayRouteLength=maxlength;
             }
         }
-
-
-
-        return squareRoutes;
+        return squares;
     }
 
-    private List<Direction> getAccessDirection(Square square,TypeTile typeTile,Direction getInDirection)
+    private static List<Direction> getAccessDirection(Square square,TypeTile typeTile,Direction getInDirection)
     {
 
         List<Direction> accessDirections = new ArrayList<>();
@@ -88,7 +76,7 @@ public class RouteUtil
 
         return accessDirections;
     }
-    private List<Direction> removeDirection(List<Direction> directions,Direction direction)
+    private static List<Direction> removeDirection(List<Direction> directions,Direction direction)
     {
         for(int i=directions.size()-1;i>=0;i--)
         {
@@ -100,7 +88,7 @@ public class RouteUtil
         return directions;
     }
 
-    private List<Direction> getSameTileDirection(Square square,TypeTile typeTile)
+    private static List<Direction> getSameTileDirection(Square square,TypeTile typeTile)
     {
         List<Direction> sameTileDirections = new ArrayList<>();
         if(square.top == typeTile)
@@ -122,18 +110,34 @@ public class RouteUtil
         return sameTileDirections;
     }
 
-    private int oneStep(int x,int y,int deepth, TypeTile typeTile,Direction getInDirection)
+    private static boolean canGetIn(Square square,TypeTile typeTile,Direction getInDirection)
+    {
+        switch (getInDirection)
+        {
+            case TOP:if(square.bottom != typeTile){return false;}break;
+            case RIGHT:if(square.left != typeTile){return false;}break;
+            case BOTTOM:if(square.top != typeTile){return false;}break;
+            case LEFT:if(square.right != typeTile){return false;}break;
+        }
+        return true;
+    }
+
+    private static int oneStep(Square[][] squareRoutes,int x,int y,int deepth, TypeTile typeTile,Direction getInDirection)
     {
 
-        SquareRoute squareRoute = squareRoutes[x][y];
+        Square square = squareRoutes[x][y];
 
+        if(!canGetIn(square,typeTile,getInDirection))
+        {
+            return deepth;
+        }
 
-        if(squareRoute.square.type== TypeSquare.WALL || squareRoute.square.type==TypeSquare.EXIT ||squareRoute.square.type==TypeSquare.EMPTY)
+        if(square.type== TypeSquare.WALL || square.type==TypeSquare.EXIT ||square.type==TypeSquare.EMPTY)
         {
             return deepth;
         }
         deepth=deepth+1;
-        List<Direction> accessDirections =getAccessDirection(squareRoute.square,typeTile,getInDirection);
+        List<Direction> accessDirections =getAccessDirection(square,typeTile,getInDirection);
         int maxDepth = deepth;
 
         int tmpDepth;
@@ -141,21 +145,20 @@ public class RouteUtil
         {
             switch (direction)
             {
-                case TOP: tmpDepth =oneStep(x-1,y,deepth,typeTile,Direction.TOP);
+                case TOP: tmpDepth =oneStep(squareRoutes,x-1,y,deepth,typeTile,Direction.TOP);
                     if(maxDepth<tmpDepth){maxDepth=tmpDepth;};
                     break;
-                case RIGHT:tmpDepth =oneStep(x,y+1,deepth,typeTile,Direction.RIGHT);
+                case RIGHT:tmpDepth =oneStep(squareRoutes,x,y+1,deepth,typeTile,Direction.RIGHT);
                     if(maxDepth<tmpDepth){maxDepth=tmpDepth;};
                     break;
-                case BOTTOM:tmpDepth =oneStep(x+1,y,deepth,typeTile,Direction.BOTTOM);
+                case BOTTOM:tmpDepth =oneStep(squareRoutes,x+1,y,deepth,typeTile,Direction.BOTTOM);
                     if(maxDepth<tmpDepth){maxDepth=tmpDepth;};
                     break;
-                case LEFT:tmpDepth =oneStep(x,y-1,deepth,typeTile,Direction.LEFT);
+                case LEFT:tmpDepth =oneStep(squareRoutes,x,y-1,deepth,typeTile,Direction.LEFT);
                     if(maxDepth<tmpDepth){maxDepth=tmpDepth;};
                     break;
             }
         }
-
         return maxDepth;
     }
 }

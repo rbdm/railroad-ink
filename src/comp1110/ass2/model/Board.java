@@ -378,8 +378,7 @@ public class Board
 
     public int getBonusScoring()
     {
-        RouteUtil routeUtil = new RouteUtil();
-        RouteUtil.SquareRoute[][] squareRoutes = routeUtil.FindSquareLongestRoute(map,MAX_HEIGHT,MAX_WITDH);
+        Square[][] squareRoutes = RouteUtil.FindSquareLongestRoute(map,MAX_HEIGHT,MAX_WITDH);
 
         int maxHighWayRouteLength = -1;
         int maxRailWayRouteLength = -1;
@@ -387,13 +386,13 @@ public class Board
         {
             for (int j=1;j<MAX_WITDH-1;j++)
             {
-                if(squareRoutes[i][j].longestRailWayLength>maxRailWayRouteLength)
+                if(squareRoutes[i][j].longestRailWayRouteLength>maxRailWayRouteLength)
                 {
-                    maxRailWayRouteLength = squareRoutes[i][j].longestRailWayLength;
+                    maxRailWayRouteLength = squareRoutes[i][j].longestRailWayRouteLength;
                 }
-                if(squareRoutes[i][j].longestHighWayLength>maxHighWayRouteLength)
+                if(squareRoutes[i][j].longestHighWayRouteLength>maxHighWayRouteLength)
                 {
-                    maxHighWayRouteLength = squareRoutes[i][j].longestHighWayLength;
+                    maxHighWayRouteLength = squareRoutes[i][j].longestHighWayRouteLength;
                 }
             }
         }

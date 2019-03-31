@@ -38,6 +38,10 @@ public class Square
      */
     public PositionPoint positionPoint=new PositionPoint(-1,-1);
 
+    public int longestRailWayRouteLength=-1;
+
+    public int longestHighWayRouteLength=-1;
+
 
     public Square(TypeTile top, TypeTile right, TypeTile bottom, TypeTile left, Boolean isOverpass, String name,TypeSquare type)
     {
