@@ -376,27 +376,32 @@ public class Board
         }
     }
 
+    /**
+     * get the bonus score.
+     *
+     * @return bonus score.
+     */
     public int getBonusScoring()
     {
-        Square[][] squareRoutes = RouteUtil.FindSquareLongestRoute(map,MAX_HEIGHT,MAX_WITDH);
+        Square[][] squareRoutes = RouteUtil.FindSquareLongestRoute(map, MAX_HEIGHT, MAX_WITDH);
 
-        int maxHighWayRouteLength = -1;
-        int maxRailWayRouteLength = -1;
-        for(int i=0;i<MAX_HEIGHT-1;i++)
+        int maxHighWayRouteLength = - 1;
+        int maxRailWayRouteLength = - 1;
+        for (int i = 0; i < MAX_HEIGHT - 1; i++)
         {
-            for (int j=1;j<MAX_WITDH-1;j++)
+            for (int j = 1; j < MAX_WITDH - 1; j++)
             {
-                if(squareRoutes[i][j].longestRailWayRouteLength>maxRailWayRouteLength)
+                if (squareRoutes[i][j].longestRailWayRouteLength > maxRailWayRouteLength)
                 {
                     maxRailWayRouteLength = squareRoutes[i][j].longestRailWayRouteLength;
                 }
-                if(squareRoutes[i][j].longestHighWayRouteLength>maxHighWayRouteLength)
+                if (squareRoutes[i][j].longestHighWayRouteLength > maxHighWayRouteLength)
                 {
                     maxHighWayRouteLength = squareRoutes[i][j].longestHighWayRouteLength;
                 }
             }
         }
-        return maxHighWayRouteLength+maxRailWayRouteLength;
+        return maxHighWayRouteLength + maxRailWayRouteLength;
 
     }
 
