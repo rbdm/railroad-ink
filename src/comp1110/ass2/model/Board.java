@@ -1,6 +1,7 @@
 package comp1110.ass2.model;
 
 
+import comp1110.ass2.util.RouteUtil;
 import javafx.scene.image.ImageView;
 
 import java.util.ArrayList;
@@ -360,6 +361,44 @@ public class Board
         int longestHighway = 0;
 
         return longestHighway;
+    }
+
+    /**
+     * put the placementString to map and javafx
+     * @param placementString placementString
+     */
+    public void putPlacementStringToMap(String placementString)
+    {
+        for(int i=0;i<placementString.length();i+=5)
+        {
+            Square square =getSquareFormSquareString(placementString.substring(i,i+5));
+            map[square.positionPoint.getX()][square.positionPoint.getY()] = square;
+        }
+    }
+
+    public int getBonusScoring()
+    {
+        RouteUtil routeUtil = new RouteUtil();
+        RouteUtil.SquareRoute[][] squareRoutes = routeUtil.FindSquareLongestRoute(map,MAX_HEIGHT,MAX_WITDH);
+
+        int maxHighWayRouteLength = -1;
+        int maxRailWayRouteLength = -1;
+        for(int i=0;i<MAX_HEIGHT-1;i++)
+        {
+            for (int j=1;j<MAX_WITDH-1;j++)
+            {
+                if(squareRoutes[i][j].longestRailWayLength>maxRailWayRouteLength)
+                {
+                    maxRailWayRouteLength = squareRoutes[i][j].longestRailWayLength;
+                }
+                if(squareRoutes[i][j].longestHighWayLength>maxHighWayRouteLength)
+                {
+                    maxHighWayRouteLength = squareRoutes[i][j].longestHighWayLength;
+                }
+            }
+        }
+        return maxHighWayRouteLength+maxRailWayRouteLength;
+
     }
 
 }

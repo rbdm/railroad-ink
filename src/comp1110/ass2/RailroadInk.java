@@ -176,7 +176,9 @@ public class RailroadInk {
      */
     public static int getAdvancedScore(String boardString) {
         // FIXME Task 12: compute the total score including bonus points
-        return -1;
+        Board board = new Board();
+        board.putPlacementStringToMap(boardString);
+        return board.getBonusScoring();
     }
 }
 
