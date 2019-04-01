@@ -383,7 +383,7 @@ public class Board
      */
     public int getBonusScoring()
     {
-        Square[][] squareRoutes = RouteUtil.FindSquareLongestRoute(map, MAX_HEIGHT, MAX_WITDH);
+        Square[][] squareRoutes = RouteUtil.findSquareLongestRoute(map, MAX_HEIGHT, MAX_WITDH);
 
         int maxHighWayRouteLength = - 1;
         int maxRailWayRouteLength = - 1;

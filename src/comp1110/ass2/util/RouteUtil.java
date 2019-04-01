@@ -4,8 +4,6 @@ import comp1110.ass2.model.PositionPoint;
 import comp1110.ass2.model.Square;
 import comp1110.ass2.model.TypeSquare;
 import comp1110.ass2.model.TypeTile;
-import javafx.geometry.Pos;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,7 +29,7 @@ public class RouteUtil
      * @param width  the map width
      * @return the map with longest highway and railway distance
      */
-    public static Square[][] FindSquareLongestRoute(Square[][] map, int height, int width)
+    public static Square[][] findSquareLongestRoute(Square[][] map, int height, int width)
     {
         Square[][] squares = new Square[height][width];
         for (int i = 0; i < height; i++)
@@ -213,6 +211,7 @@ public class RouteUtil
      * @param deepth         last square's deepth(route length)
      * @param typeTile       choosen tile type
      * @param getInDirection how to get in current square? top ....
+     * @param trackingList tracking list
      * @return current square's deepth(route length)
      */
     private static int oneStep(Square[][] squareRoutes, int x, int y, int deepth, TypeTile typeTile, Direction getInDirection, List<PositionPoint> trackingList)
@@ -251,7 +250,6 @@ public class RouteUtil
                     {
                         maxDepth = tmpDepth;
                     }
-                    ;
                     break;
                 case RIGHT:
                     tmpDepth = oneStep(squareRoutes, x, y + 1, deepth, typeTile, Direction.RIGHT,trackingList);
@@ -259,7 +257,6 @@ public class RouteUtil
                     {
                         maxDepth = tmpDepth;
                     }
-                    ;
                     break;
                 case BOTTOM:
                     tmpDepth = oneStep(squareRoutes, x + 1, y, deepth, typeTile, Direction.BOTTOM,trackingList);
@@ -267,7 +264,6 @@ public class RouteUtil
                     {
                         maxDepth = tmpDepth;
                     }
-                    ;
                     break;
                 case LEFT:
                     tmpDepth = oneStep(squareRoutes, x, y - 1, deepth, typeTile, Direction.LEFT,trackingList);
