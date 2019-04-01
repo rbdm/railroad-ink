@@ -31,6 +31,7 @@ public class RouteUtil
      */
     public static Square[][] findSquareLongestRoute(Square[][] map, int height, int width)
     {
+        //Intial map
         Square[][] squares = new Square[height][width];
         for (int i = 0; i < height; i++)
         {
@@ -39,7 +40,7 @@ public class RouteUtil
                 squares[i][j] = map[i][j];
             }
         }
-
+        // find each square's longest highway
         for (int i = 1; i < height - 1; i++)
         {
             for (int j = 1; j < width - 1; j++)
@@ -49,6 +50,7 @@ public class RouteUtil
                 squares[i][j].longestHighWayRouteLength = maxlength;
             }
         }
+        // find each square's longest railway
         for (int i = 1; i < height - 1; i++)
         {
             for (int j = 1; j < width - 1; j++)
@@ -218,23 +220,22 @@ public class RouteUtil
     {
 
         Square square = squareRoutes[x][y];
-
+        //can get in from the previous square's dirction?
         if (! canGetIn(square, typeTile, getInDirection))
         {
             return deepth;
         }
-
+        //is in loop?
         if(isLoop(square.positionPoint,trackingList))
         {
             return deepth;
         }
-        trackingList.add(square.positionPoint);
-
-
+        // do the track meet the wall
         if (square.type == TypeSquare.WALL || square.type == TypeSquare.EXIT || square.type == TypeSquare.EMPTY)
         {
             return deepth;
         }
+        trackingList.add(square.positionPoint);
         deepth = deepth + 1;
         List<Direction> accessDirections = getAccessDirection(square, typeTile, getInDirection);
         int maxDepth = deepth;

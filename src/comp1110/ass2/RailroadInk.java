@@ -96,7 +96,6 @@ public class RailroadInk {
         // FIXME Task 6: determine whether the given placement sequence is valid
         if ( ! isBoardStringWellFormed(boardString)) return false;
         Board board = new Board();
-
         for (int i = 0; i < boardString.length(); i += 5)
         {
             String tilePlacementStringA = boardString.substring(i, i + 5);
