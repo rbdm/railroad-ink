@@ -401,6 +401,7 @@ public class Board
                 }
             }
         }
+        //TODO : getBasicScore
         return maxHighWayRouteLength + maxRailWayRouteLength;
 
     }

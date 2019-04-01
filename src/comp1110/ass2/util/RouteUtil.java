@@ -1,8 +1,10 @@
 package comp1110.ass2.util;
 
+import comp1110.ass2.model.PositionPoint;
 import comp1110.ass2.model.Square;
 import comp1110.ass2.model.TypeSquare;
 import comp1110.ass2.model.TypeTile;
+import javafx.geometry.Pos;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,7 +46,8 @@ public class RouteUtil
         {
             for (int j = 1; j < width - 1; j++)
             {
-                int maxlength = oneStep(squares, i, j, 0, TypeTile.HIGHWAY, Direction.NONE);
+                ArrayList<PositionPoint> trackingList = new ArrayList<>();
+                int maxlength = oneStep(squares, i, j, 0, TypeTile.HIGHWAY, Direction.NONE,trackingList);
                 squares[i][j].longestHighWayRouteLength = maxlength;
             }
         }
@@ -52,7 +55,8 @@ public class RouteUtil
         {
             for (int j = 1; j < width - 1; j++)
             {
-                int maxlength = oneStep(squares, i, j, 0, TypeTile.RAILWAY, Direction.NONE);
+                ArrayList<PositionPoint> trackingList = new ArrayList<>();
+                int maxlength = oneStep(squares, i, j, 0, TypeTile.RAILWAY, Direction.NONE,trackingList);
                 squares[i][j].longestRailWayRouteLength = maxlength;
             }
         }
@@ -183,6 +187,17 @@ public class RouteUtil
         return true;
     }
 
+    private static boolean isLoop(PositionPoint curPositionPoint,List<PositionPoint>trackingList)
+    {
+        for(PositionPoint positionPoint : trackingList)
+        {
+            if(positionPoint.getX() == curPositionPoint.getX() && positionPoint.getY() == curPositionPoint.getY())
+            {
+                return true;
+            }
+        }
+        return false;
+    }
     /**
      * use deep-first method to find each square's longest railway and highway
      *
@@ -194,7 +209,7 @@ public class RouteUtil
      * @param getInDirection how to get in current square? top ....
      * @return current square's deepth(route length)
      */
-    private static int oneStep(Square[][] squareRoutes, int x, int y, int deepth, TypeTile typeTile, Direction getInDirection)
+    private static int oneStep(Square[][] squareRoutes, int x, int y, int deepth, TypeTile typeTile, Direction getInDirection, List<PositionPoint> trackingList)
     {
 
         Square square = squareRoutes[x][y];
@@ -203,6 +218,13 @@ public class RouteUtil
         {
             return deepth;
         }
+
+        if(isLoop(square.positionPoint,trackingList))
+        {
+            return deepth;
+        }
+        trackingList.add(square.positionPoint);
+
 
         if (square.type == TypeSquare.WALL || square.type == TypeSquare.EXIT || square.type == TypeSquare.EMPTY)
         {
@@ -218,7 +240,7 @@ public class RouteUtil
             switch (direction)
             {
                 case TOP:
-                    tmpDepth = oneStep(squareRoutes, x - 1, y, deepth, typeTile, Direction.TOP);
+                    tmpDepth = oneStep(squareRoutes, x - 1, y, deepth, typeTile, Direction.TOP,trackingList);
                     if (maxDepth < tmpDepth)
                     {
                         maxDepth = tmpDepth;
@@ -226,7 +248,7 @@ public class RouteUtil
                     ;
                     break;
                 case RIGHT:
-                    tmpDepth = oneStep(squareRoutes, x, y + 1, deepth, typeTile, Direction.RIGHT);
+                    tmpDepth = oneStep(squareRoutes, x, y + 1, deepth, typeTile, Direction.RIGHT,trackingList);
                     if (maxDepth < tmpDepth)
                     {
                         maxDepth = tmpDepth;
@@ -234,7 +256,7 @@ public class RouteUtil
                     ;
                     break;
                 case BOTTOM:
-                    tmpDepth = oneStep(squareRoutes, x + 1, y, deepth, typeTile, Direction.BOTTOM);
+                    tmpDepth = oneStep(squareRoutes, x + 1, y, deepth, typeTile, Direction.BOTTOM,trackingList);
                     if (maxDepth < tmpDepth)
                     {
                         maxDepth = tmpDepth;
@@ -242,7 +264,7 @@ public class RouteUtil
                     ;
                     break;
                 case LEFT:
-                    tmpDepth = oneStep(squareRoutes, x, y - 1, deepth, typeTile, Direction.LEFT);
+                    tmpDepth = oneStep(squareRoutes, x, y - 1, deepth, typeTile, Direction.LEFT,trackingList);
                     if (maxDepth < tmpDepth)
                     {
                         maxDepth = tmpDepth;
@@ -250,6 +272,7 @@ public class RouteUtil
                     break;
             }
         }
+        trackingList.remove(trackingList.size()-1);
         return maxDepth;
     }
 }
