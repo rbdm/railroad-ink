@@ -12,7 +12,6 @@ public class Tile {
 
     public Tile()
     {
-        //TODO Hao do S0-S5, Hadi do A0-A5, Yue do B0-B2
         addSquareS();
         addSquareA();
         addSquareB();
