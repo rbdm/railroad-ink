@@ -187,6 +187,12 @@ public class RouteUtil
         return true;
     }
 
+    /**
+     * check if there is a loop in game
+     * @param curPositionPoint current square position
+     * @param trackingList tracking list
+     * @return is Loop
+     */
     private static boolean isLoop(PositionPoint curPositionPoint,List<PositionPoint>trackingList)
     {
         for(PositionPoint positionPoint : trackingList)
