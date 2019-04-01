@@ -1,9 +1,13 @@
 package comp1110.ass2;
 
 import comp1110.ass2.model.Board;
+import comp1110.ass2.model.Square;
+import comp1110.ass2.util.ExitUtil;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.Timeout;
+
+import java.util.List;
 
 /**
  * User: u6613739
@@ -23,4 +27,5 @@ public class OurTest
         //board.putPlacementStringToMap("A4A10B2B10");
         board.getBonusScoring();
     }
+
 }
