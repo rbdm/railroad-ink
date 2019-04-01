@@ -59,17 +59,29 @@ public class Board
         }
         //set exits
         map[0][2] = new Square(TypeTile.BLOCK, TypeTile.BLOCK, TypeTile.HIGHWAY, TypeTile.BLOCK, false, "H", TypeSquare.EXIT);
+        map[0][2].positionPoint=new PositionPoint(0,2);
         map[0][4] = new Square(TypeTile.BLOCK, TypeTile.BLOCK, TypeTile.RAILWAY, TypeTile.BLOCK, false, "R", TypeSquare.EXIT);
+        map[0][4].positionPoint=new PositionPoint(0,4);
         map[0][6] = new Square(TypeTile.BLOCK, TypeTile.BLOCK, TypeTile.HIGHWAY, TypeTile.BLOCK, false, "H", TypeSquare.EXIT);
+        map[0][6].positionPoint=new PositionPoint(0,6);
         map[MAX_HEIGHT - 1][2] = new Square(TypeTile.HIGHWAY, TypeTile.BLOCK, TypeTile.BLOCK, TypeTile.BLOCK, false, "H", TypeSquare.EXIT);
+        map[MAX_HEIGHT - 1][2].positionPoint=new PositionPoint(MAX_HEIGHT - 1,2);
         map[MAX_HEIGHT - 1][4] = new Square(TypeTile.RAILWAY, TypeTile.BLOCK, TypeTile.BLOCK, TypeTile.BLOCK, false, "R", TypeSquare.EXIT);
+        map[MAX_HEIGHT - 1][4].positionPoint=new PositionPoint(MAX_HEIGHT - 1,4);
         map[MAX_HEIGHT - 1][6] = new Square(TypeTile.HIGHWAY, TypeTile.BLOCK, TypeTile.BLOCK, TypeTile.BLOCK, false, "H", TypeSquare.EXIT);
+        map[MAX_HEIGHT - 1][6].positionPoint=new PositionPoint(MAX_HEIGHT - 1,6);
         map[2][0] = new Square(TypeTile.BLOCK, TypeTile.RAILWAY, TypeTile.BLOCK, TypeTile.BLOCK, false, "R", TypeSquare.EXIT);
+        map[2][0].positionPoint=new PositionPoint(2,0);
         map[4][0] = new Square(TypeTile.BLOCK, TypeTile.HIGHWAY, TypeTile.BLOCK, TypeTile.BLOCK, false, "H", TypeSquare.EXIT);
+        map[4][0].positionPoint=new PositionPoint(4,0);
         map[6][0] = new Square(TypeTile.BLOCK, TypeTile.RAILWAY, TypeTile.BLOCK, TypeTile.BLOCK, false, "R", TypeSquare.EXIT);
+        map[6][0].positionPoint=new PositionPoint(6,0);
         map[2][MAX_WITDH - 1] = new Square(TypeTile.BLOCK, TypeTile.BLOCK, TypeTile.BLOCK, TypeTile.RAILWAY, false, "R", TypeSquare.EXIT);
+        map[2][MAX_WITDH - 1].positionPoint=new PositionPoint(2,MAX_WITDH - 1);
         map[4][MAX_WITDH - 1] = new Square(TypeTile.BLOCK, TypeTile.BLOCK, TypeTile.BLOCK, TypeTile.HIGHWAY, false, "H", TypeSquare.EXIT);
+        map[4][MAX_WITDH - 1].positionPoint=new PositionPoint(4,MAX_WITDH - 1);
         map[6][MAX_WITDH - 1] = new Square(TypeTile.BLOCK, TypeTile.BLOCK, TypeTile.BLOCK, TypeTile.RAILWAY, false, "R", TypeSquare.EXIT);
+        map[6][MAX_WITDH - 1].positionPoint=new PositionPoint(6,MAX_WITDH - 1);
 
     }
 
