@@ -385,6 +385,7 @@ public class Board
         {
             Square square =getSquareFormSquareString(placementString.substring(i,i+5));
             map[square.positionPoint.getX()][square.positionPoint.getY()] = square;
+            map[square.positionPoint.getX()][square.positionPoint.getY()].type=TypeSquare.TILE;
         }
     }
 
