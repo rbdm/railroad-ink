@@ -35,11 +35,10 @@ public class ExitUtil {
     }
 
     /**
-     *
+     * return the score about number of exits in one route
      * @param map
-     * @return
+     * @return score
      */
-
     public static int getExitScore(Square[][] map){
         List<List<Square>> exitCluster =new ArrayList<>();
         List<Square> allExit = new ArrayList<>();
@@ -75,6 +74,11 @@ public class ExitUtil {
 
     }
 
+    /**
+     * @param number of exit in one route
+     * @return the score of this route
+     */
+
     public static int exitScoreTable(int number){
         switch (number){
             case 2: return 4 ;
@@ -92,12 +96,13 @@ public class ExitUtil {
         }
 
     }
+
     /**
      * input an exit A and return all other exit that are on the same mix-type route with A
-     *
      * @param exit
      * @return a list of all the exit that are connected with A
      */
+
     public static List<Square> getConnectedExit(Square exit, Square[][] map) {
         if (getConnectedNeighbour(exit, map, TypeTile.BLOCK).isEmpty() == true) {
             return new ArrayList<>();
@@ -126,7 +131,6 @@ public class ExitUtil {
 
     /**
      * if the square have connected neighbours return it, if don't just return null
-     *
      * @param square
      * @param map
      * @return neighbour square of this Square
@@ -203,6 +207,12 @@ public class ExitUtil {
         }
     }
 
+    /**
+     * return the type of connection of two squares
+     * @param A
+     * @param B
+     * @return TypeTile.Railway or TypeTile.Highway
+     */
     public static TypeTile conType(Square A, Square B) {
         if (areConSquares(A, B) == 'n') {
             return null;
@@ -227,6 +237,14 @@ public class ExitUtil {
     }
 
 
+    /**
+     *
+     * @Square s
+     * @param map
+     * @Square lastIn  the square from which we come into this square
+     * @param alreadyGet the list of squares we already know that is in this route
+     * @return all the squares that in this route
+     */
     public static List<Square> allRoute(Square s, Square[][] map, Square lastIn, List<Square> alreadyGet)
     {
         List<Square> answer = new ArrayList<>();
@@ -262,7 +280,12 @@ public class ExitUtil {
 
     }
 
-
+    /**
+     * judge if A and B are connectedSquares
+     * @param A
+     * @param B
+     * @return if A and B are connectedSquares
+     */
 
     public static char areConSquares(Square A, Square B) {
         int rowA = A.positionPoint.getX();
@@ -302,7 +325,11 @@ public class ExitUtil {
         }
     }
 
-
+    /**
+     * get the score about center squares that covered by tile
+     * @param map
+     * @return score of center tiles
+     */
     public static int getCenterScore(Square[][] map){
         int cs=0;
         for (Square s: centerList(map)){
@@ -313,6 +340,11 @@ public class ExitUtil {
         return cs;
     }
 
+    /**
+     * get squares that are located in CENTER from a map
+     * @param map
+     * @return
+     */
     public static List<Square> centerList(Square[][] map){
         List<Square> center = new ArrayList<>();
         for (int i=3;i<6;i++){
@@ -323,6 +355,11 @@ public class ExitUtil {
         return center;
     }
 
+    /**
+     * get scores that need to be deducted from basic score for error
+     * @param map
+     * @return error scores
+     */
     public static int getErrorScore(Square[][] map){
         int es=0;
         for (int i=1;i<map.length-1;i++) {
@@ -345,6 +382,14 @@ public class ExitUtil {
         return es;
     }
 
+    /**
+     * give a direction (e.g. 't' for top), see if there is an error on the top of square s,
+     * if so return 1, 0 otherwise
+     * @param square
+     * @param map
+     * @param direction
+     * @return 1 or 0
+     */
     public static int errorPoint(Square square, Square[][] map, char direction){
         if (square.type==TypeSquare.TILE){
             Square upS = map[square.positionPoint.getX() - 1][square.positionPoint.getY()];
