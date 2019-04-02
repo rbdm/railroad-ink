@@ -16,19 +16,22 @@ public class ExitUtil {
     public static void main(String[] args) {
         Board board = new Board();
 
-        board.putPlacementStringToMap("A3D61A3D53B0C52A0B52A2B63A4D41B0E60A0F61A3D31A3D23A2G30B0F34A3E32A1B01B2B10A1B21A0A63A4D01A1G41B0G12S2D10A4C10B2A10A2B33A1A30S4E11A4E21A3C21A3C31S5F11");
+        board.putPlacementStringToMap("A3A10A3A52A3G10B2F10S1B50A2B61A0C60A1B41B1A35A4A41A2B31A1C30B0D32A2C50A4E10A3D12B2B10A2F01A0G00A4D01B1A27S3B20A4C10A1D50A0F23B2G25A3E30A4E41");
         Square[][] map = board.getMap();
-        List<Square> X = ExitUtil.getConnectedExit(map[2][0],map);
-        int xx=getExitScore(map);
-        System.out.println(xx);
-        //List<Square> X = ExitUtil.getConnectedNeighbour(map[2][2],map,TypeTile.BLOCK);
-        //List<Square> X = ExitUtil.allRoute(map[1][2], map, map[0][2], new ArrayList<>());
+        //List<Square> X = ExitUtil.getConnectedExit(map[0][2],map);
+        //int xxex = getExitScore(map);
+        //int xxer=getErrorScore(map);
+        //int xxce=getCenterScore(map);
+        //System.out.print(xxex+","+xxer+","+xxce);
+        //List<Square> X = ExitUtil.getConnectedNeighbour(map[0][2],map,TypeTile.BLOCK);
+        List<Square> X = ExitUtil.allRoute(map[1][2], map, map[0][2], new ArrayList<>());
         //System.out.println(conType(map[2][2],map[2][1]));
         //System.out.println(map[0][2].positionPoint.getY());
         for (Square i : X) {
             System.out.print("[" + i.positionPoint.getX() + "," + i.positionPoint.getY() + "]");
         }
         System.out.println();
+
     }
 
     /**
@@ -38,15 +41,36 @@ public class ExitUtil {
      */
 
     public static int getExitScore(Square[][] map){
-        List<Square> exitList =new ArrayList<>();
+        List<List<Square>> exitCluster =new ArrayList<>();
+        List<Square> allExit = new ArrayList<>();
         int Score=0;
         for (int i=0;i<map.length;i++){
             for (int j=0;j<map[0].length;j++){
                 if (map[i][j].type==TypeSquare.EXIT){
-                    exitList.add(map[i][j]);
+                    allExit.add(map[i][j]);
                 }
             }
         }
+        exitCluster.add(allExit);
+        for(Square i : exitCluster.get(0)){
+            boolean ct=false;
+            for (int index=1;index<exitCluster.size();index++){
+                if (exitCluster.get(index).contains(i)){
+                    ct = true;
+                }
+            }
+            if (ct==true){break;}
+            else {
+                List<Square> nb=getConnectedExit(i,map);
+                exitCluster.add(nb);
+            }
+
+        }
+        exitCluster.remove(0);
+        for (List l :exitCluster){
+            Score+=exitScoreTable(l.size());
+        }
+
         return Score;
 
     }
@@ -79,7 +103,7 @@ public class ExitUtil {
             return new ArrayList<>();
         } else {
             TypeTile lastIn;
-            if (exit.name.equals("  R  ")) {
+            if (exit.name.equals("R")) {
                 lastIn = TypeTile.RAILWAY;
             } else {
                 lastIn = TypeTile.HIGHWAY;
@@ -276,6 +300,89 @@ public class ExitUtil {
         } else {
             return 'n';
         }
+    }
+
+
+    public static int getCenterScore(Square[][] map){
+        int cs=0;
+        for (Square s: centerList(map)){
+            if (s.type==TypeSquare.TILE){
+                cs+=1;
+            }
+        }
+        return cs;
+    }
+
+    public static List<Square> centerList(Square[][] map){
+        List<Square> center = new ArrayList<>();
+        for (int i=3;i<6;i++){
+            for (int j=3;j<6;j++) {
+                center.add(map[i][j]);
+            }
+        }
+        return center;
+    }
+
+    public static int getErrorScore(Square[][] map){
+        int es=0;
+        for (int i=1;i<map.length-1;i++) {
+            for (int j=1;j<map[0].length-1;j++){
+                int topEr = errorPoint(map[i][j],map,'t');
+                int rightEr = errorPoint(map[i][j],map,'r');
+                int bottomEr = errorPoint(map[i][j],map,'b');
+                int leftEr = errorPoint(map[i][j],map,'l');
+
+                int totalEr = topEr+rightEr+bottomEr+leftEr;
+
+                if (i==1){totalEr=totalEr-topEr;}
+                if (i == map.length - 2) { totalEr=totalEr-bottomEr;}
+                if (j==1) {totalEr=totalEr-leftEr;}
+                if (j==map[0].length-2){totalEr=totalEr-rightEr;}
+                es=es+totalEr;
+
+            }
+        }
+        return es;
+    }
+
+    public static int errorPoint(Square square, Square[][] map, char direction){
+        if (square.type==TypeSquare.TILE){
+            Square upS = map[square.positionPoint.getX() - 1][square.positionPoint.getY()];
+            Square rightS = map[square.positionPoint.getX()][square.positionPoint.getY() + 1];
+            Square downS = map[square.positionPoint.getX() + 1][square.positionPoint.getY()];
+            Square leftS = map[square.positionPoint.getX()][square.positionPoint.getY() - 1];
+            if (direction=='t'){
+                //check if has ERROR POINT on TOP
+                if (square.top!=TypeTile.BLOCK && upS.bottom==TypeTile.BLOCK){
+                    return 1;
+                }
+                else {return 0;}
+            }
+            else if (direction=='r'){
+                //check if has ERROR POINT on Right
+                if (square.right!=TypeTile.BLOCK && rightS.left==TypeTile.BLOCK){
+                    return 1;
+                }
+                else {return 0; }
+            }
+            else if (direction=='b'){
+                //check if has ERROR POINT on bottom
+                if (square.bottom!=TypeTile.BLOCK && downS.top==TypeTile.BLOCK){
+                    return 1;
+                }
+                else {return 0; }
+            }
+            else if(direction=='l'){
+                //check if has ERROR POINT on Left
+                if (square.left!=TypeTile.BLOCK && leftS.right==TypeTile.BLOCK){
+                    return 1;
+                }
+                else {return 0; }
+            }
+            else {return 0;}
+        }
+        else {return 0;}
+
     }
 
 

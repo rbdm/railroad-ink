@@ -150,7 +150,10 @@ public class RailroadInk {
      */
     public static int getBasicScore(String boardString) {
         // FIXME Task 8: compute the basic score
-        return -1;
+        Board board = new Board();
+        board.putPlacementStringToMap(boardString);
+        int x = board.getBasicScoring();
+        return x;
     }
 
     /**

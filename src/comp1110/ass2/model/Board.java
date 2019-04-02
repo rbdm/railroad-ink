@@ -1,6 +1,7 @@
 package comp1110.ass2.model;
 
 
+import comp1110.ass2.util.ExitUtil;
 import comp1110.ass2.util.RouteUtil;
 import javafx.scene.image.ImageView;
 
@@ -418,6 +419,13 @@ public class Board
         //TODO : getBasicScore
         return maxHighWayRouteLength + maxRailWayRouteLength;
 
+    }
+
+    public int getBasicScoring(){
+        int bs=0;
+        Square[][] m =this.map;
+        bs=ExitUtil.getExitScore(m)+ExitUtil.getCenterScore(m)-ExitUtil.getErrorScore(m);//todo:center and error
+        return bs;
     }
 
 }
