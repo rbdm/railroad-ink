@@ -7,9 +7,7 @@ import comp1110.ass2.model.Square;
 import comp1110.ass2.model.TypeSquare;
 import comp1110.ass2.model.TypeTile;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
 public class ExitUtil {
 
@@ -19,10 +17,10 @@ public class ExitUtil {
         board.putPlacementStringToMap("A3A10A3A52A3G10B2F10S1B50A2B61A0C60A1B41B1A35A4A41A2B31A1C30B0D32A2C50A4E10A3D12B2B10A2F01A0G00A4D01B1A27S3B20A4C10A1D50A0F23B2G25A3E30A4E41");
         Square[][] map = board.getMap();
         List<Square> X = ExitUtil.getConnectedExit(map[0][2],map);
-        //int xxex = getExitScore(map);
-        //int xxer=getErrorScore(map);
-        //int xxce=getCenterScore(map);
-        //System.out.print(xxex+","+xxer+","+xxce);
+        int xxex = getExitScore(map);
+        int xxer=getErrorScore(map);
+        int xxce=getCenterScore(map);
+        System.out.print(xxex+","+xxer+","+xxce);
         //List<Square> X = ExitUtil.getConnectedNeighbour(map[0][2],map,TypeTile.BLOCK);
         //List<Square> X = ExitUtil.allRoute(map[1][2], map, map[0][2], new ArrayList<>());
         //System.out.println(conType(map[2][2],map[2][1]));
@@ -50,28 +48,27 @@ public class ExitUtil {
                 }
             }
         }
-        exitCluster.add(allExit);
-        for(Square i : exitCluster.get(0)){
-            boolean ct=false;
-            for (int index=1;index<exitCluster.size();index++){
-                if (exitCluster.get(index).contains(i)){
-                    ct = true;
-                }
-            }
-            if (ct==true){break;}
-            else {
-                List<Square> nb=getConnectedExit(i,map);
-                exitCluster.add(nb);
+        List<Square> firstRoute = getConnectedExit(allExit.get(0),map);
+        exitCluster.add(firstRoute);
+        for (Square s: allExit){
+            if (isInCluster(s,exitCluster)==false){
+                exitCluster.add(getConnectedExit(s,map));
             }
 
         }
-        exitCluster.remove(0);
-        for (List l :exitCluster){
-            Score+=exitScoreTable(l.size());
+        for (List list:exitCluster){
+            Score+=exitScoreTable(list.size());
         }
 
         return Score;
 
+    }
+
+    private static boolean isInCluster(Square s, List<List<Square>> list ){
+        for (List<Square> route:list){
+            if (route.contains(s)){return true;}
+        }
+        return false;
     }
 
     /**
