@@ -239,9 +239,9 @@ public class ExitUtil {
 
     /**
      *
-     * @Square s
-     * @param map
-     * @Square lastIn  the square from which we come into this square
+     * @param  s  Square s
+     * @param map the map
+     * @param  lastIn  the square from which we come into this square
      * @param alreadyGet the list of squares we already know that is in this route
      * @return all the squares that in this route
      */
@@ -251,21 +251,21 @@ public class ExitUtil {
         Square squareNow=s;
         Square squareLast = lastIn;
 
-        if (alreadyGet.contains(squareNow) == false) {
+        if (!alreadyGet.contains(squareNow)) {
             alreadyGet.add(squareNow);
         }
-        if (alreadyGet.contains(squareLast) == false) {
+        if (!alreadyGet.contains(squareLast)) {
             alreadyGet.add(squareLast);
         }
         List<Square> neighbour = getConnectedNeighbour(squareNow, map, conType(squareLast,squareNow));
         List<Square> removeList = new ArrayList<>();
         for (Square i : neighbour) {
-            if (alreadyGet.contains(i) == true) {
+            if (alreadyGet.contains(i)) {
                 removeList.add(i);
             }
         }
         neighbour.removeAll(removeList);
-        if (neighbour.isEmpty() == true) {
+        if (neighbour.isEmpty()) {
             return alreadyGet;
         } else{
             for (Square element : neighbour){
@@ -282,8 +282,8 @@ public class ExitUtil {
 
     /**
      * judge if A and B are connectedSquares
-     * @param A
-     * @param B
+     * @param A  Square A
+     * @param B  Square B
      * @return if A and B are connectedSquares
      */
 
