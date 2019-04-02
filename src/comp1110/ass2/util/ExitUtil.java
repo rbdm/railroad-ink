@@ -18,13 +18,13 @@ public class ExitUtil {
 
         board.putPlacementStringToMap("A3A10A3A52A3G10B2F10S1B50A2B61A0C60A1B41B1A35A4A41A2B31A1C30B0D32A2C50A4E10A3D12B2B10A2F01A0G00A4D01B1A27S3B20A4C10A1D50A0F23B2G25A3E30A4E41");
         Square[][] map = board.getMap();
-        //List<Square> X = ExitUtil.getConnectedExit(map[0][2],map);
+        List<Square> X = ExitUtil.getConnectedExit(map[0][2],map);
         //int xxex = getExitScore(map);
         //int xxer=getErrorScore(map);
         //int xxce=getCenterScore(map);
         //System.out.print(xxex+","+xxer+","+xxce);
         //List<Square> X = ExitUtil.getConnectedNeighbour(map[0][2],map,TypeTile.BLOCK);
-        List<Square> X = ExitUtil.allRoute(map[1][2], map, map[0][2], new ArrayList<>());
+        //List<Square> X = ExitUtil.allRoute(map[1][2], map, map[0][2], new ArrayList<>());
         //System.out.println(conType(map[2][2],map[2][1]));
         //System.out.println(map[0][2].positionPoint.getY());
         for (Square i : X) {
@@ -247,17 +247,14 @@ public class ExitUtil {
      */
     public static List<Square> allRoute(Square s, Square[][] map, Square lastIn, List<Square> alreadyGet)
     {
-        List<Square> answer = new ArrayList<>();
-        Square squareNow=s;
-        Square squareLast = lastIn;
 
-        if (!alreadyGet.contains(squareNow)) {
-            alreadyGet.add(squareNow);
+        if (!alreadyGet.contains(s)) {
+            alreadyGet.add(s);
         }
-        if (!alreadyGet.contains(squareLast)) {
-            alreadyGet.add(squareLast);
+        if (!alreadyGet.contains(lastIn)) {
+            alreadyGet.add(lastIn);
         }
-        List<Square> neighbour = getConnectedNeighbour(squareNow, map, conType(squareLast,squareNow));
+        List<Square> neighbour = getConnectedNeighbour(s, map, conType(s,lastIn));
         List<Square> removeList = new ArrayList<>();
         for (Square i : neighbour) {
             if (alreadyGet.contains(i)) {
@@ -267,17 +264,24 @@ public class ExitUtil {
         neighbour.removeAll(removeList);
         if (neighbour.isEmpty()) {
             return alreadyGet;
-        } else{
+        }
+        else{
             for (Square element : neighbour){
-                squareLast=squareNow;
-                squareNow=element;
-                for(Square i:allRoute(squareNow,map,squareLast,alreadyGet)){
-                    if (answer.contains(i)==false){answer.add(i);}
+                Square squareLast=s;
+                Square squareNow=element;
+                alreadyGet.add(element);
+            }
+            for (Square element:neighbour){
+                List<Square> nbnb = allRoute(element,map,s,alreadyGet);
+                for (Square i:nbnb){
+                    if (!alreadyGet.contains(i)){
+                        alreadyGet.add(i);
+                    }
                 }
             }
-        }
-        return answer;
 
+        }
+        return alreadyGet;
     }
 
     /**
@@ -292,8 +296,6 @@ public class ExitUtil {
         int colA = A.positionPoint.getY();
         int rowB = B.positionPoint.getX();
         int colB = B.positionPoint.getY();
-        //determine whether A and B are neighbours
-
         if (rowA == rowB && colB - colA == 1) { //A is on the left of B
             if (A.right == B.left && A.right != TypeTile.BLOCK) {
                 return 'l';
