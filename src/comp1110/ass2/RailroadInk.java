@@ -42,8 +42,8 @@ public class RailroadInk {
      */
     public static boolean isBoardStringWellFormed(String boardString) {
         // FIXME Task 3: determine whether a board string is well-formed
-        if (boardString == null || boardString.length() == 0 || boardString.length() % 5 != 0) return false;
-        int specialTileLimit = 2;
+        if (boardString == null || boardString.length() == 0 || boardString.length() % 5 != 0 || boardString.length() > (5*31)) return false;
+        int specialTileLimit = 3;
         for (int i = 0; i < boardString.length(); i += 5)
         {
             String tilePlacementString = boardString.substring(i, i + 5);
@@ -51,7 +51,7 @@ public class RailroadInk {
             else if (tilePlacementString.charAt(0) == 'S')
             {
                 specialTileLimit -= 1;
-                if (specialTileLimit < 0) return false;
+                if (specialTileLimit <= 0) return false;
             }
         }
         return true;
@@ -107,6 +107,7 @@ public class RailroadInk {
                 if (board.areConnectedSquares(tilePlacementStringA, tilePlacementStringB)) connected = true;
             }
             if ( ! connected) return false;
+
         }
         return true;
     }
