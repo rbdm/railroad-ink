@@ -291,7 +291,7 @@ public class ExitUtil {
                     }
                     for (Square ss:getConnectedNeighbour(i,map,oppo)){
                         if (alreadyGet.contains(ss)){
-                            i.isOverpass=false;
+                            i.connectedByTwoWay=true;
                         }
                     }
                     removeList.add(i);
