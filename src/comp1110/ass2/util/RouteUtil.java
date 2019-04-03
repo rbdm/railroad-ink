@@ -205,7 +205,7 @@ public class RouteUtil
         return false;
     }
     /**
-     * use deep-first method to find each square's longest railway and highway
+     * use deep-first method to find each square's longest railway or highway
      *
      * @param squareRoutes   all squares
      * @param x              current square x

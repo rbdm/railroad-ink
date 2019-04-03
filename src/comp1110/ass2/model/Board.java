@@ -378,20 +378,6 @@ public class Board
     }
 
     /**
-     * put the placementString to map and javafx
-     * @param placementString placementString
-     */
-    public void putPlacementStringToMap(String placementString)
-    {
-        for(int i=0;i<placementString.length();i+=5)
-        {
-            Square square =getSquareFormSquareString(placementString.substring(i,i+5));
-            map[square.positionPoint.getX()][square.positionPoint.getY()] = square;
-
-        }
-    }
-
-    /**
      * get the bonus score.
      *
      * @return bonus score.
@@ -419,6 +405,20 @@ public class Board
         //TODO : getBasicScore
         return maxHighWayRouteLength + maxRailWayRouteLength;
 
+    }
+
+    /**
+     * put the placementString to map and javafx
+     * @param placementString placementString
+     */
+    public void putPlacementStringToMap(String placementString)
+    {
+        for(int i=0;i<placementString.length();i+=5)
+        {
+            Square square =getSquareFormSquareString(placementString.substring(i,i+5));
+            map[square.positionPoint.getX()][square.positionPoint.getY()] = square;
+
+        }
     }
 
     public int getBasicScoring(){
