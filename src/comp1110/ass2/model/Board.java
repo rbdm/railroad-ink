@@ -424,7 +424,7 @@ public class Board
     public int getBasicScoring(){
         int bs=0;
         Square[][] m =this.map;
-        bs=ExitUtil.getExitScore(m)+ExitUtil.getCenterScore(m)-ExitUtil.getErrorScore(m);//todo:center and error
+        bs=ExitUtil.getExitScore(m)+ExitUtil.getCenterScore(m)-ExitUtil.getErrorScore(m);
         return bs;
     }
 
