@@ -183,7 +183,7 @@ public class RailroadInk {
         // FIXME Task 12: compute the total score including bonus points
         Board board = new Board();
         board.putPlacementStringToMap(boardString);
-        return board.getBonusScoring()+board.getBasicScoring();
+        return board.getBonusScoring();
     }
 }
 

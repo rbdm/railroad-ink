@@ -402,8 +402,7 @@ public class Board
                 }
             }
         }
-        //TODO : getBasicScore
-        return maxHighWayRouteLength + maxRailWayRouteLength;
+        return maxHighWayRouteLength + maxRailWayRouteLength+getBasicScoring();
 
     }
 
@@ -423,7 +422,7 @@ public class Board
 
     public int getBasicScoring(){
         int bs=0;
-        Square[][] m =this.map;
+        Square[][] m =this.map.clone();
         bs=ExitUtil.getExitScore(m)+ExitUtil.getCenterScore(m)-ExitUtil.getErrorScore(m);
         return bs;
     }
