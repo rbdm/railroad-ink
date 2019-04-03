@@ -3,6 +3,7 @@ package comp1110.ass2.gui;
 import comp1110.ass2.model.Board;
 import comp1110.ass2.model.Square;
 import comp1110.ass2.model.TypeTile;
+import comp1110.ass2.util.GuiUtil;
 import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Node;
@@ -12,6 +13,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.Border;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
@@ -41,130 +43,14 @@ public class Viewer extends Application {
     void makePlacement(String placement)
     {
         // FIXME Task 4: implement the simple placement viewer
-        //        if (RailroadInk.isBoardStringWellFormed(placement) == false)
-        //        {
-        //            return;
-        //        }
-        BorderPane mapPanel = new BorderPane();
-        Board board = new Board();
-        for (Node node : controls.getChildren())
-        {
-            if (node.getClass().equals(BorderPane.class))
-            {
-                controls.getChildren().remove(node);
-                break;
-            }
-        }
-        controls.getChildren().add(mapPanel);
-
-        for (int i = 0; i < 9; i++)
-        {
-            for (int j = 0; j < 9; j++)
-            {
-                Square square = board.getMap()[i][j];
-                String name = URI_BASE + "WALL.png";
-                switch (square.type)
-                {
-                    case EXIT:
-                        if (square.top == TypeTile.RAILWAY || square.left == TypeTile.RAILWAY || square.right == TypeTile.RAILWAY || square.bottom == TypeTile.RAILWAY)
-                        {
-                            name = URI_BASE + "RailExit.png";
-                        }
-                        else if (square.top == TypeTile.HIGHWAY || square.left == TypeTile.HIGHWAY || square.right == TypeTile.HIGHWAY || square.bottom == TypeTile.HIGHWAY)
-                        {
-                            {
-                                name = URI_BASE + "HighExit.png";
-                            }
-                        }
-                        break;
-                    case WALL:
-                        name = URI_BASE + "WALL.png";
-                        break;
-                    case EMPTY:
-                        name = URI_BASE + "EMPTY.png";
-                        break;
-                    default:
-                        name = URI_BASE + "Board.jpg";
-                        break;
-                }
-                Image image = new Image(this.getClass().getResource("") + name);
-                ImageView imageView = new ImageView(image);
-                imageView.setX(j * 80);
-                imageView.setY(i * 80);
-                imageView.setFitHeight(80);
-                imageView.setFitWidth(80);
-
-                if (square.top != TypeTile.BLOCK)
-                {
-                    imageView.setRotate(0);
-                }
-                else if (square.left != TypeTile.BLOCK)
-                {
-                    imageView.setRotate(270);
-                }
-                else if (square.bottom != TypeTile.BLOCK)
-                {
-                    imageView.setRotate(180);
-                }
-                else if (square.right != TypeTile.BLOCK)
-                {
-                    imageView.setRotate(90);
-                }
-                board.imageViews[i][j] = imageView;
-                mapPanel.getChildren().add(imageView);
-            }
-        }
-        //check placement
-        for (int i = 0; i < placement.length(); i += 5)
-        {
-            String squareString = placement.substring(i, i + 5);
-            Square square = board.getSquareFormSquareString(squareString);
-
-            Image image = new Image(this.getClass().getResource("") + URI_BASE + squareString.substring(0, 2) + ".png");
-            ImageView imageView = board.imageViews[square.positionPoint.getX()][square.positionPoint.getY()];
-            imageView.setImage(image);
-
-            switch (squareString.charAt(4))
-            {
-                case '0':
-                    imageView.setRotate(0);
-                    imageView.setScaleX(1);
-                    break;
-                case '1':
-                    imageView.setRotate(90);
-                    imageView.setScaleX(1);
-                    break;
-                case '2':
-                    imageView.setRotate(180);
-                    imageView.setScaleX(1);
-                    break;
-                case '3':
-                    imageView.setRotate(270);
-                    imageView.setScaleX(1);
-                    break;
-                case '4':
-                    imageView.setRotate(0);
-                    imageView.setScaleX(- 1);
-                    break;
-                case '5':
-                    imageView.setRotate(90);
-                    imageView.setScaleX(- 1);
-                    break;
-                case '6':
-                    imageView.setRotate(180);
-                    imageView.setScaleX(- 1);
-                    break;
-                case '7':
-                    imageView.setRotate(270);
-                    imageView.setScaleX(- 1);
-                    break;
-            }
-
-
-        }
-
+        BorderPane borderPane = new BorderPane();
+        Board border = new Board();
+        BorderPane mapPanel = GuiUtil.updateGuiByPlacementString(borderPane,border,placement,this.getClass().getResource("")+URI_BASE);
+        GuiUtil.cleanCanvas(root);
+        root.getChildren().add(mapPanel);
 
     }
+
 
     /**
      * Create a basic text field for input and a refresh button.

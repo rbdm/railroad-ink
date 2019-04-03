@@ -1,6 +1,7 @@
 package comp1110.ass2.model;
 
 
+import comp1110.ass2.util.ExitUtil;
 import comp1110.ass2.util.RouteUtil;
 import javafx.scene.image.ImageView;
 
@@ -377,20 +378,6 @@ public class Board
     }
 
     /**
-     * put the placementString to map and javafx
-     * @param placementString placementString
-     */
-    public void putPlacementStringToMap(String placementString)
-    {
-        for(int i=0;i<placementString.length();i+=5)
-        {
-            Square square =getSquareFormSquareString(placementString.substring(i,i+5));
-            map[square.positionPoint.getX()][square.positionPoint.getY()] = square;
-
-        }
-    }
-
-    /**
      * get the bonus score.
      *
      * @return bonus score.
@@ -415,9 +402,29 @@ public class Board
                 }
             }
         }
-        //TODO : getBasicScore
-        return maxHighWayRouteLength + maxRailWayRouteLength;
+        return maxHighWayRouteLength + maxRailWayRouteLength+getBasicScoring();
 
+    }
+
+    /**
+     * put the placementString to map and javafx
+     * @param placementString placementString
+     */
+    public void putPlacementStringToMap(String placementString)
+    {
+        for(int i=0;i<placementString.length();i+=5)
+        {
+            Square square =getSquareFormSquareString(placementString.substring(i,i+5));
+            map[square.positionPoint.getX()][square.positionPoint.getY()] = square;
+
+        }
+    }
+
+    public int getBasicScoring(){
+        int bs=0;
+        Square[][] m =this.map.clone();
+        bs=ExitUtil.getExitScore(m)+ExitUtil.getCenterScore(m)-ExitUtil.getErrorScore(m);
+        return bs;
     }
 
 }
