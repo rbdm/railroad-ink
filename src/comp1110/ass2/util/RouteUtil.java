@@ -11,7 +11,7 @@ import java.util.List;
  * User: u6613739
  * Date: 2019/3/31
  * Time: 16:43
- * Description:
+ * Description: to calculate the longest route length.
  */
 public class RouteUtil
 {
@@ -32,14 +32,7 @@ public class RouteUtil
     public static Square[][] findSquareLongestRoute(Square[][] map, int height, int width)
     {
         //Intial map
-        Square[][] squares = new Square[height][width];
-        for (int i = 0; i < height; i++)
-        {
-            for (int j = 0; j < width; j++)
-            {
-                squares[i][j] = map[i][j];
-            }
-        }
+        Square[][] squares = map.clone();
         // find each square's longest highway
         for (int i = 1; i < height - 1; i++)
         {
