@@ -42,6 +42,8 @@ public class Square
 
     public int longestHighWayRouteLength=-1;
 
+    public boolean connectedByTwoWay=false;
+
 
     public Square(TypeTile top, TypeTile right, TypeTile bottom, TypeTile left, Boolean isOverpass, String name,TypeSquare type)
     {

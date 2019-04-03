@@ -14,15 +14,15 @@ public class ExitUtil {
     public static void main(String[] args) {
         Board board = new Board();
 
-        board.putPlacementStringToMap("A3A10A3A52A3G10B2F10S1B50A2B61A0C60A1B41B1A35A4A41A2B31A1C30B0D32A2C50A4E10A3D12B2B10A2F01A0G00A4D01B1A27S3B20A4C10A1D50A0F23B2G25A3E30A4E41");
+        board.putPlacementStringToMap("A4A50A1A30B2B31A0C34A3B41B2C40A3B52A2B60A2C62S5C50B1D65A4B21A2A60A3B10A4A10A4C10B2G10B2F10A4E10A3D12A1F01S2D00A4C00B1B02A0F23A0G20A2F61B2F50A3G52A0G02");
         Square[][] map = board.getMap();
-        List<Square> X = ExitUtil.getConnectedExit(map[0][2],map);
+        List<Square> X = ExitUtil.getConnectedExit(map[6][0],map);
         int xxex = getExitScore(map);
         int xxer=getErrorScore(map);
         int xxce=getCenterScore(map);
         System.out.print(xxex+","+xxer+","+xxce);
         //List<Square> X = ExitUtil.getConnectedNeighbour(map[0][2],map,TypeTile.BLOCK);
-        //List<Square> X = ExitUtil.allRoute(map[1][2], map, map[0][2], new ArrayList<>());
+        //List<Square> X = ExitUtil.allRoute(map[1][6], map, map[0][6], new ArrayList<>());
         //System.out.println(conType(map[2][2],map[2][1]));
         //System.out.println(map[0][2].positionPoint.getY());
         for (Square i : X) {
@@ -56,12 +56,36 @@ public class ExitUtil {
             }
 
         }
+
+        exitCluster = noDuplicated(exitCluster);
+
         for (List list:exitCluster){
             Score+=exitScoreTable(list.size());
         }
 
         return Score;
 
+    }
+
+    private static List<List<Square>> noDuplicated(List<List<Square>> hasDuplicated){
+        for (List<Square> i:hasDuplicated){
+            List<Square> last = new ArrayList<>();
+            for (int j =0;j<hasDuplicated.size();j++){
+                if (!hasDuplicated.get(j).equals(i)) {
+                    last.addAll(hasDuplicated.get(j));
+                }
+            }
+            List<Square> remove=new ArrayList<>();
+            for (Square x:i){
+                if (last.contains(x)){
+                    remove.add(x);
+                }
+            }
+            i.removeAll(remove);
+
+
+        }
+        return hasDuplicated;
     }
 
     private static boolean isInCluster(Square s, List<List<Square>> list ){
@@ -102,7 +126,9 @@ public class ExitUtil {
 
     public static List<Square> getConnectedExit(Square exit, Square[][] map) {
         if (getConnectedNeighbour(exit, map, TypeTile.BLOCK).isEmpty() == true) {
-            return new ArrayList<>();
+            List<Square> a=new ArrayList<>();
+            a.add(exit);
+            return a;
         } else {
             TypeTile lastIn;
             if (exit.name.equals("R")) {
@@ -144,7 +170,7 @@ public class ExitUtil {
                 Square downS = map[square.positionPoint.getX() + 1][square.positionPoint.getY()];
                 Square leftS = map[square.positionPoint.getX()][square.positionPoint.getY() - 1];
                 List<Square> answer = new ArrayList<>();
-                if (square.isOverpass == false) {
+                if (square.isOverpass == false || square.connectedByTwoWay==true) {
                     if (upS.bottom == square.top && square.top != TypeTile.BLOCK) {
                         answer.add(upS);
                     }
@@ -255,7 +281,22 @@ public class ExitUtil {
         List<Square> removeList = new ArrayList<>();
         for (Square i : neighbour) {
             if (alreadyGet.contains(i)) {
-                removeList.add(i);
+                if (i.isOverpass==false){removeList.add(i);}
+                else {
+                    TypeTile oppo;
+                    if (conType(s, lastIn) == TypeTile.RAILWAY) {
+                        oppo = TypeTile.HIGHWAY;
+                    } else {
+                        oppo = TypeTile.RAILWAY;
+                    }
+                    for (Square ss:getConnectedNeighbour(i,map,oppo)){
+                        if (alreadyGet.contains(ss)){
+                            i.isOverpass=false;
+                        }
+                    }
+                    removeList.add(i);
+
+                }
             }
         }
         neighbour.removeAll(removeList);
