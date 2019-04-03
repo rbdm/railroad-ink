@@ -14,7 +14,7 @@ public class ExitUtil {
     /**
      * return the score about number of exits in one route
      *
-     * @param map
+     * @param map map
      * @return score
      */
     public static int getExitScore(Square[][] map) {
@@ -115,7 +115,7 @@ public class ExitUtil {
     /**
      * input an exit A and return all other exit that are on the same mix-type route with A
      *
-     * @param exit
+     * @param exit the first exit on one route
      * @return a list of all the exit that are connected with A
      */
 
@@ -150,8 +150,8 @@ public class ExitUtil {
     /**
      * if the square have connected neighbours return it, if don't just return null
      *
-     * @param square
-     * @param map
+     * @param square the square we are looking into
+     * @param map current state of board
      * @return neighbour square of this Square
      */
     public static List<Square> getConnectedNeighbour(Square square, Square[][] map, TypeTile lastIn) {
@@ -228,8 +228,8 @@ public class ExitUtil {
     /**
      * return the type of connection of two squares
      *
-     * @param A
-     * @param B
+     * @param A  square A
+     * @param B one of A's neighbour square
      * @return TypeTile.Railway or TypeTile.Highway
      */
     public static TypeTile conType(Square A, Square B) {
@@ -372,7 +372,7 @@ public class ExitUtil {
     /**
      * get the score about center squares that covered by tile
      *
-     * @param map
+     * @param map current map
      * @return score of center tiles
      */
     public static int getCenterScore(Square[][] map) {
@@ -404,7 +404,7 @@ public class ExitUtil {
     /**
      * get scores that need to be deducted from basic score for error
      *
-     * @param map
+     * @param map current map
      * @return error scores
      */
     public static int getErrorScore(Square[][] map) {
@@ -441,9 +441,9 @@ public class ExitUtil {
      * give a direction (e.g. 't' for top), see if there is an error on the top of square s,
      * if so return 1, 0 otherwise
      *
-     * @param square
-     * @param map
-     * @param direction
+     * @param square  the square we are looking into
+     * @param map  current map
+     * @param direction  the direction we are checking
      * @return 1 or 0
      */
     public static int errorPoint(Square square, Square[][] map, char direction) {
