@@ -38,10 +38,15 @@ public class Square
      */
     public PositionPoint positionPoint=new PositionPoint(-1,-1);
 
+    /**
+     * longestRailwayLength though the square
+     */
     public int longestRailWayRouteLength=-1;
-
+    /**
+     * longestHighwayLength though the square
+     */
     public int longestHighWayRouteLength=-1;
-
+    //TODO : add javadoc here.
     public boolean connectedByTwoWay=false;
 
 
