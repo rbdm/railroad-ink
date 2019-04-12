@@ -118,7 +118,6 @@ public class ExitUtil {
      * @param exit the first exit on one route
      * @return a list of all the exit that are connected with A
      */
-
     public static List<Square> getConnectedExit(Square exit, Square[][] map) {
         if (getConnectedNeighbour(exit, map, TypeTile.BLOCK).isEmpty() == true) {
             List<Square> a = new ArrayList<>();
