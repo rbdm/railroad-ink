@@ -292,10 +292,11 @@ public class Board
      * @return true if there is a valid connection and there is no invalid connection to the placed tile.
      */
     public Boolean isValidPlacement(Square square) {
-        if (square.positionPoint.getX()==-1 && square.positionPoint.getY()==-1){return false;}
+        if ( ! isEmptyPosition(square.positionPoint.getX(), square.positionPoint.getY())) return false;
+        else if (square.positionPoint.getX()==-1 && square.positionPoint.getY()==-1) return false;
         else {
             Square upS = map[square.positionPoint.getX()-1][square.positionPoint.getY()];
-            Square rightS = map[square.positionPoint.getX()-1][square.positionPoint.getY()+1];
+            Square rightS = map[square.positionPoint.getX()][square.positionPoint.getY()+1];
             Square downS = map[square.positionPoint.getX()+1][square.positionPoint.getY()];
             Square leftS = map[square.positionPoint.getX()][square.positionPoint.getY()-1];
 
@@ -311,7 +312,88 @@ public class Board
                 else {return false;}
             }
         }
+    }
 
+    /**
+     * Finds out if the current position x,y is empty or occupied by other tile
+     * x, y similar to in PositionPoint
+     * @return boolean
+     */
+    public boolean isEmptyPosition(int x, int y) {
+        return (map[x][y].name.equals("NUL"));
+    }
+
+    /**
+     * Validate whether a given boardString can be placed in current board
+     * @param boardString placementString(s) concatenated in ordered sequence, like 'A0A07A1A30S1B20'
+     * @return boolean
+     */
+    public boolean isValidBoardStringPlacement(String boardString) {
+        for (int i = 0; i < boardString.length(); i += 5) {
+            String tilePlacementStringA = boardString.substring(i, i + 5);
+            if ( ! isValidPlacement(getSquareFormSquareString(tilePlacementStringA))) {
+                return false;
+            } else {
+                putPlacementStringToMap(tilePlacementStringA);
+            }
+        }
+        return true;
+    }
+
+    /**
+     * Given a dice, returns a possible placementString for that dice
+     * if none is possible (for every combination of board position and dice orientation), returns an empty string
+     * @param dice one of the dice rolled in this turn, like 'A0' or 'B1'
+     * @return String placementString or emptyString
+     */
+    private String getPossibleDicePlacement(String dice) {
+        String emptyString = "";
+        for (char row='A'; row<='G'; row++) {
+            for (char col='1'; col<='6'; col++) {
+                for (char orientation='0'; orientation<='7'; orientation++) {
+                    String placementString = dice + row + col + orientation;
+                    if (isValidPlacement(getSquareFormSquareString(placementString))) {
+                        return placementString;
+                    }
+                }
+            }
+        }
+        return emptyString;
+    }
+
+    /**
+     * Given a dice roll (group of dices), returns a possible sequence of placementString(s)
+     * if none is possible (for every combination of dice order, board position and dice orientation), returns empty string
+     * @param diceRoll all of the dices rolled in this turn, like 'A0A1A3B2' or 'A0A0A0B1'
+     * @return String validPlacementSequence or emptyString
+     */
+    public String getPossibleDicePlacementSequence(String diceRoll) {
+        int diceCount = diceRoll.length()/2;
+        String validPlacementSequence = "";
+        String emptyString = "";
+
+        // sets all the available dice in a list for tracking, because it returns faster than recursion when tried
+        List<String> availableDice = new ArrayList<>();
+        for (int i=0; i<diceRoll.length(); i+=2) {
+            availableDice.add(diceRoll.substring(i, i+2));
+        }
+
+        // uses getPossibleDicePlacement to determine whether a dice can be placed
+        // if a placement is found, repeat for other dices that are still available
+        for (int i=0; i < diceCount; i++) {
+            for (int j=0; j < diceRoll.length(); j+=2) {
+                String dice = diceRoll.substring(j, j+2);
+                if (availableDice.contains(dice)) {
+                    if ( ! getPossibleDicePlacement(dice).equals(emptyString)) {
+                        String placementString = getPossibleDicePlacement(dice);
+                        validPlacementSequence = validPlacementSequence.concat(placementString);
+                        putPlacementStringToMap(placementString);
+                        availableDice.remove(dice);
+                    }
+                }
+            }
+        }
+        return validPlacementSequence;
     }
 
     /**
@@ -426,5 +508,4 @@ public class Board
         bs=ExitUtil.getExitScore(m)+ExitUtil.getCenterScore(m)-ExitUtil.getErrorScore(m);
         return bs;
     }
-
 }
