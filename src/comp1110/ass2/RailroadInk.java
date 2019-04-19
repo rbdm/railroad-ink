@@ -96,20 +96,7 @@ public class RailroadInk {
         // FIXME Task 6: determine whether the given placement sequence is valid
         if ( ! isBoardStringWellFormed(boardString)) return false;
         Board board = new Board();
-        for (int i = 0; i < boardString.length(); i += 5)
-        {
-            String tilePlacementStringA = boardString.substring(i, i + 5);
-            boolean connected = false;
-            if (board.isConnectedWithExit(tilePlacementStringA)) connected = true;
-            for (int j = i - 5; j >= 0; j -= 5)
-            {
-                String tilePlacementStringB = boardString.substring(j, j + 5);
-                if (board.areConnectedSquares(tilePlacementStringA, tilePlacementStringB)) connected = true;
-            }
-            if ( ! connected) return false;
-
-        }
-        return true;
+        return board.isValidBoardStringPlacement(boardString);
     }
 
     /**
@@ -166,7 +153,9 @@ public class RailroadInk {
      */
     public static String generateMove(String boardString, String diceRoll) {
         // FIXME Task 10: generate a valid move
-        return null;
+        Board board = new Board();
+        board.putPlacementStringToMap(boardString);
+        return board.getPossibleDicePlacementSequence(diceRoll);
     }
 
     /**
