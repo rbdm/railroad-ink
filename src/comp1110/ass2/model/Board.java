@@ -331,11 +331,11 @@ public class Board
      */
     public boolean isValidBoardStringPlacement(String boardString) {
         for (int i = 0; i < boardString.length(); i += 5) {
-            String tilePlacementStringA = boardString.substring(i, i + 5);
-            if ( ! isValidPlacement(getSquareFormSquareString(tilePlacementStringA))) {
+            String placementString = boardString.substring(i, i + 5);
+            if ( ! isValidPlacement(getSquareFormSquareString(placementString))) {
                 return false;
             } else {
-                putPlacementStringToMap(tilePlacementStringA);
+                putPlacementStringToMap(placementString);
             }
         }
         return true;
