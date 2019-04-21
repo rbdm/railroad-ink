@@ -291,7 +291,7 @@ public class Board
      * @param square a placement square
      * @return true if there is a valid connection and there is no invalid connection to the placed tile.
      */
-    public Boolean isValidPlacement(Square square) {
+    private Boolean isValidPlacement(Square square) {
         if ( ! isEmptyPosition(square.positionPoint.getX(), square.positionPoint.getY())) return false;
         else if (square.positionPoint.getX()==-1 && square.positionPoint.getY()==-1) return false;
         else {
@@ -320,7 +320,7 @@ public class Board
      * @param y row
      * @return boolean
      */
-    public boolean isEmptyPosition(int x, int y) {
+    private boolean isEmptyPosition(int x, int y) {
         return (map[x][y].type == TypeSquare.EMPTY);
     }
 
