@@ -315,12 +315,13 @@ public class Board
     }
 
     /**
-     * Finds out if the current position x,y is empty or occupied by other tile
-     * x, y similar to in PositionPoint
+     * Finds out if the current position x,y is empty or occupied by other tile. x,y similar to in PositionPoint
+     * @param x col
+     * @param y row
      * @return boolean
      */
     public boolean isEmptyPosition(int x, int y) {
-        return (map[x][y].name.equals("NUL"));
+        return (map[x][y].type == TypeSquare.EMPTY);
     }
 
     /**
@@ -369,10 +370,9 @@ public class Board
      */
     public String getPossibleDicePlacementSequence(String diceRoll) {
         int diceCount = diceRoll.length()/2;
-        String validPlacementSequence = "";
         String emptyString = "";
+        String validPlacementSequence = emptyString;
 
-        // sets all the available dice in a list for tracking, because it returns faster than recursion when tried
         List<String> availableDice = new ArrayList<>();
         for (int i=0; i<diceRoll.length(); i+=2) {
             availableDice.add(diceRoll.substring(i, i+2));
