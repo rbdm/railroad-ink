@@ -234,39 +234,27 @@ public class RouteUtil
         List<Direction> accessDirections = getAccessDirection(square, typeTile, getInDirection);
         int maxDepth = deepth;
 
-        int tmpDepth;
+        int tmpDepth=0;
         for (Direction direction : accessDirections)
         {
             switch (direction)
             {
                 case TOP:
                     tmpDepth = oneStep(squareRoutes, x - 1, y, deepth, typeTile, Direction.TOP, trackingList);
-                    if (maxDepth < tmpDepth)
-                    {
-                        maxDepth = tmpDepth;
-                    }
                     break;
                 case RIGHT:
                     tmpDepth = oneStep(squareRoutes, x, y + 1, deepth, typeTile, Direction.RIGHT, trackingList);
-                    if (maxDepth < tmpDepth)
-                    {
-                        maxDepth = tmpDepth;
-                    }
                     break;
                 case BOTTOM:
                     tmpDepth = oneStep(squareRoutes, x + 1, y, deepth, typeTile, Direction.BOTTOM, trackingList);
-                    if (maxDepth < tmpDepth)
-                    {
-                        maxDepth = tmpDepth;
-                    }
                     break;
                 case LEFT:
                     tmpDepth = oneStep(squareRoutes, x, y - 1, deepth, typeTile, Direction.LEFT, trackingList);
-                    if (maxDepth < tmpDepth)
-                    {
-                        maxDepth = tmpDepth;
-                    }
                     break;
+            }
+            if (maxDepth < tmpDepth)
+            {
+                maxDepth = tmpDepth;
             }
         }
         trackingList.remove(trackingList.size() - 1);

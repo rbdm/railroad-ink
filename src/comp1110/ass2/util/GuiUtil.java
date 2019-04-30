@@ -27,9 +27,32 @@ public class GuiUtil
      */
     public static BorderPane updateGuiByPlacementString(BorderPane mapPanel, Board board, String placementString,String rootImgUrl)
     {
-        for (int i = 0; i < 9; i++)
+        initialEmptyBoardGui(mapPanel, board, rootImgUrl);
+        //check placement
+        updateBoardGuiByPlacementString(board, placementString, rootImgUrl);
+        return mapPanel;
+    }
+
+    private static void updateBoardGuiByPlacementString(Board board, String placementString, String rootImgUrl)
+    {
+        for (int i = 0; i < placementString.length(); i += 5)
         {
-            for (int j = 0; j < 9; j++)
+            String squareString = placementString.substring(i, i + 5);
+            Square square = board.getSquareFormSquareString(squareString);
+
+            Image image = new Image( rootImgUrl + squareString.substring(0, 2) + ".png");
+            ImageView imageView = board.imageViews[square.positionPoint.getX()][square.positionPoint.getY()];
+            imageView.setImage(image);
+            imageView.setRotate(((squareString.charAt(4) - '0') % 4) * 90);
+            imageView.setScaleX((squareString.charAt(4) - '0') < 4 ? 1 : - 1);
+        }
+    }
+
+    private static void initialEmptyBoardGui(BorderPane mapPanel, Board board, String rootImgUrl)
+    {
+        for (int i = 0; i < board.getMap().length; i++)
+        {
+            for (int j = 0; j < board.getMap().length; j++)
             {
                 Square square = board.getMap()[i][j];
                 String name = rootImgUrl + "WALL.png";
@@ -84,53 +107,6 @@ public class GuiUtil
                 mapPanel.getChildren().add(imageView);
             }
         }
-        //check placement
-        for (int i = 0; i < placementString.length(); i += 5)
-        {
-            String squareString = placementString.substring(i, i + 5);
-            Square square = board.getSquareFormSquareString(squareString);
-
-            Image image = new Image( rootImgUrl + squareString.substring(0, 2) + ".png");
-            ImageView imageView = board.imageViews[square.positionPoint.getX()][square.positionPoint.getY()];
-            imageView.setImage(image);
-
-            switch (squareString.charAt(4))
-            {
-                case '0':
-                    imageView.setRotate(0);
-                    imageView.setScaleX(1);
-                    break;
-                case '1':
-                    imageView.setRotate(90);
-                    imageView.setScaleX(1);
-                    break;
-                case '2':
-                    imageView.setRotate(180);
-                    imageView.setScaleX(1);
-                    break;
-                case '3':
-                    imageView.setRotate(270);
-                    imageView.setScaleX(1);
-                    break;
-                case '4':
-                    imageView.setRotate(0);
-                    imageView.setScaleX(- 1);
-                    break;
-                case '5':
-                    imageView.setRotate(90);
-                    imageView.setScaleX(- 1);
-                    break;
-                case '6':
-                    imageView.setRotate(180);
-                    imageView.setScaleX(- 1);
-                    break;
-                case '7':
-                    imageView.setRotate(270);
-                    imageView.setScaleX(- 1);
-                    break;
-            }
-        }
-        return mapPanel;
     }
 
     /**
