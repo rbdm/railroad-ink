@@ -4,7 +4,6 @@ import comp1110.ass2.model.PositionPoint;
 import comp1110.ass2.model.Square;
 import comp1110.ass2.model.TypeSquare;
 import comp1110.ass2.model.TypeTile;
-
 import java.util.ArrayList;
 import java.util.List;
 
