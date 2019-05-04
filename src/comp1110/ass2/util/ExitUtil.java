@@ -1,11 +1,8 @@
 package comp1110.ass2.util;
 
-import com.sun.glass.ui.CommonDialogs;
-import comp1110.ass2.RailroadInk;
-import comp1110.ass2.model.Board;
+import comp1110.ass2.model.EnumTypeTile;
 import comp1110.ass2.model.Square;
-import comp1110.ass2.model.TypeSquare;
-import comp1110.ass2.model.TypeTile;
+import comp1110.ass2.model.EnumTypeSquare;
 
 import java.util.*;
 
@@ -23,7 +20,7 @@ public class ExitUtil {
         int Score = 0;
         for (int i = 0; i < map.length; i++) {
             for (int j = 0; j < map[0].length; j++) {
-                if (map[i][j].type == TypeSquare.EXIT) {
+                if (map[i][j].type == EnumTypeSquare.EXIT) {
                     allExit.add(map[i][j]);
                 }
             }
@@ -119,16 +116,16 @@ public class ExitUtil {
      * @return a list of all the exit that are connected with A
      */
     public static List<Square> getConnectedExit(Square exit, Square[][] map) {
-        if (getConnectedNeighbour(exit, map, TypeTile.BLOCK).isEmpty() == true) {
+        if (getConnectedNeighbour(exit, map, EnumTypeTile.BLOCK).isEmpty() == true) {
             List<Square> a = new ArrayList<>();
             a.add(exit);
             return a;
         } else {
-            TypeTile lastIn;
+            EnumTypeTile lastIn;
             if (exit.name.equals("R")) {
-                lastIn = TypeTile.RAILWAY;
+                lastIn = EnumTypeTile.RAILWAY;
             } else {
-                lastIn = TypeTile.HIGHWAY;
+                lastIn = EnumTypeTile.HIGHWAY;
             }
 
             Square start = getConnectedNeighbour(exit, map, lastIn).get(0);
@@ -138,7 +135,7 @@ public class ExitUtil {
             List<Square> all = allRoute(start, map, exit, nowList);
             List<Square> exits = new ArrayList<>();
             for (Square element : all) {
-                if (element.type == TypeSquare.EXIT) {
+                if (element.type == EnumTypeSquare.EXIT) {
                     exits.add(element);
                 }
             }
@@ -153,29 +150,29 @@ public class ExitUtil {
      * @param map current state of board
      * @return neighbour square of this Square
      */
-    public static List<Square> getConnectedNeighbour(Square square, Square[][] map, TypeTile lastIn) {
+    public static List<Square> getConnectedNeighbour(Square square, Square[][] map, EnumTypeTile lastIn) {
         if (square.positionPoint.getX() == -1 && square.positionPoint.getY() == -1) {
             return new ArrayList<>();
         } else {
             int x = square.positionPoint.getX();
             int y = square.positionPoint.getY();
-            if (square.type == TypeSquare.TILE) {
+            if (square.type == EnumTypeSquare.TILE) {
                 Square upS = map[square.positionPoint.getX() - 1][square.positionPoint.getY()];
                 Square rightS = map[square.positionPoint.getX()][square.positionPoint.getY() + 1];
                 Square downS = map[square.positionPoint.getX() + 1][square.positionPoint.getY()];
                 Square leftS = map[square.positionPoint.getX()][square.positionPoint.getY() - 1];
                 List<Square> answer = new ArrayList<>();
                 if (square.isOverpass == false || square.connectedByTwoWay == true) {
-                    if (upS.bottom == square.top && square.top != TypeTile.BLOCK) {
+                    if (upS.bottom == square.top && square.top != EnumTypeTile.BLOCK) {
                         answer.add(upS);
                     }
-                    if (rightS.left == square.right && square.right != TypeTile.BLOCK) {
+                    if (rightS.left == square.right && square.right != EnumTypeTile.BLOCK) {
                         answer.add(rightS);
                     }
-                    if (downS.top == square.bottom && square.bottom != TypeTile.BLOCK) {
+                    if (downS.top == square.bottom && square.bottom != EnumTypeTile.BLOCK) {
                         answer.add(downS);
                     }
-                    if (leftS.right == square.left && square.left != TypeTile.BLOCK) {
+                    if (leftS.right == square.left && square.left != EnumTypeTile.BLOCK) {
                         answer.add(leftS);
                     }
                     return answer;
@@ -194,7 +191,7 @@ public class ExitUtil {
                     }
                     return answer;
                 }
-            } else if (square.type == TypeSquare.EXIT) {
+            } else if (square.type == EnumTypeSquare.EXIT) {
                 List<Square> answer = new ArrayList<>();
                 if (square.positionPoint.getX() == 0) {
                     Square downS = map[square.positionPoint.getX() + 1][square.positionPoint.getY()];
@@ -229,35 +226,35 @@ public class ExitUtil {
      *
      * @param A  square A
      * @param B one of A's neighbour square
-     * @return TypeTile.Railway or TypeTile.Highway
+     * @return EnumTypeTile.Railway or EnumTypeTile.Highway
      */
-    public static TypeTile conType(Square A, Square B) {
+    public static EnumTypeTile conType(Square A, Square B) {
         if (areConSquares(A, B) == 'n') {
             return null;
         } else {
             if (areConSquares(A, B) == 'l') {
-                if (A.right == TypeTile.RAILWAY) {
-                    return TypeTile.RAILWAY;
+                if (A.right == EnumTypeTile.RAILWAY) {
+                    return EnumTypeTile.RAILWAY;
                 } else {
-                    return TypeTile.HIGHWAY;
+                    return EnumTypeTile.HIGHWAY;
                 }
             } else if (areConSquares(A, B) == 'r') {
-                if (A.left == TypeTile.RAILWAY) {
-                    return TypeTile.RAILWAY;
+                if (A.left == EnumTypeTile.RAILWAY) {
+                    return EnumTypeTile.RAILWAY;
                 } else {
-                    return TypeTile.HIGHWAY;
+                    return EnumTypeTile.HIGHWAY;
                 }
             } else if (areConSquares(A, B) == 'a') {
-                if (A.bottom == TypeTile.RAILWAY) {
-                    return TypeTile.RAILWAY;
+                if (A.bottom == EnumTypeTile.RAILWAY) {
+                    return EnumTypeTile.RAILWAY;
                 } else {
-                    return TypeTile.HIGHWAY;
+                    return EnumTypeTile.HIGHWAY;
                 }
             } else {
-                if (A.top == TypeTile.RAILWAY) {
-                    return TypeTile.RAILWAY;
+                if (A.top == EnumTypeTile.RAILWAY) {
+                    return EnumTypeTile.RAILWAY;
                 } else {
-                    return TypeTile.HIGHWAY;
+                    return EnumTypeTile.HIGHWAY;
                 }
             }
         }
@@ -286,11 +283,11 @@ public class ExitUtil {
                 if (i.isOverpass == false) {
                     removeList.add(i);
                 } else {
-                    TypeTile oppo;
-                    if (conType(s, lastIn) == TypeTile.RAILWAY) {
-                        oppo = TypeTile.HIGHWAY;
+                    EnumTypeTile oppo;
+                    if (conType(s, lastIn) == EnumTypeTile.RAILWAY) {
+                        oppo = EnumTypeTile.HIGHWAY;
                     } else {
-                        oppo = TypeTile.RAILWAY;
+                        oppo = EnumTypeTile.RAILWAY;
                     }
                     for (Square ss : getConnectedNeighbour(i, map, oppo)) {
                         if (alreadyGet.contains(ss)) {
@@ -338,27 +335,27 @@ public class ExitUtil {
         int rowB = B.positionPoint.getX();
         int colB = B.positionPoint.getY();
         if (rowA == rowB && colB - colA == 1) { //A is on the left of B
-            if (A.right == B.left && A.right != TypeTile.BLOCK) {
+            if (A.right == B.left && A.right != EnumTypeTile.BLOCK) {
                 return 'l';
             } else {
                 return 'n';
             }
 
         } else if (rowA == rowB && colA - colB == 1) { //A is on the right of B
-            if (A.left == B.right && A.left != TypeTile.BLOCK) {
+            if (A.left == B.right && A.left != EnumTypeTile.BLOCK) {
                 return 'r';
             } else {
                 return 'n';
             }
 
         } else if (colA == colB && rowA - rowB == 1) { //A is below B
-            if (A.top == B.bottom && A.top != TypeTile.BLOCK) {
+            if (A.top == B.bottom && A.top != EnumTypeTile.BLOCK) {
                 return 'b';
             } else {
                 return 'n';
             }
         } else if (colA == colB && rowB - rowA == 1) {  //A is above B
-            if (A.bottom == B.top && A.bottom != TypeTile.BLOCK) {
+            if (A.bottom == B.top && A.bottom != EnumTypeTile.BLOCK) {
                 return 'a';
             } else {
                 return 'n';
@@ -377,7 +374,7 @@ public class ExitUtil {
     public static int getCenterScore(Square[][] map) {
         int cs = 0;
         for (Square s : centerList(map)) {
-            if (s.type == TypeSquare.TILE) {
+            if (s.type == EnumTypeSquare.TILE) {
                 cs += 1;
             }
         }
@@ -446,35 +443,35 @@ public class ExitUtil {
      * @return 1 or 0
      */
     public static int errorPoint(Square square, Square[][] map, char direction) {
-        if (square.type == TypeSquare.TILE) {
+        if (square.type == EnumTypeSquare.TILE) {
             Square upS = map[square.positionPoint.getX() - 1][square.positionPoint.getY()];
             Square rightS = map[square.positionPoint.getX()][square.positionPoint.getY() + 1];
             Square downS = map[square.positionPoint.getX() + 1][square.positionPoint.getY()];
             Square leftS = map[square.positionPoint.getX()][square.positionPoint.getY() - 1];
             if (direction == 't') {
                 //check if has ERROR POINT on TOP
-                if (square.top != TypeTile.BLOCK && upS.bottom == TypeTile.BLOCK) {
+                if (square.top != EnumTypeTile.BLOCK && upS.bottom == EnumTypeTile.BLOCK) {
                     return 1;
                 } else {
                     return 0;
                 }
             } else if (direction == 'r') {
                 //check if has ERROR POINT on Right
-                if (square.right != TypeTile.BLOCK && rightS.left == TypeTile.BLOCK) {
+                if (square.right != EnumTypeTile.BLOCK && rightS.left == EnumTypeTile.BLOCK) {
                     return 1;
                 } else {
                     return 0;
                 }
             } else if (direction == 'b') {
                 //check if has ERROR POINT on bottom
-                if (square.bottom != TypeTile.BLOCK && downS.top == TypeTile.BLOCK) {
+                if (square.bottom != EnumTypeTile.BLOCK && downS.top == EnumTypeTile.BLOCK) {
                     return 1;
                 } else {
                     return 0;
                 }
             } else if (direction == 'l') {
                 //check if has ERROR POINT on Left
-                if (square.left != TypeTile.BLOCK && leftS.right == TypeTile.BLOCK) {
+                if (square.left != EnumTypeTile.BLOCK && leftS.right == EnumTypeTile.BLOCK) {
                     return 1;
                 } else {
                     return 0;

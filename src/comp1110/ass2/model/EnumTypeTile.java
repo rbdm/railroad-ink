@@ -1,6 +1,7 @@
 package comp1110.ass2.model;
 
-public enum TypeTile {
+public enum EnumTypeTile
+{
     RAILWAY,
     HIGHWAY,
     BLOCK

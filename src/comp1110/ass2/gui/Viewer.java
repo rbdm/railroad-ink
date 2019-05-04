@@ -1,19 +1,13 @@
 package comp1110.ass2.gui;
 
 import comp1110.ass2.model.Board;
-import comp1110.ass2.model.Square;
-import comp1110.ass2.model.TypeTile;
 import comp1110.ass2.util.GuiUtil;
 import javafx.application.Application;
 import javafx.scene.Group;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.layout.Border;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;

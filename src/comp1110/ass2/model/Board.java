@@ -38,50 +38,50 @@ public class Board
         {
             for (int j = 0; j < MAX_HEIGHT; j++)
             {
-                map[i][j] = new Square(TypeTile.BLOCK, TypeTile.BLOCK, TypeTile.BLOCK, TypeTile.BLOCK, false, "NUL", TypeSquare.EMPTY);
+                map[i][j] = new Square(EnumTypeTile.BLOCK, EnumTypeTile.BLOCK, EnumTypeTile.BLOCK, EnumTypeTile.BLOCK, false, "NUL", EnumTypeSquare.EMPTY);
             }
         }
         //set surround wall
         for (int i = 0; i < MAX_WITDH; i++)
         {
-            map[i][0] = new Square(TypeTile.BLOCK, TypeTile.BLOCK, TypeTile.BLOCK, TypeTile.BLOCK, false, "-", TypeSquare.WALL);
+            map[i][0] = new Square(EnumTypeTile.BLOCK, EnumTypeTile.BLOCK, EnumTypeTile.BLOCK, EnumTypeTile.BLOCK, false, "-", EnumTypeSquare.WALL);
         }
         for (int i = 0; i < MAX_WITDH; i++)
         {
-            map[i][MAX_HEIGHT - 1] = new Square(TypeTile.BLOCK, TypeTile.BLOCK, TypeTile.BLOCK, TypeTile.BLOCK, false, "-", TypeSquare.WALL);
+            map[i][MAX_HEIGHT - 1] = new Square(EnumTypeTile.BLOCK, EnumTypeTile.BLOCK, EnumTypeTile.BLOCK, EnumTypeTile.BLOCK, false, "-", EnumTypeSquare.WALL);
         }
         for (int i = 0; i < MAX_HEIGHT; i++)
         {
-            map[0][i] = new Square(TypeTile.BLOCK, TypeTile.BLOCK, TypeTile.BLOCK, TypeTile.BLOCK, false, "-", TypeSquare.WALL);
+            map[0][i] = new Square(EnumTypeTile.BLOCK, EnumTypeTile.BLOCK, EnumTypeTile.BLOCK, EnumTypeTile.BLOCK, false, "-", EnumTypeSquare.WALL);
         }
         for (int i = 0; i < MAX_HEIGHT; i++)
         {
-            map[MAX_WITDH - 1][i] = new Square(TypeTile.BLOCK, TypeTile.BLOCK, TypeTile.BLOCK, TypeTile.BLOCK, false, "-", TypeSquare.WALL);
+            map[MAX_WITDH - 1][i] = new Square(EnumTypeTile.BLOCK, EnumTypeTile.BLOCK, EnumTypeTile.BLOCK, EnumTypeTile.BLOCK, false, "-", EnumTypeSquare.WALL);
         }
         //set exits
-        map[0][2] = new Square(TypeTile.BLOCK, TypeTile.BLOCK, TypeTile.HIGHWAY, TypeTile.BLOCK, false, "H", TypeSquare.EXIT);
+        map[0][2] = new Square(EnumTypeTile.BLOCK, EnumTypeTile.BLOCK, EnumTypeTile.HIGHWAY, EnumTypeTile.BLOCK, false, "H", EnumTypeSquare.EXIT);
         map[0][2].positionPoint.setPositionPoint(0,2);
-        map[0][4] = new Square(TypeTile.BLOCK, TypeTile.BLOCK, TypeTile.RAILWAY, TypeTile.BLOCK, false, "R", TypeSquare.EXIT);
+        map[0][4] = new Square(EnumTypeTile.BLOCK, EnumTypeTile.BLOCK, EnumTypeTile.RAILWAY, EnumTypeTile.BLOCK, false, "R", EnumTypeSquare.EXIT);
         map[0][4].positionPoint.setPositionPoint(0,4);
-        map[0][6] = new Square(TypeTile.BLOCK, TypeTile.BLOCK, TypeTile.HIGHWAY, TypeTile.BLOCK, false, "H", TypeSquare.EXIT);
+        map[0][6] = new Square(EnumTypeTile.BLOCK, EnumTypeTile.BLOCK, EnumTypeTile.HIGHWAY, EnumTypeTile.BLOCK, false, "H", EnumTypeSquare.EXIT);
         map[0][6].positionPoint.setPositionPoint(0,6);
-        map[MAX_HEIGHT - 1][2] = new Square(TypeTile.HIGHWAY, TypeTile.BLOCK, TypeTile.BLOCK, TypeTile.BLOCK, false, "H", TypeSquare.EXIT);
+        map[MAX_HEIGHT - 1][2] = new Square(EnumTypeTile.HIGHWAY, EnumTypeTile.BLOCK, EnumTypeTile.BLOCK, EnumTypeTile.BLOCK, false, "H", EnumTypeSquare.EXIT);
         map[MAX_HEIGHT - 1][2].positionPoint.setPositionPoint(MAX_HEIGHT - 1,2);
-        map[MAX_HEIGHT - 1][4] = new Square(TypeTile.RAILWAY, TypeTile.BLOCK, TypeTile.BLOCK, TypeTile.BLOCK, false, "R", TypeSquare.EXIT);
+        map[MAX_HEIGHT - 1][4] = new Square(EnumTypeTile.RAILWAY, EnumTypeTile.BLOCK, EnumTypeTile.BLOCK, EnumTypeTile.BLOCK, false, "R", EnumTypeSquare.EXIT);
         map[MAX_HEIGHT - 1][4].positionPoint.setPositionPoint(MAX_HEIGHT - 1,4);
-        map[MAX_HEIGHT - 1][6] = new Square(TypeTile.HIGHWAY, TypeTile.BLOCK, TypeTile.BLOCK, TypeTile.BLOCK, false, "H", TypeSquare.EXIT);
+        map[MAX_HEIGHT - 1][6] = new Square(EnumTypeTile.HIGHWAY, EnumTypeTile.BLOCK, EnumTypeTile.BLOCK, EnumTypeTile.BLOCK, false, "H", EnumTypeSquare.EXIT);
         map[MAX_HEIGHT - 1][6].positionPoint.setPositionPoint(MAX_HEIGHT - 1,6);
-        map[2][0] = new Square(TypeTile.BLOCK, TypeTile.RAILWAY, TypeTile.BLOCK, TypeTile.BLOCK, false, "R", TypeSquare.EXIT);
+        map[2][0] = new Square(EnumTypeTile.BLOCK, EnumTypeTile.RAILWAY, EnumTypeTile.BLOCK, EnumTypeTile.BLOCK, false, "R", EnumTypeSquare.EXIT);
         map[2][0].positionPoint.setPositionPoint(2,0);
-        map[4][0] = new Square(TypeTile.BLOCK, TypeTile.HIGHWAY, TypeTile.BLOCK, TypeTile.BLOCK, false, "H", TypeSquare.EXIT);
+        map[4][0] = new Square(EnumTypeTile.BLOCK, EnumTypeTile.HIGHWAY, EnumTypeTile.BLOCK, EnumTypeTile.BLOCK, false, "H", EnumTypeSquare.EXIT);
         map[4][0].positionPoint.setPositionPoint(4,0);
-        map[6][0] = new Square(TypeTile.BLOCK, TypeTile.RAILWAY, TypeTile.BLOCK, TypeTile.BLOCK, false, "R", TypeSquare.EXIT);
+        map[6][0] = new Square(EnumTypeTile.BLOCK, EnumTypeTile.RAILWAY, EnumTypeTile.BLOCK, EnumTypeTile.BLOCK, false, "R", EnumTypeSquare.EXIT);
         map[6][0].positionPoint.setPositionPoint(6,0);
-        map[2][MAX_WITDH - 1] = new Square(TypeTile.BLOCK, TypeTile.BLOCK, TypeTile.BLOCK, TypeTile.RAILWAY, false, "R", TypeSquare.EXIT);
+        map[2][MAX_WITDH - 1] = new Square(EnumTypeTile.BLOCK, EnumTypeTile.BLOCK, EnumTypeTile.BLOCK, EnumTypeTile.RAILWAY, false, "R", EnumTypeSquare.EXIT);
         map[2][MAX_WITDH - 1].positionPoint.setPositionPoint(2,MAX_WITDH - 1);
-        map[4][MAX_WITDH - 1] = new Square(TypeTile.BLOCK, TypeTile.BLOCK, TypeTile.BLOCK, TypeTile.HIGHWAY, false, "H", TypeSquare.EXIT);
+        map[4][MAX_WITDH - 1] = new Square(EnumTypeTile.BLOCK, EnumTypeTile.BLOCK, EnumTypeTile.BLOCK, EnumTypeTile.HIGHWAY, false, "H", EnumTypeSquare.EXIT);
         map[4][MAX_WITDH - 1].positionPoint.setPositionPoint(4,MAX_WITDH - 1);
-        map[6][MAX_WITDH - 1] = new Square(TypeTile.BLOCK, TypeTile.BLOCK, TypeTile.BLOCK, TypeTile.RAILWAY, false, "R", TypeSquare.EXIT);
+        map[6][MAX_WITDH - 1] = new Square(EnumTypeTile.BLOCK, EnumTypeTile.BLOCK, EnumTypeTile.BLOCK, EnumTypeTile.RAILWAY, false, "R", EnumTypeSquare.EXIT);
         map[6][MAX_WITDH - 1].positionPoint.setPositionPoint(6,MAX_WITDH - 1);
 
     }
@@ -169,7 +169,7 @@ public class Board
         squareList = squareList.subList(8 * (face - '0'), 8 * (face - '0') + 8);
         Square square = squareList.get(orientation - '0');
         square.positionPoint.setPositionPoint(row - 'A' + 1, col - '0' + 1);
-        square.type=TypeSquare.TILE;
+        square.type= EnumTypeSquare.TILE;
         return square;
 
     }
@@ -193,13 +193,13 @@ public class Board
         } else {
             if (rowA == rowB) {
                 if (colB - colA == 1) {  //A is on the left of B
-                    if (A.right == B.left && A.right != TypeTile.BLOCK) {
+                    if (A.right == B.left && A.right != EnumTypeTile.BLOCK) {
                         return true;
                     } else {
                         return false;
                     }
                 } else if (colA - colB == 1) {  //A is on the right of B
-                    if (A.left == B.right && A.left != TypeTile.BLOCK) {
+                    if (A.left == B.right && A.left != EnumTypeTile.BLOCK) {
                         return true;
                     } else {
                         return false;
@@ -209,13 +209,13 @@ public class Board
                 }
             } else if (colA == colB) {
                 if (rowA - rowB == 1) {  //A is below B
-                    if (A.top == B.bottom && A.top != TypeTile.BLOCK) {
+                    if (A.top == B.bottom && A.top != EnumTypeTile.BLOCK) {
                         return true;
                     } else {
                         return false;
                     }
                 } else if (rowB - rowA == 1) {  //A is above B
-                    if (A.bottom == B.top && A.bottom != TypeTile.BLOCK) {
+                    if (A.bottom == B.top && A.bottom != EnumTypeTile.BLOCK) {
                         return true;
                     } else {
                         return false;
@@ -278,9 +278,9 @@ public class Board
      * @return boolean
      */
 
-    public boolean isIllegal(TypeTile A, TypeTile B){
-        if (A==TypeTile.HIGHWAY && B==TypeTile.RAILWAY){return true;}
-        else if (A==TypeTile.RAILWAY && B==TypeTile.HIGHWAY){return true;}
+    public boolean isIllegal(EnumTypeTile A, EnumTypeTile B){
+        if (A== EnumTypeTile.HIGHWAY && B== EnumTypeTile.RAILWAY){return true;}
+        else if (A== EnumTypeTile.RAILWAY && B== EnumTypeTile.HIGHWAY){return true;}
         else {return false;}
     }
 
@@ -305,10 +305,10 @@ public class Board
                 return false;
             }
             else {
-                if (upS.bottom==square.top && square.top!=TypeTile.BLOCK){ return true; }
-                else if (rightS.left==square.right && square.right!=TypeTile.BLOCK){return true;}
-                else if (downS.top==square.bottom && square.bottom!=TypeTile.BLOCK){return true;}
-                else if (leftS.right==square.left && square.left!=TypeTile.BLOCK){return true;}
+                if (upS.bottom==square.top && square.top!= EnumTypeTile.BLOCK){ return true; }
+                else if (rightS.left==square.right && square.right!= EnumTypeTile.BLOCK){return true;}
+                else if (downS.top==square.bottom && square.bottom!= EnumTypeTile.BLOCK){return true;}
+                else if (leftS.right==square.left && square.left!= EnumTypeTile.BLOCK){return true;}
                 else {return false;}
             }
         }
@@ -321,7 +321,7 @@ public class Board
      * @return boolean
      */
     private boolean isEmptyPosition(int x, int y) {
-        return (map[x][y].type == TypeSquare.EMPTY);
+        return (map[x][y].type == EnumTypeSquare.EMPTY);
     }
 
     /**

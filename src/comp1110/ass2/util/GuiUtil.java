@@ -1,8 +1,8 @@
 package comp1110.ass2.util;
 
 import comp1110.ass2.model.Board;
+import comp1110.ass2.model.EnumTypeTile;
 import comp1110.ass2.model.Square;
-import comp1110.ass2.model.TypeTile;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.image.Image;
@@ -59,11 +59,11 @@ public class GuiUtil
                 switch (square.type)
                 {
                     case EXIT:
-                        if (square.top == TypeTile.RAILWAY || square.left == TypeTile.RAILWAY || square.right == TypeTile.RAILWAY || square.bottom == TypeTile.RAILWAY)
+                        if (square.top == EnumTypeTile.RAILWAY || square.left == EnumTypeTile.RAILWAY || square.right == EnumTypeTile.RAILWAY || square.bottom == EnumTypeTile.RAILWAY)
                         {
                             name = rootImgUrl + "RailExit.png";
                         }
-                        else if (square.top == TypeTile.HIGHWAY || square.left == TypeTile.HIGHWAY || square.right == TypeTile.HIGHWAY || square.bottom == TypeTile.HIGHWAY)
+                        else if (square.top == EnumTypeTile.HIGHWAY || square.left == EnumTypeTile.HIGHWAY || square.right == EnumTypeTile.HIGHWAY || square.bottom == EnumTypeTile.HIGHWAY)
                         {
                             {
                                 name = rootImgUrl + "HighExit.png";
@@ -87,19 +87,19 @@ public class GuiUtil
                 imageView.setFitHeight(80);
                 imageView.setFitWidth(80);
 
-                if (square.top != TypeTile.BLOCK)
+                if (square.top != EnumTypeTile.BLOCK)
                 {
                     imageView.setRotate(0);
                 }
-                else if (square.left != TypeTile.BLOCK)
+                else if (square.left != EnumTypeTile.BLOCK)
                 {
                     imageView.setRotate(270);
                 }
-                else if (square.bottom != TypeTile.BLOCK)
+                else if (square.bottom != EnumTypeTile.BLOCK)
                 {
                     imageView.setRotate(180);
                 }
-                else if (square.right != TypeTile.BLOCK)
+                else if (square.right != EnumTypeTile.BLOCK)
                 {
                     imageView.setRotate(90);
                 }

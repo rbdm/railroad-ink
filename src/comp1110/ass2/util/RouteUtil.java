@@ -1,9 +1,10 @@
 package comp1110.ass2.util;
 
+import comp1110.ass2.model.EnumTypeTile;
 import comp1110.ass2.model.PositionPoint;
 import comp1110.ass2.model.Square;
-import comp1110.ass2.model.TypeSquare;
-import comp1110.ass2.model.TypeTile;
+import comp1110.ass2.model.EnumTypeSquare;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,7 +40,7 @@ public class RouteUtil
             for (int j = 1; j < width - 1; j++)
             {
                 ArrayList<PositionPoint> trackingList = new ArrayList<>();
-                int maxlength = oneStep(squares, i, j, 0, TypeTile.HIGHWAY, Direction.NONE, trackingList);
+                int maxlength = oneStep(squares, i, j, 0, EnumTypeTile.HIGHWAY, Direction.NONE, trackingList);
                 squares[i][j].longestHighWayRouteLength = maxlength;
             }
         }
@@ -49,7 +50,7 @@ public class RouteUtil
             for (int j = 1; j < width - 1; j++)
             {
                 ArrayList<PositionPoint> trackingList = new ArrayList<>();
-                int maxlength = oneStep(squares, i, j, 0, TypeTile.RAILWAY, Direction.NONE, trackingList);
+                int maxlength = oneStep(squares, i, j, 0, EnumTypeTile.RAILWAY, Direction.NONE, trackingList);
                 squares[i][j].longestRailWayRouteLength = maxlength;
             }
         }
@@ -60,16 +61,16 @@ public class RouteUtil
      * to judge a square what directions can it goes next.
      *
      * @param square         current square
-     * @param typeTile       choose typetile
+     * @param enumTypeTile       choose typetile
      * @param getInDirection how does the previous square get in.
      * @return the direction the square can approach next.
      */
-    private static List<Direction> getAccessDirection(Square square, TypeTile typeTile, Direction getInDirection)
+    private static List<Direction> getAccessDirection(Square square, EnumTypeTile enumTypeTile, Direction getInDirection)
     {
 
         List<Direction> accessDirections = new ArrayList<>();
 
-        accessDirections.addAll(getSameTileDirection(square, typeTile));
+        accessDirections.addAll(getSameTileDirection(square, enumTypeTile));
 
         //remove InDirection no turn round
         switch (getInDirection)
@@ -113,25 +114,25 @@ public class RouteUtil
      * get the Direction list which is consist of choosen tile
      *
      * @param square   square
-     * @param typeTile highway or railway
+     * @param enumTypeTile highway or railway
      * @return same tile direction
      */
-    private static List<Direction> getSameTileDirection(Square square, TypeTile typeTile)
+    private static List<Direction> getSameTileDirection(Square square, EnumTypeTile enumTypeTile)
     {
         List<Direction> sameTileDirections = new ArrayList<>();
-        if (square.top == typeTile)
+        if (square.top == enumTypeTile)
         {
             sameTileDirections.add(Direction.TOP);
         }
-        if (square.right == typeTile)
+        if (square.right == enumTypeTile)
         {
             sameTileDirections.add(Direction.RIGHT);
         }
-        if (square.bottom == typeTile)
+        if (square.bottom == enumTypeTile)
         {
             sameTileDirections.add(Direction.BOTTOM);
         }
-        if (square.left == typeTile)
+        if (square.left == enumTypeTile)
         {
             sameTileDirections.add(Direction.LEFT);
         }
@@ -142,34 +143,34 @@ public class RouteUtil
      * to judge if the square can be get in by the getInDirection
      *
      * @param square         square
-     * @param typeTile       highway or railway
+     * @param enumTypeTile       highway or railway
      * @param getInDirection get in direction
      * @return can get in?
      */
-    private static boolean canGetIn(Square square, TypeTile typeTile, Direction getInDirection)
+    private static boolean canGetIn(Square square, EnumTypeTile enumTypeTile, Direction getInDirection)
     {
         switch (getInDirection)
         {
             case TOP:
-                if (square.bottom != typeTile)
+                if (square.bottom != enumTypeTile)
                 {
                     return false;
                 }
                 break;
             case RIGHT:
-                if (square.left != typeTile)
+                if (square.left != enumTypeTile)
                 {
                     return false;
                 }
                 break;
             case BOTTOM:
-                if (square.top != typeTile)
+                if (square.top != enumTypeTile)
                 {
                     return false;
                 }
                 break;
             case LEFT:
-                if (square.right != typeTile)
+                if (square.right != enumTypeTile)
                 {
                     return false;
                 }
@@ -204,17 +205,17 @@ public class RouteUtil
      * @param x              current square x
      * @param y              current square y
      * @param deepth         last square's deepth(route length)
-     * @param typeTile       choosen tile type
+     * @param enumTypeTile       choosen tile type
      * @param getInDirection how to get in current square? top ....
      * @param trackingList   tracking list
      * @return current square's deepth(route length)
      */
-    private static int oneStep(Square[][] squareRoutes, int x, int y, int deepth, TypeTile typeTile, Direction getInDirection, List<PositionPoint> trackingList)
+    private static int oneStep(Square[][] squareRoutes, int x, int y, int deepth, EnumTypeTile enumTypeTile, Direction getInDirection, List<PositionPoint> trackingList)
     {
 
         Square square = squareRoutes[x][y];
         //can get in from the previous square's dirction?
-        if (! canGetIn(square, typeTile, getInDirection))
+        if (! canGetIn(square, enumTypeTile, getInDirection))
         {
             return deepth;
         }
@@ -224,13 +225,13 @@ public class RouteUtil
             return deepth;
         }
         // do the track meet the wall
-        if (square.type == TypeSquare.WALL || square.type == TypeSquare.EXIT || square.type == TypeSquare.EMPTY)
+        if (square.type == EnumTypeSquare.WALL || square.type == EnumTypeSquare.EXIT || square.type == EnumTypeSquare.EMPTY)
         {
             return deepth;
         }
         trackingList.add(square.positionPoint);
         deepth = deepth + 1;
-        List<Direction> accessDirections = getAccessDirection(square, typeTile, getInDirection);
+        List<Direction> accessDirections = getAccessDirection(square, enumTypeTile, getInDirection);
         int maxDepth = deepth;
 
         int tmpDepth=0;
@@ -239,16 +240,16 @@ public class RouteUtil
             switch (direction)
             {
                 case TOP:
-                    tmpDepth = oneStep(squareRoutes, x - 1, y, deepth, typeTile, Direction.TOP, trackingList);
+                    tmpDepth = oneStep(squareRoutes, x - 1, y, deepth, enumTypeTile, Direction.TOP, trackingList);
                     break;
                 case RIGHT:
-                    tmpDepth = oneStep(squareRoutes, x, y + 1, deepth, typeTile, Direction.RIGHT, trackingList);
+                    tmpDepth = oneStep(squareRoutes, x, y + 1, deepth, enumTypeTile, Direction.RIGHT, trackingList);
                     break;
                 case BOTTOM:
-                    tmpDepth = oneStep(squareRoutes, x + 1, y, deepth, typeTile, Direction.BOTTOM, trackingList);
+                    tmpDepth = oneStep(squareRoutes, x + 1, y, deepth, enumTypeTile, Direction.BOTTOM, trackingList);
                     break;
                 case LEFT:
-                    tmpDepth = oneStep(squareRoutes, x, y - 1, deepth, typeTile, Direction.LEFT, trackingList);
+                    tmpDepth = oneStep(squareRoutes, x, y - 1, deepth, enumTypeTile, Direction.LEFT, trackingList);
                     break;
             }
             if (maxDepth < tmpDepth)

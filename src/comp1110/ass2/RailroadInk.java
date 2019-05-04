@@ -2,7 +2,6 @@ package comp1110.ass2;
 
 import comp1110.ass2.model.Board;
 import comp1110.ass2.model.Square;
-import comp1110.ass2.model.TypeTile;
 
 public class RailroadInk {
     /**

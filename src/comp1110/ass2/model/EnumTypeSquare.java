@@ -6,7 +6,7 @@ package comp1110.ass2.model;
  * Time: 19:47
  * Description:
  */
-public enum  TypeSquare
+public enum EnumTypeSquare
 {
 
     TILE,

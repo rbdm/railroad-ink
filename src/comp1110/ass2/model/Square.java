@@ -1,26 +1,23 @@
 package comp1110.ass2.model;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class Square
 {
     /**
      * top TileType
      */
-    public TypeTile top;
+    public EnumTypeTile top;
     /**
      * right TileType
      */
-    public TypeTile right;
+    public EnumTypeTile right;
     /**
      * bottom TileType
      */
-    public TypeTile bottom;
+    public EnumTypeTile bottom;
     /**
      * left TileType
      */
-    public TypeTile left;
+    public EnumTypeTile left;
     /**
      * is the center overpass?
      */
@@ -32,7 +29,7 @@ public class Square
     /**
      * Square Type
      */
-    public TypeSquare type;
+    public EnumTypeSquare type;
     /**
      * Square position
      */
@@ -50,7 +47,7 @@ public class Square
     public boolean connectedByTwoWay=false;
 
 
-    public Square(TypeTile top, TypeTile right, TypeTile bottom, TypeTile left, Boolean isOverpass, String name,TypeSquare type)
+    public Square(EnumTypeTile top, EnumTypeTile right, EnumTypeTile bottom, EnumTypeTile left, Boolean isOverpass, String name, EnumTypeSquare type)
     {
         this.top = top;
         this.right = right;

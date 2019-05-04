@@ -37,7 +37,7 @@ public class OurTest
         int errorScore=ExitUtil.getErrorScore(mapOfBoard);
         int centerScore=ExitUtil.getCenterScore(mapOfBoard);
         System.out.print("exit "+exitScore+", center "+centerScore+", error "+errorScore);
-        //List<Square> X = ExitUtil.getConnectedNeighbour(map[0][2],map,TypeTile.BLOCK);
+        //List<Square> X = ExitUtil.getConnectedNeighbour(map[0][2],map,EnumTypeTile.BLOCK);
         //List<Square> X = ExitUtil.allRoute(map[1][6], map, map[0][6], new ArrayList<>());
         //System.out.println(conType(map[2][2],map[2][1]));
         //System.out.println(map[0][2].positionPoint.getY());
