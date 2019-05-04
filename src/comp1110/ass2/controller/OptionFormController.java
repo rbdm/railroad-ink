@@ -82,6 +82,15 @@ public class OptionFormController implements Initializable
         {
             System.out.println("finish option selection");
             //TODO get the new windows
+            Stage optionFormStage = StageManager.stageMap.get("OptionFormStage");
+            optionFormStage.hide();
+            Stage gameStage = new Stage();
+            Parent root = FXMLLoader.load(ClassLoader.getSystemResource("guidemo/gameStage.fxml"));
+            Scene scene = new Scene(root);
+            gameStage.setScene(scene);
+            gameStage.setTitle("gameStage");
+            gameStage.show();
+            StageManager.stageMap.put("gameStage",gameStage);
 
         }
         StageManager.playerNumber--;

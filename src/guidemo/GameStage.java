@@ -1,4 +1,4 @@
-package comp1110.ass2.controller;
+package guidemo;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
