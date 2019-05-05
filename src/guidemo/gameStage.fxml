@@ -11,10 +11,9 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-
 <AnchorPane prefHeight="768.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="guidemo.GameStage">
    <children>
-      <GridPane gridLinesVisible="true" layoutX="689.0" layoutY="126.0" AnchorPane.rightAnchor="160.0" AnchorPane.topAnchor="125.0">
+      <GridPane fx:id="gridPane_special" gridLinesVisible="true" layoutX="689.0" layoutY="126.0" AnchorPane.rightAnchor="160.0" AnchorPane.topAnchor="125.0">
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="60.0" />
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="60.0" />
@@ -25,39 +24,39 @@
           <RowConstraints minHeight="10.0" prefHeight="60.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <ImageView fx:id="tile_s0" fitHeight="60.0" fitWidth="60.0" onScroll="#tileRotateFlip" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="tile_s0" fitHeight="60.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../comp1110/ass2/gui/assets/S0.png" />
                </image>
             </ImageView>
-            <ImageView fx:id="tile_s1" fitHeight="60.0" fitWidth="60.0" onScroll="#tileRotateFlip" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1">
+            <ImageView fx:id="tile_s1" fitHeight="60.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1">
                <image>
                   <Image url="@../comp1110/ass2/gui/assets/S1.png" />
                </image>
             </ImageView>
-            <ImageView fx:id="tile_s2" fitHeight="60.0" fitWidth="60.0" onScroll="#tileRotateFlip" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="1">
+            <ImageView fx:id="tile_s2" fitHeight="60.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="1">
                <image>
                   <Image url="@../comp1110/ass2/gui/assets/S2.png" />
                </image>
             </ImageView>
-            <ImageView fx:id="tile_s3" fitHeight="60.0" fitWidth="60.0" onScroll="#tileRotateFlip" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="1">
+            <ImageView fx:id="tile_s3" fitHeight="60.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="1">
                <image>
                   <Image url="@../comp1110/ass2/gui/assets/S3.png" />
                </image>
             </ImageView>
-            <ImageView fx:id="tile_s4" fitHeight="60.0" fitWidth="60.0" onScroll="#tileRotateFlip" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="2">
+            <ImageView fx:id="tile_s4" fitHeight="60.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="2">
                <image>
                   <Image url="@../comp1110/ass2/gui/assets/S4.png" />
                </image>
             </ImageView>
-            <ImageView fx:id="tile_s5" fitHeight="60.0" fitWidth="60.0" onScroll="#tileRotateFlip" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="2">
+            <ImageView fx:id="tile_s5" fitHeight="60.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="2">
                <image>
                   <Image url="@../comp1110/ass2/gui/assets/S5.png" />
                </image>
             </ImageView>
          </children>
       </GridPane>
-      <GridPane gridLinesVisible="true" layoutX="699.0" layoutY="136.0" AnchorPane.rightAnchor="160.0" AnchorPane.topAnchor="330.0">
+      <GridPane fx:id="gridPane_dice" gridLinesVisible="true" layoutX="699.0" layoutY="136.0" AnchorPane.rightAnchor="160.0" AnchorPane.topAnchor="330.0">
          <columnConstraints>
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="60.0" />
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="60.0" />
@@ -67,14 +66,14 @@
             <RowConstraints minHeight="10.0" prefHeight="60.0" vgrow="SOMETIMES" />
          </rowConstraints>
          <children>
-            <ImageView fx:id="dice_1" fitHeight="60.0" fitWidth="60.0" onScroll="#tileRotateFlip" pickOnBounds="true" preserveRatio="true" />
-            <ImageView fx:id="dice_2" fitHeight="60.0" fitWidth="60.0" onScroll="#tileRotateFlip" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" />
-            <ImageView fx:id="dice_3" fitHeight="60.0" fitWidth="60.0" onScroll="#tileRotateFlip" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="1" />
-            <ImageView fx:id="dice_4" fitHeight="60.0" fitWidth="60.0" onScroll="#tileRotateFlip" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <ImageView fx:id="dice_1" fitHeight="60.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="dice_2" fitHeight="60.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" />
+            <ImageView fx:id="dice_3" fitHeight="60.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="1" />
+            <ImageView fx:id="dice_4" fitHeight="60.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="1" />
          </children>
       </GridPane>
-      <Button layoutX="769.0" layoutY="479.0" mnemonicParsing="false" onMouseClicked="#btn_nextTurn_click" text="Next turn" AnchorPane.bottomAnchor="265.0" />
-      <GridPane gridLinesVisible="true" layoutX="189.0" layoutY="240.0" AnchorPane.leftAnchor="78.0" AnchorPane.topAnchor="120.0">
+      <Button fx:id="btn_next" layoutX="769.0" layoutY="479.0" mnemonicParsing="false" onMouseClicked="#btn_nextTurn_click" text="Next turn" />
+      <GridPane fx:id="gridPane_board" gridLinesVisible="true" layoutX="189.0" layoutY="240.0" AnchorPane.leftAnchor="78.0" AnchorPane.topAnchor="120.0">
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="60.0" />
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="60.0" />
@@ -99,7 +98,32 @@
         </rowConstraints>
       </GridPane>
       <Text layoutX="704.0" layoutY="90.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Remaining chance for special tiles: " />
-      <Label layoutX="913.0" layoutY="74.0" text="3" textFill="#c40d0d">
+      <Label fx:id="num_remainST" layoutX="913.0" layoutY="74.0" text="3" textFill="#c40d0d">
+         <font>
+            <Font name="System Bold Italic" size="16.0" />
+         </font>
+      </Label>
+      <Text layoutX="348.0" layoutY="90.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Round: ">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Text>
+      <Text layoutX="78.0" layoutY="90.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Player">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Text>
+      <Label fx:id="num_player" layoutX="130.0" layoutY="73.0" text="1" textFill="#d30f0f">
+         <font>
+            <Font name="System Bold Italic" size="16.0" />
+         </font>
+      </Label>
+      <Label fx:id="name_player" layoutX="160.0" layoutY="73.0" text="Name">
+         <font>
+            <Font size="17.0" />
+         </font>
+      </Label>
+      <Label fx:id="num_round" layoutX="407.0" layoutY="74.0" text="1" textFill="#cf1515">
          <font>
             <Font name="System Bold Italic" size="16.0" />
          </font>

@@ -1,6 +1,7 @@
 package comp1110.ass2.controller;
 
 import comp1110.ass2.util.StageManager;
+import guidemo.GameStage;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableArray;
 import javafx.collections.ObservableList;
@@ -41,6 +42,7 @@ public class StartFormController implements Initializable
         Stage startFormStage = StageManager.stageMap.get("StartFormStage");
         startFormStage.hide();
         StageManager.playerNumber = Integer.valueOf(comboBox_PlayerNumber.getValue().toString());
+        GameStage.totalPlayerNum = Integer.valueOf(comboBox_PlayerNumber.getValue().toString());
 
         //open a stage
         StageManager.playerNumber--;
