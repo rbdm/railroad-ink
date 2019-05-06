@@ -1,6 +1,7 @@
 package comp1110.ass2.util;
 
 import comp1110.ass2.model.Player;
+import guidemo.GameStage;
 import javafx.stage.Stage;
 
 import java.util.ArrayList;
@@ -20,5 +21,7 @@ public class StageManager
     public static List<Player> playerList = new ArrayList<>();
     public static Map<String, Stage> stageMap=new HashMap<String, Stage>();
     public static Map<String, Object> controllerMap=new HashMap<String, Object>();
+    public static Map<Integer,GameStage> gameStageMap = new HashMap<>();
+
 
 }

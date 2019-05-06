@@ -19,7 +19,7 @@ public class Player
     /**
      * the player name
      */
-    private String playerName;
+    public String playerName;
     /**
      * the round index.
      */
@@ -45,6 +45,10 @@ public class Player
      * AI difficulty, only use in AI mode.
      */
     private EnumTypeDifficulty difficulty ;
+
+    public String getPlayerName(){
+        return playerName;
+    }
 
     public Player(String playerName, String playerType, String difficulty)
     {

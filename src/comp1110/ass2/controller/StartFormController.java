@@ -44,6 +44,8 @@ public class StartFormController implements Initializable
         StageManager.playerNumber = Integer.valueOf(comboBox_PlayerNumber.getValue().toString());
         GameStage.totalPlayerNum = Integer.valueOf(comboBox_PlayerNumber.getValue().toString());
 
+
+
         //open a stage
         StageManager.playerNumber--;
         Stage stage = new Stage();

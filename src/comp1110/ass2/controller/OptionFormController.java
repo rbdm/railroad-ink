@@ -2,6 +2,7 @@ package comp1110.ass2.controller;
 
 import comp1110.ass2.model.Player;
 import comp1110.ass2.util.StageManager;
+import guidemo.GameStage;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -78,19 +79,22 @@ public class OptionFormController implements Initializable
         System.out.println(player.toString());
         StageManager.playerList.add(player);
 
+
         if(StageManager.playerNumber==0)
         {
             System.out.println("finish option selection");
             //TODO get the new windows
+            GameStage gameStageOne = new GameStage();
+            Parent rootOne = FXMLLoader.load(ClassLoader.getSystemResource("guidemo/gameStage.fxml"));
+            Scene sceneOne = new Scene(rootOne);
+            gameStageOne.setScene(sceneOne);
+            gameStageOne.setTitle("gameStage");
+            StageManager.gameStageMap.put(1,gameStageOne);
+
             Stage optionFormStage = StageManager.stageMap.get("OptionFormStage");
             optionFormStage.hide();
-            Stage gameStage = new Stage();
-            Parent root = FXMLLoader.load(ClassLoader.getSystemResource("guidemo/gameStage.fxml"));
-            Scene scene = new Scene(root);
-            gameStage.setScene(scene);
-            gameStage.setTitle("gameStage");
-            gameStage.show();
-            StageManager.stageMap.put("gameStage",gameStage);
+            gameStageOne.show();
+
 
         }
         StageManager.playerNumber--;
