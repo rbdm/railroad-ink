@@ -67,21 +67,16 @@ public class GameStage implements Initializable {
             this.setFitHeight(60);
             this.setFitWidth(60);
             setOnMouseClicked(event -> {
-                if (rotate!=3&&rotate<7){
-                    rotate++;
-                    this.setRotate(90);
+                // if not right click ,return.
+                if(event.getButton()!= MouseButton.SECONDARY)
+                {
+                    return;
                 }
-                else if (rotate==3){
-                    rotate++;
-                    this.setRotate(90);
-                    this.setScaleX(-1);
-                }
-                else if (rotate==7){
-                    rotate=0;
-                    this.setRotate(90);
-                    this.setScaleX(-1);
-                }
-                event.consume();
+                System.out.println("right mouse click");
+                rotate = (rotate+1)%7;
+                this.setRotate((rotate % 4) * 90);
+                this.setScaleX((rotate) < 4 ? 1 : - 1);
+
             });
         }
 
