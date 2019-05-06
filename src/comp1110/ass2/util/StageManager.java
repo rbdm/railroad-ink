@@ -21,7 +21,6 @@ public class StageManager
     public static List<Player> playerList = new ArrayList<>();
     public static Map<String, Stage> stageMap=new HashMap<String, Stage>();
     public static Map<String, Object> controllerMap=new HashMap<String, Object>();
-    public static Map<Integer,GameStage> gameStageMap = new HashMap<>();
 
 
 }
