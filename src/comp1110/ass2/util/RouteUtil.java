@@ -17,7 +17,7 @@ import java.util.List;
 public class RouteUtil
 {
 
-    enum Direction
+    public enum Direction
     {
         TOP, LEFT, BOTTOM, RIGHT, NONE
     }
@@ -65,9 +65,12 @@ public class RouteUtil
      * @param getInDirection how does the previous square get in.
      * @return the direction the square can approach next.
      */
-    private static List<Direction> getAccessDirection(Square square, EnumTypeTile enumTypeTile, Direction getInDirection)
+    public static List<Direction> getAccessDirection(Square square, EnumTypeTile enumTypeTile, Direction getInDirection)
     {
-
+        if(square == null)
+        {
+            return new ArrayList<>();
+        }
         List<Direction> accessDirections = new ArrayList<>();
 
         accessDirections.addAll(getSameTileDirection(square, enumTypeTile));
@@ -120,6 +123,11 @@ public class RouteUtil
     private static List<Direction> getSameTileDirection(Square square, EnumTypeTile enumTypeTile)
     {
         List<Direction> sameTileDirections = new ArrayList<>();
+        if(square==null)
+        {
+            return null;
+        }
+
         if (square.top == enumTypeTile)
         {
             sameTileDirections.add(Direction.TOP);
@@ -186,8 +194,13 @@ public class RouteUtil
      * @param trackingList     tracking list
      * @return is Loop
      */
-    private static boolean isLoop(PositionPoint curPositionPoint, List<PositionPoint> trackingList)
+    public static boolean isLoop(PositionPoint curPositionPoint, List<PositionPoint> trackingList)
     {
+        if(trackingList == null || curPositionPoint == null)
+        {
+            return false;
+        }
+
         for (PositionPoint positionPoint : trackingList)
         {
             if (positionPoint.getX() == curPositionPoint.getX() && positionPoint.getY() == curPositionPoint.getY())
