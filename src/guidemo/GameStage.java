@@ -55,9 +55,11 @@ public class GameStage implements Initializable {
                     return;
                 }
                 System.out.println("right mouse click");
-                rotate = (rotate+1)%7;
-                this.setRotate((rotate % 4) * 90);
+                if(rotate<7){rotate++;}
+                else if (rotate==7){rotate=0;}
                 this.setScaleX((rotate) < 4 ? 1 : - 1);
+                this.setRotate( (rotate%4)* 90);
+
 
             });
         }
@@ -73,7 +75,8 @@ public class GameStage implements Initializable {
                     return;
                 }
                 System.out.println("right mouse click");
-                rotate = (rotate+1)%7;
+                if(rotate<7){rotate++;}
+                else if (rotate==7){rotate=0;}
                 this.setRotate((rotate % 4) * 90);
                 this.setScaleX((rotate) < 4 ? 1 : - 1);
 
@@ -82,6 +85,11 @@ public class GameStage implements Initializable {
 
         public void setTileName(String tileName) {
             this.tileName = tileName;
+        }
+        public void setRotateToZero(){
+            this.rotate=0;
+            this.setRotate((rotate % 4) * 90);
+            this.setScaleX((rotate) < 4 ? 1 : - 1);
         }
 
 
@@ -137,6 +145,10 @@ public class GameStage implements Initializable {
         dice_3.setImage(d3);
         Image d4 = new Image(Viewer.class.getResource("")+"assets/"+diceRoll.substring(6,8)+".png");
         dice_4.setImage(d4);
+        dice_1.setRotateToZero();
+        dice_2.setRotateToZero();
+        dice_3.setRotateToZero();
+        dice_4.setRotateToZero();
         gridPane_dice.add(dice_1,0,0);
         gridPane_dice.add(dice_2,1,0);
         gridPane_dice.add(dice_3,0,1);
