@@ -149,10 +149,12 @@ public class GameStage implements Initializable {
         dice_2.setRotateToZero();
         dice_3.setRotateToZero();
         dice_4.setRotateToZero();
-        gridPane_dice.add(dice_1,0,0);
-        gridPane_dice.add(dice_2,1,0);
-        gridPane_dice.add(dice_3,0,1);
-        gridPane_dice.add(dice_4,1,1);
+        dice_1.setTileName(diceRoll.substring(0,2));
+        dice_2.setTileName(diceRoll.substring(2,4));
+        dice_3.setTileName(diceRoll.substring(4,6));
+        dice_4.setTileName(diceRoll.substring(6,8));
+        gridPane_dice.getChildren().removeAll();
+
     }
 
     @FXML
@@ -201,6 +203,10 @@ public class GameStage implements Initializable {
         gridPane_special.add(tile_s3,1,1);
         gridPane_special.add(tile_s4,0,2);
         gridPane_special.add(tile_s5,1,2);
+        gridPane_dice.add(dice_1,0,0);
+        gridPane_dice.add(dice_2,1,0);
+        gridPane_dice.add(dice_3,0,1);
+        gridPane_dice.add(dice_4,1,1);
 
     }
 
