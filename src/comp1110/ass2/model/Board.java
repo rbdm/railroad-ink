@@ -347,12 +347,15 @@ public class Board
      * @param dice one of the dice rolled in this turn, like 'A0' or 'B1'
      * @return String placementString or emptyString
      */
-    private String getPossibleDicePlacement(String dice) {
+    public String getPossibleDicePlacement(String dice) {
         String emptyString = "";
         for (char row='A'; row<='G'; row++) {
             for (char col='1'; col<='6'; col++) {
                 for (char orientation='0'; orientation<='7'; orientation++) {
                     String placementString = dice + row + col + orientation;
+                    if (getSquareFormSquareString(placementString) == null) {
+                        throw new IllegalArgumentException();
+                    }
                     if (isValidPlacement(getSquareFormSquareString(placementString))) {
                         return placementString;
                     }
