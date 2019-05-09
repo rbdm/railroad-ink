@@ -52,9 +52,10 @@ public class getPossibleDicePlacementTest {
         }
     }
 
-    // uses 2 board condition: regularly filled and empty board
+    // uses 3 board conditions: almost full, regularly filled and empty board
     private String[] NORMAL_BOARD_STRINGS = {
             "A3D53A0B52A2B63A4D41B0E60A0F61A3D31A3D23A2G30B0F34A3E32A1B01B2B10A1B21A0A63A4D01A1G41B0G12S2D10A4C10B2A10A2B33B0A30S4E11A4E21A3C21",
+            "A4A50A1A30A1G30B0F30",
             ""
     };
 
@@ -75,6 +76,10 @@ public class getPossibleDicePlacementTest {
             "A1A21",
             "S5A20",
             "B2A20",
+            "A0B30",
+            "A1B30",
+            "S5A10",
+            "B2A10",
             "A0A30",
             "A1A30",
             "S5A10",
