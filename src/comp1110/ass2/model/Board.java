@@ -353,6 +353,9 @@ public class Board
             for (char col='1'; col<='6'; col++) {
                 for (char orientation='0'; orientation<='7'; orientation++) {
                     String placementString = dice + row + col + orientation;
+                    if (getSquareFormSquareString(placementString) == null) {
+                        throw new IllegalArgumentException();
+                    }
                     if (isValidPlacement(getSquareFormSquareString(placementString))) {
                         return placementString;
                     }
