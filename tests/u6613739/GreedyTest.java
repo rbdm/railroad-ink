@@ -43,6 +43,11 @@ public class GreedyTest
     public void testGreedyCanNotPut()
     {
 
+        String map ="A3D61A3D53B0C52A0B52A2B63A4D41B0E60A0F61A3D31A3D23A2G30B0F34A3E32A1B01B2B10A1B21A0A63A4D01A1G41B0G12S2D10A4C10B2A10A2B33A1A30S4E11A4E21A3C21A3C31S5F11A4C41A4F21A4A50A4G50A4F50A4E50";
+        String diceRoll = "A4";
+        String ref = "";
+        String result = PlacementUtil.getPlacementByGreedyAlgorithm(map,diceRoll,false);
+        assertTrue(String.format("the expected ref is: %s, while the res is: %s",ref,result),ref.equals(result));
     }
     @Test
     public void testGreedyEmpty()
