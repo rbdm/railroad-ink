@@ -18,10 +18,19 @@ import java.util.regex.Pattern;
 public class PlacementUtil
 {
     static String currentPlacment = null;
-    static String bestPlacement = null;
+    static String bestPlacement = "";
     static Integer bestScore = Integer.MIN_VALUE;
+
+    private static void initialize()
+    {
+        currentPlacment = null;
+        bestPlacement = "";
+        bestScore = Integer.MIN_VALUE;
+    }
+
     public static String getPlacementByGreedyAlgorithm(String currentPlacementString,String diceRoll,boolean CanSpeicalTile)
     {
+        initialize();
         currentPlacment = currentPlacementString;
         Tile tile = new Tile();
         List<String> diceList = new ArrayList<>();
@@ -40,7 +49,7 @@ public class PlacementUtil
         if(deepth == diceList.size())
         {
             int score = evaluation(combination);
-            System.out.println("the current combination is: "+combination+", and it scores: "+score);
+            //System.out.println("the current combination is: "+combination+", and it scores: "+score);
             if(score>bestScore)
             {
                 bestScore = score;
