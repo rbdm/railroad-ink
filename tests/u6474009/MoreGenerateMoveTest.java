@@ -1,5 +1,7 @@
-package comp1110.ass2;
+package u6474009;
 
+import comp1110.ass2.RailroadInk;
+import org.junit.Assert;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
@@ -16,7 +18,7 @@ public class MoreGenerateMoveTest {
         int indexOfExpectedMove = 0;
         for (String bs : BOARD_STRINGS) {
             for (String dr : DICE_ROLLS) {
-                assertEquals(EXPECTED_MOVES[indexOfExpectedMove], RailroadInk.generateMove(bs, dr));
+                Assert.assertEquals(EXPECTED_MOVES[indexOfExpectedMove], RailroadInk.generateMove(bs, dr));
                 indexOfExpectedMove++;
             }
         }
