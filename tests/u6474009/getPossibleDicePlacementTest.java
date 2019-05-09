@@ -13,7 +13,7 @@ public class getPossibleDicePlacementTest {
      * Checks the output for some regular combination of boards and dices
      */
     @Test
-    public void testNormalBoards() {
+    public void testRegularCases() {
         int resultIndex = 0;
         for (String bs : NORMAL_BOARD_STRINGS) {
             for (String d : VALID_DICES) {
