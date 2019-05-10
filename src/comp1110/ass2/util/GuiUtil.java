@@ -40,7 +40,7 @@ public class GuiUtil
             String squareString = placementString.substring(i, i + 5);
             Square square = board.getSquareFormSquareString(squareString);
 
-            Image image = new Image( rootImgUrl + squareString.substring(0, 2) + ".png");
+            Image image = new Image( rootImgUrl + squareString.substring(0, 2) + ".jpg");
             ImageView imageView = board.imageViews[square.positionPoint.getX()][square.positionPoint.getY()];
             imageView.setImage(image);
             imageView.setRotate(((squareString.charAt(4) - '0') % 4) * 90);
@@ -55,26 +55,26 @@ public class GuiUtil
             for (int j = 0; j < board.getMap().length; j++)
             {
                 Square square = board.getMap()[i][j];
-                String name = rootImgUrl + "WALL.png";
+                String name = rootImgUrl + "WALL.jpg";
                 switch (square.type)
                 {
                     case EXIT:
                         if (square.top == EnumTypeTile.RAILWAY || square.left == EnumTypeTile.RAILWAY || square.right == EnumTypeTile.RAILWAY || square.bottom == EnumTypeTile.RAILWAY)
                         {
-                            name = rootImgUrl + "RailExit.png";
+                            name = rootImgUrl + "RailExit.jpg";
                         }
                         else if (square.top == EnumTypeTile.HIGHWAY || square.left == EnumTypeTile.HIGHWAY || square.right == EnumTypeTile.HIGHWAY || square.bottom == EnumTypeTile.HIGHWAY)
                         {
                             {
-                                name = rootImgUrl + "HighExit.png";
+                                name = rootImgUrl + "HighExit.jpg";
                             }
                         }
                         break;
                     case WALL:
-                        name = rootImgUrl + "WALL.png";
+                        name = rootImgUrl + "WALL.jpg";
                         break;
                     case EMPTY:
-                        name = rootImgUrl + "EMPTY.png";
+                        name = rootImgUrl + "EMPTY.jpg";
                         break;
                     default:
                         name = rootImgUrl + "Board.jpg";

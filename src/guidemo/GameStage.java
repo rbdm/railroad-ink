@@ -60,6 +60,7 @@ public class GameStage implements Initializable {
                 this.setScaleX((rotate) < 4 ? 1 : - 1);
                 this.setRotate( (rotate%4)* 90);
 
+                event.consume();
 
             });
         }
@@ -79,6 +80,9 @@ public class GameStage implements Initializable {
                 else if (rotate==7){rotate=0;}
                 this.setRotate((rotate % 4) * 90);
                 this.setScaleX((rotate) < 4 ? 1 : - 1);
+
+                event.consume();
+
 
             });
         }
@@ -137,13 +141,13 @@ public class GameStage implements Initializable {
 
     void setDiceRoll(){
         diceRoll=RailroadInk.generateDiceRoll();
-        Image d1 = new Image(Viewer.class.getResource("")+"assets/"+diceRoll.substring(0,2)+".png");
+        Image d1 = new Image(Viewer.class.getResource("")+"assets/"+diceRoll.substring(0,2)+".jpg");
         dice_1.setImage(d1);
-        Image d2 = new Image(Viewer.class.getResource("")+"assets/"+diceRoll.substring(2,4)+".png");
+        Image d2 = new Image(Viewer.class.getResource("")+"assets/"+diceRoll.substring(2,4)+".jpg");
         dice_2.setImage(d2);
-        Image d3 = new Image(Viewer.class.getResource("")+"assets/"+diceRoll.substring(4,6)+".png");
+        Image d3 = new Image(Viewer.class.getResource("")+"assets/"+diceRoll.substring(4,6)+".jpg");
         dice_3.setImage(d3);
-        Image d4 = new Image(Viewer.class.getResource("")+"assets/"+diceRoll.substring(6,8)+".png");
+        Image d4 = new Image(Viewer.class.getResource("")+"assets/"+diceRoll.substring(6,8)+".jpg");
         dice_4.setImage(d4);
         dice_1.setRotateToZero();
         dice_2.setRotateToZero();
@@ -183,12 +187,12 @@ public class GameStage implements Initializable {
         num_player.setText(String.valueOf(currentPlayer));
         this.name_player.setText(name);
         num_round.setText(String.valueOf(round));
-        Image s0 = new Image(Viewer.class.getResource("")+"assets/S0.png");
-        Image s1 = new Image(Viewer.class.getResource("")+"assets/S1.png");
-        Image s2 = new Image(Viewer.class.getResource("")+"assets/S2.png");
-        Image s3 = new Image(Viewer.class.getResource("")+"assets/S3.png");
-        Image s4 = new Image(Viewer.class.getResource("")+"assets/S4.png");
-        Image s5 = new Image(Viewer.class.getResource("")+"assets/S5.png");
+        Image s0 = new Image(Viewer.class.getResource("")+"assets/S0.jpg");
+        Image s1 = new Image(Viewer.class.getResource("")+"assets/S1.jpg");
+        Image s2 = new Image(Viewer.class.getResource("")+"assets/S2.jpg");
+        Image s3 = new Image(Viewer.class.getResource("")+"assets/S3.jpg");
+        Image s4 = new Image(Viewer.class.getResource("")+"assets/S4.jpg");
+        Image s5 = new Image(Viewer.class.getResource("")+"assets/S5.jpg");
         tile_s0.setImage(s0);
         tile_s1.setImage(s1);
         tile_s2.setImage(s2);
