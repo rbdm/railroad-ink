@@ -212,12 +212,13 @@ public class GameStage implements Initializable {
     private draggableTiles tile_s3=new draggableTiles(1,1);
     private draggableTiles tile_s4=new draggableTiles(0,2);
     private draggableTiles tile_s5=new draggableTiles(1,2);
-    private draggableTiles dice_1=new draggableTiles(0,0);
-    private draggableTiles dice_2=new draggableTiles(1,0);
-    private draggableTiles dice_3=new draggableTiles(0,1);
-    private draggableTiles dice_4=new draggableTiles(1,1);
+
 
     void setDiceRoll(){
+        draggableTiles dice_1=new draggableTiles(0,0);
+        draggableTiles dice_2=new draggableTiles(1,0);
+        draggableTiles dice_3=new draggableTiles(0,1);
+        draggableTiles dice_4=new draggableTiles(1,1);
         diceRoll=RailroadInk.generateDiceRoll();
         Image d1 = new Image(Viewer.class.getResource("")+"assets/"+diceRoll.substring(0,2)+".jpg");
         dice_1.setImage(d1);
@@ -235,13 +236,49 @@ public class GameStage implements Initializable {
         dice_2.setTileName(diceRoll.substring(2,4));
         dice_3.setTileName(diceRoll.substring(4,6));
         dice_4.setTileName(diceRoll.substring(6,8));
-        gridPane_dice.getChildren().removeAll();
+        if (gridPane_dice.getChildren().size()>0){
+            gridPane_dice.getChildren().removeAll();
+        }
+        gridPane_dice.add(dice_1,0,0);
+        gridPane_dice.add(dice_2,1,0);
+        gridPane_dice.add(dice_3,0,1);
+        gridPane_dice.add(dice_4,1,1);
 
+
+    }
+
+    void setDTileAgain(){  //set Tiles without changing the dice string
+        draggableTiles dice_1=new draggableTiles(0,0);
+        draggableTiles dice_2=new draggableTiles(1,0);
+        draggableTiles dice_3=new draggableTiles(0,1);
+        draggableTiles dice_4=new draggableTiles(1,1);
+        Image d1 = new Image(Viewer.class.getResource("")+"assets/"+diceRoll.substring(0,2)+".jpg");
+        dice_1.setImage(d1);
+        Image d2 = new Image(Viewer.class.getResource("")+"assets/"+diceRoll.substring(2,4)+".jpg");
+        dice_2.setImage(d2);
+        Image d3 = new Image(Viewer.class.getResource("")+"assets/"+diceRoll.substring(4,6)+".jpg");
+        dice_3.setImage(d3);
+        Image d4 = new Image(Viewer.class.getResource("")+"assets/"+diceRoll.substring(6,8)+".jpg");
+        dice_4.setImage(d4);
+        dice_1.setRotateToZero();
+        dice_2.setRotateToZero();
+        dice_3.setRotateToZero();
+        dice_4.setRotateToZero();
+        dice_1.setTileName(diceRoll.substring(0,2));
+        dice_2.setTileName(diceRoll.substring(2,4));
+        dice_3.setTileName(diceRoll.substring(4,6));
+        dice_4.setTileName(diceRoll.substring(6,8));
+        if (gridPane_dice.getChildren().size()>0){
+            gridPane_dice.getChildren().removeAll();
+        }
+        gridPane_dice.add(dice_1,0,0);
+        gridPane_dice.add(dice_2,1,0);
+        gridPane_dice.add(dice_3,0,1);
+        gridPane_dice.add(dice_4,1,1);
     }
 
     @FXML
     void btn_nextTurn_click(MouseEvent event) {
-
 
         if (totalPlayerNum==1){
             round++;
@@ -251,6 +288,7 @@ public class GameStage implements Initializable {
         else if (totalPlayerNum>currentPlayer){
             currentPlayer++;
             name_player.setText(StageManager.playerList.get(currentPlayer-1).getPlayerName());
+            setDTileAgain();
         }
         else if (totalPlayerNum==currentPlayer){
             currentPlayer=1;
@@ -342,7 +380,6 @@ public class GameStage implements Initializable {
         Image s3 = new Image(Viewer.class.getResource("")+"assets/S3.jpg");
         Image s4 = new Image(Viewer.class.getResource("")+"assets/S4.jpg");
         Image s5 = new Image(Viewer.class.getResource("")+"assets/S5.jpg");
-
         tile_s0.setImage(s0);
         tile_s1.setImage(s1);
         tile_s2.setImage(s2);
@@ -364,14 +401,8 @@ public class GameStage implements Initializable {
         gridPane_special.add(tile_s3,1,1);
         gridPane_special.add(tile_s4,0,2);
         gridPane_special.add(tile_s5,1,2);
-        gridPane_dice.add(dice_1,0,0);
-        gridPane_dice.add(dice_2,1,0);
-        gridPane_dice.add(dice_3,0,1);
-        gridPane_dice.add(dice_4,1,1);
-
         displayWallsAndExits();
         setWarning(defaultWarning);
-
         gridPane_dice.toFront();
         gridPane_special.toFront();
     }
