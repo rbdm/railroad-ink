@@ -14,6 +14,7 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
+import javafx.stage.Stage;
 
 import java.net.URL;
 import java.util.*;
@@ -298,7 +299,6 @@ public class GameStage implements Initializable {
 
     @FXML
     void btn_nextTurn_click(MouseEvent event) {
-
         if (remainDTile>0){
             setWarning("You need to put all the 4 Normal Tiles on the board.");
         }
@@ -307,10 +307,15 @@ public class GameStage implements Initializable {
             roundST=0;
             remainDTile=4;
             num_remainDT.setText("4");
-            if (totalPlayerNum==1){
+            if (totalPlayerNum==1 && round<7){
                 round++;
                 num_round.setText(String.valueOf(round));
                 setDiceRoll();
+            }
+            else if (round==7 && totalPlayerNum==currentPlayer){
+                //todo:  open the window(stage) of ending OR(And) show the scores
+                Stage curr = StageManager.stageMap.get("gameStage");
+                curr.hide();
             }
             else if (totalPlayerNum>currentPlayer){
                 currentPlayer++;
