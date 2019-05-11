@@ -2,6 +2,7 @@ package guidemo;
 
 import com.sun.media.jfxmedia.events.PlayerEvent;
 import comp1110.ass2.gui.Viewer;
+import comp1110.ass2.model.Board;
 import comp1110.ass2.model.Player;
 import comp1110.ass2.RailroadInk;
 import comp1110.ass2.model.Tile;
@@ -21,6 +22,7 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 
 import java.net.URL;
@@ -35,19 +37,63 @@ public class GameStage implements Initializable {
     public String roundString;
     List<Integer> usedSpecialTile=new ArrayList<>();
     public String diceRoll;
+    private final int SQUARE_SIZE = 60;
+
+    /* initialize game board */
+    private Board board = new Board();
+
+    public class fixedTile extends ImageView{
+        fixedTile(){
+            this.setFitHeight(SQUARE_SIZE);
+            this.setFitWidth(SQUARE_SIZE);
+        }
+    }
 
     public class dragableTiles extends ImageView{
+
         int homeCol; int homeRow;
         int rotate;
-        int mouseX; int mouseY;
+        double mouseX; double mouseY;
+        double homeX; double homeY;
+
         String tilePlacementString;
         String tileName;
+        List<dragableTiles> availableTiles = new ArrayList<>();
+
+        private void drag(double movementX, double movementY) {
+            setLayoutX(mouseX - homeX);
+            setLayoutY(mouseY - homeY);
+            System.out.println("dragging to"+ getLayoutX()+movementX + ", "+ getLayoutY()+movementY);
+
+            this.setTranslateX(getLayoutX());
+            this.setTranslateY(getLayoutY());
+            //this.setOpacity(0.5);
+            this.toFront();
+        }
+
+        private void moveToHome() {
+            setLayoutX(0.0);
+            setLayoutY(0.0);
+
+            this.setTranslateX(getLayoutX());
+            this.setTranslateY(getLayoutY());
+            this.setOpacity(1);
+            this.toFront();
+        }
+
+        boolean onBoard() {
+            return mouseX > (gridPane_board.getLayoutX() + SQUARE_SIZE)
+                    && mouseX < (gridPane_board.getLayoutX() + gridPane_board.getWidth() - SQUARE_SIZE)
+                    && mouseY > (gridPane_board.getLayoutY() + SQUARE_SIZE)
+                    && mouseY < (gridPane_board.getLayoutY() + gridPane_board.getHeight() - SQUARE_SIZE);
+        }
+
+        // trying to merge into 1 constructor to reduce duplicate code
+        /*
         dragableTiles(int homeCol,int homeRow,String tileName){
             this.homeCol=homeCol;
             this.homeRow=homeRow;
             this.tileName=tileName;
-            this.setFitHeight(60);
-            this.setFitWidth(60);
             setOnMouseClicked(event -> {
                 // if not right click ,return.
                 if(event.getButton()!= MouseButton.SECONDARY)
@@ -64,11 +110,71 @@ public class GameStage implements Initializable {
 
             });
         }
+        */
         dragableTiles(int homeCol,int homeRow){
             this.homeCol=homeCol;
             this.homeRow=homeRow;
-            this.setFitHeight(60);
-            this.setFitWidth(60);
+            this.setFitHeight(SQUARE_SIZE);
+            this.setFitWidth(SQUARE_SIZE);
+
+            setOnMousePressed(event -> {
+                this.toFront();
+                System.out.println("recording mouse coordinate");
+
+                mouseX = event.getSceneX();
+                mouseY = event.getSceneY();
+                homeX = event.getSceneX();
+                homeY = event.getSceneY();
+
+                System.out.println("initial :"+event.getSceneX() + ", " + event.getSceneY());
+
+            });
+
+            setOnMouseDragged(event -> {
+                this.toFront();
+                double movementX = event.getSceneX() - mouseX;
+                double movementY = event.getSceneY() - mouseY;
+                this.drag(movementX, movementY);
+                mouseX = event.getSceneX();
+                mouseY = event.getSceneY();
+            });
+
+            setOnMouseReleased(event -> {
+                System.out.println("gridPane layouts: "+gridPane_board.getLayoutX() + ", "+ gridPane_board.getLayoutY());
+                System.out.println("gridPane height: "+gridPane_board.getHeight());
+                System.out.println("gridPane width: "+gridPane_board.getWidth());
+
+                if (onBoard()) {
+                    this.setOpacity(1);
+                    int boardCol = (int) (mouseX - gridPane_board.getLayoutX()) / SQUARE_SIZE;
+                    int boardRow = (int) (mouseY - gridPane_board.getLayoutY()) / SQUARE_SIZE;
+
+                    System.out.println("board col: "+boardCol);
+                    System.out.println("board row: "+boardRow);
+
+                    String boardSquareName = board.getBoardSquareNameFromPosition(boardCol, boardRow);
+                    String placementString = this.tileName + boardSquareName + this.rotate;
+                    if (board.isValidPlacement(board.getSquareFormSquareString(placementString))) {
+                        board.putPlacementStringToMap(placementString);
+
+                        if (tileName.charAt(0) == 'S') {
+                            gridPane_special.getChildren().remove(this);
+                        }
+                        else {
+                            gridPane_dice.getChildren().remove(this);
+                        }
+
+                        setTile(boardCol, boardRow, this.rotate * 90, this.getImage());
+                    }
+                    else {
+                        this.moveToHome();
+                    }
+                }
+                else {
+                    this.moveToHome();
+                }
+            });
+
             setOnMouseClicked(event -> {
                 // if not right click ,return.
                 if(event.getButton()!= MouseButton.SECONDARY)
@@ -83,7 +189,6 @@ public class GameStage implements Initializable {
 
                 event.consume();
 
-
             });
         }
 
@@ -95,22 +200,24 @@ public class GameStage implements Initializable {
             this.setRotate((rotate % 4) * 90);
             this.setScaleX((rotate) < 4 ? 1 : - 1);
         }
-
-
-
     }
 
-    private dragableTiles tile_s0=new dragableTiles(0,0,"S0");
-    private dragableTiles tile_s1=new dragableTiles(1,0,"S1");
-    private dragableTiles tile_s2=new dragableTiles(0,1,"S2");
-    private dragableTiles tile_s3=new dragableTiles(1,1,"S3");
-    private dragableTiles tile_s4=new dragableTiles(0,2,"S4");
-    private dragableTiles tile_s5=new dragableTiles(1,2,"S5");
+    //private dragableTiles tile_s0=new dragableTiles(0,0,"S0");
+    //private dragableTiles tile_s1=new dragableTiles(1,0,"S1");
+    //private dragableTiles tile_s2=new dragableTiles(0,1,"S2");
+    //private dragableTiles tile_s3=new dragableTiles(1,1,"S3");
+    //private dragableTiles tile_s4=new dragableTiles(0,2,"S4");
+    //private dragableTiles tile_s5=new dragableTiles(1,2,"S5");
+    private dragableTiles tile_s0=new dragableTiles(0,0);
+    private dragableTiles tile_s1=new dragableTiles(1,0);
+    private dragableTiles tile_s2=new dragableTiles(0,1);
+    private dragableTiles tile_s3=new dragableTiles(1,1);
+    private dragableTiles tile_s4=new dragableTiles(0,2);
+    private dragableTiles tile_s5=new dragableTiles(1,2);
     private dragableTiles dice_1=new dragableTiles(0,0);
     private dragableTiles dice_2=new dragableTiles(1,0);
     private dragableTiles dice_3=new dragableTiles(0,1);
     private dragableTiles dice_4=new dragableTiles(1,1);
-
 
     @FXML
     private GridPane gridPane_special;
@@ -163,6 +270,8 @@ public class GameStage implements Initializable {
 
     @FXML
     void btn_nextTurn_click(MouseEvent event) {
+
+
         if (totalPlayerNum==1){
             round++;
             num_round.setText(String.valueOf(round));
@@ -182,6 +291,69 @@ public class GameStage implements Initializable {
 
     }
 
+    void setTile(int col, int row, int rotation, Image image) {
+        fixedTile tile = new fixedTile();
+        tile.setImage(image);
+        tile.setRotate(rotation);
+        gridPane_board.add(tile, col, row);
+    }
+
+    void displayWallsAndExits() {
+        Image wallImage = new Image(Viewer.class.getResource("")+"assets/Wall.jpg");
+        Image railwayExitImage = new Image(Viewer.class.getResource("")+"assets/RailExit.jpg");
+        Image highwayExitImage = new Image(Viewer.class.getResource("")+"assets/HighExit.jpg");
+
+        for (int row=0; row<9; row++) {
+            for (int col=0; col<9; col++) {
+                if (col == 0) {
+                    if (row == 2 || row == 6) {
+                        setTile(col, row, 270, railwayExitImage);
+                    }
+                    else if (row == 4) {
+                        setTile(col, row, 270, highwayExitImage);
+                    }
+                    else {
+                        setTile(col, row, 0, wallImage);
+                    }
+                }
+                if (col == 8) {
+                    if (row == 2 || row == 6) {
+                        setTile(col, row, 90, railwayExitImage);
+                    }
+                    else if (row == 4) {
+                        setTile(col, row, 90, highwayExitImage);
+                    }
+                    else {
+                        setTile(col, row, 0, wallImage);
+                    }
+                }
+                if (row == 0) {
+                    if (col == 2 || col == 6) {
+                        setTile(col, row, 0, highwayExitImage);
+                    }
+                    else if (col == 4) {
+                        setTile(col, row, 0, railwayExitImage);
+                    }
+                    else {
+                        setTile(col, row, 0, wallImage);
+                    }
+                }
+                if (row == 8) {
+                    if (col == 2 || col == 6) {
+                        setTile(col, row, 180, highwayExitImage);
+                    }
+                    else if (col == 4) {
+                        setTile(col, row, 180, railwayExitImage);
+                    }
+                    else {
+                        setTile(col, row, 0, wallImage);
+                    }
+                }
+            }
+        }
+    }
+
+
     public void initialize(URL location, ResourceBundle resources){
         String name = StageManager.playerList.get(currentPlayer-1).playerName;
         num_player.setText(String.valueOf(currentPlayer));
@@ -193,12 +365,20 @@ public class GameStage implements Initializable {
         Image s3 = new Image(Viewer.class.getResource("")+"assets/S3.jpg");
         Image s4 = new Image(Viewer.class.getResource("")+"assets/S4.jpg");
         Image s5 = new Image(Viewer.class.getResource("")+"assets/S5.jpg");
+
         tile_s0.setImage(s0);
         tile_s1.setImage(s1);
         tile_s2.setImage(s2);
         tile_s3.setImage(s3);
         tile_s4.setImage(s4);
         tile_s5.setImage(s5);
+        tile_s0.setTileName("S0");
+        tile_s1.setTileName("S1");
+        tile_s2.setTileName("S2");
+        tile_s3.setTileName("S3");
+        tile_s4.setTileName("S4");
+        tile_s5.setTileName("S5");
+
         setDiceRoll();
         System.out.println(diceRoll);
         gridPane_special.add(tile_s0,0,0);
@@ -212,6 +392,7 @@ public class GameStage implements Initializable {
         gridPane_dice.add(dice_3,0,1);
         gridPane_dice.add(dice_4,1,1);
 
+        displayWallsAndExits();
     }
 
 
