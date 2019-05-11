@@ -19,6 +19,40 @@ import java.net.URL;
 import java.util.*;
 
 public class GameStage implements Initializable {
+
+    @FXML
+    private AnchorPane rootPane;
+
+    @FXML
+    private GridPane gridPane_special;
+
+    @FXML
+    private GridPane gridPane_dice;
+
+    @FXML
+    private Button btn_next;
+
+    @FXML
+    private GridPane gridPane_board;
+
+    @FXML
+    private Label num_remainST;
+
+    @FXML
+    private Label num_player;
+
+    @FXML
+    public Label name_player;
+
+    @FXML
+    private Label num_round;
+
+    @FXML
+    private Label num_remainDT;
+
+    @FXML
+    private Label warning;
+
     public static int totalPlayerNum=1;
     public int currentPlayer=1;
     public int round=1;
@@ -28,6 +62,8 @@ public class GameStage implements Initializable {
     List<Integer> usedSpecialTile=new ArrayList<>();
     public String diceRoll;
     private final int SQUARE_SIZE = 60;
+    private String defaultWarning = "Drag the available tiles to the board, then click Next Turn button to end your turn.";
+    private String placementWarning = "Invalid tile placement.";
 
     /* initialize game board */
     private Board board = new Board();
@@ -84,7 +120,7 @@ public class GameStage implements Initializable {
             this.setFitWidth(SQUARE_SIZE);
 
             setOnMousePressed(event -> {
-                this.toFront();
+                setWarning(defaultWarning);
                 System.out.println("recording mouse coordinate");
 
                 mouseX = event.getSceneX();
@@ -134,10 +170,12 @@ public class GameStage implements Initializable {
                     }
                     else {
                         this.moveToHome();
+                        setWarning(placementWarning);
                     }
                 }
                 else {
                     this.moveToHome();
+                    setWarning(placementWarning);
                 }
             });
 
@@ -178,36 +216,6 @@ public class GameStage implements Initializable {
     private draggableTiles dice_2=new draggableTiles(1,0);
     private draggableTiles dice_3=new draggableTiles(0,1);
     private draggableTiles dice_4=new draggableTiles(1,1);
-
-    @FXML
-    private AnchorPane rootPane;
-
-    @FXML
-    private GridPane gridPane_special;
-
-    @FXML
-    private GridPane gridPane_dice;
-
-    @FXML
-    private Button btn_next;
-
-    @FXML
-    private GridPane gridPane_board;
-
-    @FXML
-    private Label num_remainST;
-
-    @FXML
-    private Label num_player;
-
-    @FXML
-    public Label name_player;
-
-    @FXML
-    private Label num_round;
-
-    @FXML
-    private Label num_remainDT;
 
     void setDiceRoll(){
         diceRoll=RailroadInk.generateDiceRoll();
@@ -259,7 +267,12 @@ public class GameStage implements Initializable {
         tile.setImage(image);
         tile.setRotate(rotation);
         gridPane_board.add(tile, col, row);
+    }
 
+    void setWarning(String string) {
+        warning.setText(string);
+        if (string == defaultWarning) warning.setStyle("-fx-border-color: green; -fx-border-width: 2px; -fx-background-color: palegreen");
+        else warning.setStyle("-fx-border-color: red; -fx-border-width: 2px; -fx-background-color: lightpink");
     }
 
     void displayWallsAndExits() {
@@ -357,6 +370,8 @@ public class GameStage implements Initializable {
         gridPane_dice.add(dice_4,1,1);
 
         displayWallsAndExits();
+        setWarning(defaultWarning);
+
         gridPane_dice.toFront();
         gridPane_special.toFront();
     }
