@@ -175,6 +175,20 @@ public class Board
     }
 
     /**
+     * transfer a col, row position to boardSquareName
+     * @param col,row int coordinate like 1 or 6
+     * @return string boardSquareName, like "A0", "B1", etc
+     */
+    public String getBoardSquareNameFromPosition (int col, int row) {
+        char rowName = (char) (row + 65 - 1);
+        String colName = String.valueOf(col - 1);
+        if (col == 0 || col == 8 || row == 0 || row == 8) return null;
+        else {
+            return rowName + colName;
+        }
+    }
+
+    /**
      * judge if two squaresa are connected?
      * @param tilePlacementA Square A
      * @param tilePlacementB Square B
@@ -291,7 +305,7 @@ public class Board
      * @param square a placement square
      * @return true if there is a valid connection and there is no invalid connection to the placed tile.
      */
-    private Boolean isValidPlacement(Square square) {
+    public Boolean isValidPlacement(Square square) {
         if ( ! isEmptyPosition(square.positionPoint.getX(), square.positionPoint.getY())) return false;
         else if (square.positionPoint.getX()==-1 && square.positionPoint.getY()==-1) return false;
         else {
