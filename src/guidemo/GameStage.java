@@ -21,6 +21,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.ScrollEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
@@ -46,7 +47,9 @@ public class GameStage implements Initializable {
         fixedTile(){
             this.setFitHeight(SQUARE_SIZE);
             this.setFitWidth(SQUARE_SIZE);
+
         }
+
     }
 
     public class dragableTiles extends ImageView{
@@ -87,30 +90,6 @@ public class GameStage implements Initializable {
                     && mouseY > (gridPane_board.getLayoutY() + SQUARE_SIZE)
                     && mouseY < (gridPane_board.getLayoutY() + gridPane_board.getHeight() - SQUARE_SIZE);
         }
-
-        // trying to merge into 1 constructor to reduce duplicate code
-        /*
-        dragableTiles(int homeCol,int homeRow,String tileName){
-            this.homeCol=homeCol;
-            this.homeRow=homeRow;
-            this.tileName=tileName;
-            setOnMouseClicked(event -> {
-                // if not right click ,return.
-                if(event.getButton()!= MouseButton.SECONDARY)
-                {
-                    return;
-                }
-                System.out.println("right mouse click");
-                if(rotate<7){rotate++;}
-                else if (rotate==7){rotate=0;}
-                this.setScaleX((rotate) < 4 ? 1 : - 1);
-                this.setRotate( (rotate%4)* 90);
-
-                event.consume();
-
-            });
-        }
-        */
         dragableTiles(int homeCol,int homeRow){
             this.homeCol=homeCol;
             this.homeRow=homeRow;
@@ -202,12 +181,6 @@ public class GameStage implements Initializable {
         }
     }
 
-    //private dragableTiles tile_s0=new dragableTiles(0,0,"S0");
-    //private dragableTiles tile_s1=new dragableTiles(1,0,"S1");
-    //private dragableTiles tile_s2=new dragableTiles(0,1,"S2");
-    //private dragableTiles tile_s3=new dragableTiles(1,1,"S3");
-    //private dragableTiles tile_s4=new dragableTiles(0,2,"S4");
-    //private dragableTiles tile_s5=new dragableTiles(1,2,"S5");
     private dragableTiles tile_s0=new dragableTiles(0,0);
     private dragableTiles tile_s1=new dragableTiles(1,0);
     private dragableTiles tile_s2=new dragableTiles(0,1);
@@ -218,6 +191,9 @@ public class GameStage implements Initializable {
     private dragableTiles dice_2=new dragableTiles(1,0);
     private dragableTiles dice_3=new dragableTiles(0,1);
     private dragableTiles dice_4=new dragableTiles(1,1);
+
+    @FXML
+    private AnchorPane rootPane;
 
     @FXML
     private GridPane gridPane_special;
@@ -296,6 +272,7 @@ public class GameStage implements Initializable {
         tile.setImage(image);
         tile.setRotate(rotation);
         gridPane_board.add(tile, col, row);
+
     }
 
     void displayWallsAndExits() {
@@ -393,6 +370,8 @@ public class GameStage implements Initializable {
         gridPane_dice.add(dice_4,1,1);
 
         displayWallsAndExits();
+        gridPane_dice.toFront();
+        gridPane_special.toFront();
     }
 
 
