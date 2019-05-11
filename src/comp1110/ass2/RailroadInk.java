@@ -19,7 +19,7 @@ public class RailroadInk {
     public static boolean isTilePlacementWellFormed(String tilePlacementString) {
         // FIXME Task 2: determine whether a tile placement is well-formed
         Board board = new Board();
-        Square square = board.getSquareFormSquareString(tilePlacementString);
+        Square square = board.getSquareFromSquareString(tilePlacementString);
         if (square != null)
         {
             return true;

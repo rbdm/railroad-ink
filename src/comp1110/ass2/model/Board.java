@@ -121,7 +121,7 @@ public class Board
      * @param tilePlacementString is like "B1C54"
      * @return if valid string, return an instance of Square class. if tilePlacementString is invalid, return null.
      */
-    public Square getSquareFormSquareString(String tilePlacementString)
+    public Square getSquareFromSquareString(String tilePlacementString)
     {
         if (tilePlacementString.length() != 5)
         {
@@ -199,8 +199,8 @@ public class Board
         int colA = tilePlacementA.charAt(3);
         int rowB = tilePlacementB.charAt(2);
         int colB = tilePlacementB.charAt(3);
-        Square A = getSquareFormSquareString(tilePlacementA);
-        Square B = getSquareFormSquareString(tilePlacementB);
+        Square A = getSquareFromSquareString(tilePlacementA);
+        Square B = getSquareFromSquareString(tilePlacementB);
         //determine whether A and B are neighbours
         if (rowA != rowB && colA != colB) {
             return false;
@@ -251,7 +251,7 @@ public class Board
     public Boolean isConnectedWithExit(String tilePlacementString) {
         int row = Character.getNumericValue(tilePlacementString.charAt(2)) - 9;
         int col = Character.getNumericValue(tilePlacementString.charAt(3)) + 1;
-        Square tile = getSquareFormSquareString(tilePlacementString);
+        Square tile = getSquareFromSquareString(tilePlacementString);
 
         if (row == 1) {
             if (col != 2 && col != 4 && col != 6) return false;
@@ -346,7 +346,7 @@ public class Board
     public boolean isValidBoardStringPlacement(String boardString) {
         for (int i = 0; i < boardString.length(); i += 5) {
             String placementString = boardString.substring(i, i + 5);
-            if ( ! isValidPlacement(getSquareFormSquareString(placementString))) {
+            if ( ! isValidPlacement(getSquareFromSquareString(placementString))) {
                 return false;
             } else {
                 putPlacementStringToMap(placementString);
@@ -367,10 +367,10 @@ public class Board
             for (char col='1'; col<='6'; col++) {
                 for (char orientation='0'; orientation<='7'; orientation++) {
                     String placementString = dice + row + col + orientation;
-                    if (getSquareFormSquareString(placementString) == null) {
+                    if (getSquareFromSquareString(placementString) == null) {
                         throw new IllegalArgumentException();
                     }
-                    if (isValidPlacement(getSquareFormSquareString(placementString))) {
+                    if (isValidPlacement(getSquareFromSquareString(placementString))) {
                         return placementString;
                     }
                 }
@@ -513,7 +513,7 @@ public class Board
     {
         for(int i=0;i<placementString.length();i+=5)
         {
-            Square square =getSquareFormSquareString(placementString.substring(i,i+5));
+            Square square =getSquareFromSquareString(placementString.substring(i,i+5));
             map[square.positionPoint.getX()][square.positionPoint.getY()] = square;
 
         }

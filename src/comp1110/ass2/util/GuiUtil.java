@@ -38,7 +38,7 @@ public class GuiUtil
         for (int i = 0; i < placementString.length(); i += 5)
         {
             String squareString = placementString.substring(i, i + 5);
-            Square square = board.getSquareFormSquareString(squareString);
+            Square square = board.getSquareFromSquareString(squareString);
 
             Image image = new Image( rootImgUrl + squareString.substring(0, 2) + ".jpg");
             ImageView imageView = board.imageViews[square.positionPoint.getX()][square.positionPoint.getY()];

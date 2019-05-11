@@ -1,30 +1,19 @@
 package guidemo;
 
-import com.sun.media.jfxmedia.events.PlayerEvent;
 import comp1110.ass2.gui.Viewer;
 import comp1110.ass2.model.Board;
-import comp1110.ass2.model.Player;
 import comp1110.ass2.RailroadInk;
-import comp1110.ass2.model.Tile;
 import comp1110.ass2.util.StageManager;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Group;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
-import javafx.stage.Stage;
 
 import java.net.URL;
 import java.util.*;
@@ -47,12 +36,10 @@ public class GameStage implements Initializable {
         fixedTile(){
             this.setFitHeight(SQUARE_SIZE);
             this.setFitWidth(SQUARE_SIZE);
-
         }
-
     }
 
-    public class dragableTiles extends ImageView{
+    public class draggableTiles extends ImageView{
 
         int homeCol; int homeRow;
         int rotate;
@@ -61,7 +48,7 @@ public class GameStage implements Initializable {
 
         String tilePlacementString;
         String tileName;
-        List<dragableTiles> availableTiles = new ArrayList<>();
+        List<draggableTiles> availableTiles = new ArrayList<>();
 
         private void drag(double movementX, double movementY) {
             setLayoutX(mouseX - homeX);
@@ -70,7 +57,7 @@ public class GameStage implements Initializable {
 
             this.setTranslateX(getLayoutX());
             this.setTranslateY(getLayoutY());
-            //this.setOpacity(0.5);
+            this.setOpacity(0.5);
             this.toFront();
         }
 
@@ -90,7 +77,7 @@ public class GameStage implements Initializable {
                     && mouseY > (gridPane_board.getLayoutY() + SQUARE_SIZE)
                     && mouseY < (gridPane_board.getLayoutY() + gridPane_board.getHeight() - SQUARE_SIZE);
         }
-        dragableTiles(int homeCol,int homeRow){
+        draggableTiles(int homeCol, int homeRow){
             this.homeCol=homeCol;
             this.homeRow=homeRow;
             this.setFitHeight(SQUARE_SIZE);
@@ -133,7 +120,7 @@ public class GameStage implements Initializable {
 
                     String boardSquareName = board.getBoardSquareNameFromPosition(boardCol, boardRow);
                     String placementString = this.tileName + boardSquareName + this.rotate;
-                    if (board.isValidPlacement(board.getSquareFormSquareString(placementString))) {
+                    if (board.isValidPlacement(board.getSquareFromSquareString(placementString))) {
                         board.putPlacementStringToMap(placementString);
 
                         if (tileName.charAt(0) == 'S') {
@@ -181,16 +168,16 @@ public class GameStage implements Initializable {
         }
     }
 
-    private dragableTiles tile_s0=new dragableTiles(0,0);
-    private dragableTiles tile_s1=new dragableTiles(1,0);
-    private dragableTiles tile_s2=new dragableTiles(0,1);
-    private dragableTiles tile_s3=new dragableTiles(1,1);
-    private dragableTiles tile_s4=new dragableTiles(0,2);
-    private dragableTiles tile_s5=new dragableTiles(1,2);
-    private dragableTiles dice_1=new dragableTiles(0,0);
-    private dragableTiles dice_2=new dragableTiles(1,0);
-    private dragableTiles dice_3=new dragableTiles(0,1);
-    private dragableTiles dice_4=new dragableTiles(1,1);
+    private draggableTiles tile_s0=new draggableTiles(0,0);
+    private draggableTiles tile_s1=new draggableTiles(1,0);
+    private draggableTiles tile_s2=new draggableTiles(0,1);
+    private draggableTiles tile_s3=new draggableTiles(1,1);
+    private draggableTiles tile_s4=new draggableTiles(0,2);
+    private draggableTiles tile_s5=new draggableTiles(1,2);
+    private draggableTiles dice_1=new draggableTiles(0,0);
+    private draggableTiles dice_2=new draggableTiles(1,0);
+    private draggableTiles dice_3=new draggableTiles(0,1);
+    private draggableTiles dice_4=new draggableTiles(1,1);
 
     @FXML
     private AnchorPane rootPane;
