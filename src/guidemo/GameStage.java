@@ -197,7 +197,7 @@ public class GameStage implements Initializable {
                 else if (rotate==7){rotate=0;}
                 this.setRotate((rotate % 4) * 90);
                 this.setScaleX((rotate) < 4 ? 1 : - 1);
-
+                displayWarning(defaultWarning);
                 event.consume();
 
             });
@@ -283,6 +283,7 @@ public class GameStage implements Initializable {
         }
         else {
             takeBackTilesPlacedThisTurn();
+            roundST = 0;
             setSTiles();
             setDTileAgain();
             remainSTile+=roundST;
