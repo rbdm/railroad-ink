@@ -294,7 +294,8 @@ public class GameStage implements Initializable {
             displayWarning(noTilesPlacedWarning);
         }
         else {
-            takeBackLastMovements();
+            takeBackTilesPlacedThisTurn();
+            setSTiles();
             setDTileAgain();
         }
     }
@@ -422,13 +423,15 @@ public class GameStage implements Initializable {
         }
     }
 
-    private void takeBackLastMovements() {
+    private void takeBackTilesPlacedThisTurn() {
         String boardString = StageManager.playerList.get(currentPlayer-1).getBoardString();
+        String removedPlacementString = boardString.substring(boardString.length() - (tilesPlacedThisTurn * 5));
         String newBoardString = boardString.substring(0, boardString.length() - (tilesPlacedThisTurn * 5));
 
         StageManager.playerList.get(currentPlayer-1).setBoardString(newBoardString);
         removeBoardDisplay();
-        loadPlayerBoard();
+        board.removeBoardStringFromBoard(removedPlacementString);
+        StageManager.playerList.get(currentPlayer-1).setBoard(board);
         displayPlayerBoard();
 
         tilesPlacedThisTurn = 0;
