@@ -3,9 +3,13 @@ package guidemo;
 import comp1110.ass2.gui.Viewer;
 import comp1110.ass2.model.Board;
 import comp1110.ass2.RailroadInk;
+import comp1110.ass2.model.PositionPoint;
+import comp1110.ass2.model.Square;
 import comp1110.ass2.util.StageManager;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -21,38 +25,18 @@ import java.util.*;
 
 public class GameStage implements Initializable {
 
-    @FXML
-    private AnchorPane rootPane;
-
-    @FXML
-    private GridPane gridPane_special;
-
-    @FXML
-    private GridPane gridPane_dice;
-
-    @FXML
-    private Button btn_next;
-
-    @FXML
-    private GridPane gridPane_board;
-
-    @FXML
-    private Label num_remainST;
-
-    @FXML
-    private Label num_player;
-
-    @FXML
-    public Label name_player;
-
-    @FXML
-    private Label num_round;
-
-    @FXML
-    private Label num_remainDT;
-
-    @FXML
-    private Label warning;
+    @FXML private AnchorPane rootPane;
+    @FXML private GridPane gridPane_special;
+    @FXML private GridPane gridPane_dice;
+    @FXML private Button btn_next;
+    @FXML private Button btn_takeBack;
+    @FXML private GridPane gridPane_board;
+    @FXML private Label num_remainST;
+    @FXML private Label num_player;
+    @FXML public Label name_player;
+    @FXML private Label num_round;
+    @FXML private Label num_remainDT;
+    @FXML private Label warning;
 
     public static int totalPlayerNum=1;
     public int currentPlayer=1;
@@ -65,8 +49,17 @@ public class GameStage implements Initializable {
     public int remainDTile=4;
     public String diceRoll;
     private final int SQUARE_SIZE = 60;
-    private String defaultWarning = "Drag the available tiles to the board, then click Next Turn button to end your turn.";
+    private String currentTurnBoardString = "";
+    private int tilesPlacedThisTurn = 0;
+    private String imageURLPrefix = "assets/";
+    private String imageURLSuffix = ".jpg";
+
+    private String defaultWarning = "Drag the available tiles to the board, then click End Turn button to end your turn.";
     private String placementWarning = "Invalid tile placement.";
+    private String specialTileTurnLimitWarning = "You can only use Special Tile once per turn.";
+    private String specialTileGameLimitWarning = "You can only use 3 Special Tiles in one game.";
+    private String diceNotPlacedWarning = "You need to put all 4 Regular Tiles on the board first.";
+    private String noTilesPlacedWarning = "You have not put any tile this turn";
 
     /* initialize game board */
     private Board board = new Board();
@@ -123,10 +116,10 @@ public class GameStage implements Initializable {
             this.setFitWidth(SQUARE_SIZE);
 
             setOnMousePressed(event -> {
-                setWarning(defaultWarning);
+                displayWarning(defaultWarning);
                 System.out.println("recording mouse coordinate");
                 if (roundST!=0 && this.tileName.substring(0,1).equals("S")){
-                    setWarning("You can only use special tile once in one round.");
+                    displayWarning(specialTileTurnLimitWarning);
                 }
                 else {
                     mouseX = event.getSceneX();
@@ -141,7 +134,7 @@ public class GameStage implements Initializable {
 
             setOnMouseDragged(event -> {
                 if (roundST!=0 && this.tileName.substring(0,1).equals("S")){
-                    setWarning("You can only use special tile once in one round.");
+                    displayWarning(specialTileTurnLimitWarning);
                 }
                 else {
                     this.toFront();
@@ -158,7 +151,7 @@ public class GameStage implements Initializable {
                 System.out.println("gridPane height: "+gridPane_board.getHeight());
                 System.out.println("gridPane width: "+gridPane_board.getWidth());
                 if (roundST!=0 && this.tileName.substring(0,1).equals("S")){
-                    setWarning("You can only use special tile once in one round.");
+                    displayWarning(specialTileTurnLimitWarning);
                 }
                 else if (onBoard()) {
                     this.setOpacity(1);
@@ -172,6 +165,9 @@ public class GameStage implements Initializable {
                     String placementString = this.tileName + boardSquareName + this.rotate;
                     if (board.isValidPlacement(board.getSquareFromSquareString(placementString))) {
                         board.putPlacementStringToMap(placementString);
+                        StageManager.playerList.get(currentPlayer-1).appendBoardString(placementString);
+                        displayTileToBoard(boardCol, boardRow, this.rotate, this.getImage());
+                        tilesPlacedThisTurn++;
 
                         if (tileName.charAt(0) == 'S') {
                             if (roundST==0) {
@@ -190,17 +186,15 @@ public class GameStage implements Initializable {
                             remainDTile--;
                             num_remainDT.setText(String.valueOf(remainDTile));
                         }
-
-                        setTile(boardCol, boardRow, this.rotate * 90, this.getImage());
                     }
                     else {
                         this.moveToHome();
-                        setWarning(placementWarning);
+                        displayWarning(placementWarning);
                     }
                 }
                 else {
                     this.moveToHome();
-                    setWarning(placementWarning);
+                    displayWarning(placementWarning);
                 }
             });
 
@@ -230,9 +224,6 @@ public class GameStage implements Initializable {
             this.setScaleX((rotate) < 4 ? 1 : - 1);
         }
     }
-
-
-
 
     void setDiceRoll(){
         draggableTiles dice_1=new draggableTiles(0,0);
@@ -298,11 +289,23 @@ public class GameStage implements Initializable {
     }
 
     @FXML
-    void btn_nextTurn_click(MouseEvent event) {
-        if (remainDTile>0){
-            setWarning("You need to put all the 4 Normal Tiles on the board.");
+    void btn_takeBack_click(MouseEvent event) {
+        if (tilesPlacedThisTurn == 0) {
+            displayWarning(noTilesPlacedWarning);
         }
         else {
+            takeBackLastMovements();
+            setDTileAgain();
+        }
+    }
+
+    @FXML
+    void btn_nextTurn_click(MouseEvent event) {
+        if (remainDTile>0){
+            displayWarning(diceNotPlacedWarning);
+        }
+        else {
+            tilesPlacedThisTurn=0;
             setSTiles();
             roundST=0;
             remainDTile=4;
@@ -318,92 +321,148 @@ public class GameStage implements Initializable {
                 curr.hide();
             }
             else if (totalPlayerNum>currentPlayer){
+                savePlayerBoard();
                 currentPlayer++;
+                num_player.setText(Integer.toString(currentPlayer));
                 name_player.setText(StageManager.playerList.get(currentPlayer-1).getPlayerName());
                 remainSTile=3-StageManager.playerList.get(currentPlayer-1).usedSpeicalTile;
                 num_remainST.setText(String.valueOf(remainSTile));
                 setDTileAgain();
+
+                removeBoardDisplay();
+                loadPlayerBoard();
+                displayPlayerBoard();
             }
             else if (totalPlayerNum==currentPlayer){
+                savePlayerBoard();
                 currentPlayer=1;
+                num_player.setText(Integer.toString(currentPlayer));
                 round++;
                 num_round.setText(String.valueOf(round));
                 name_player.setText(StageManager.playerList.get(currentPlayer-1).getPlayerName());
                 remainSTile=3-StageManager.playerList.get(currentPlayer-1).usedSpeicalTile;
                 num_remainST.setText(String.valueOf(remainSTile));
                 setDiceRoll();
+
+                removeBoardDisplay();
+                loadPlayerBoard();
+                displayPlayerBoard();
             }
         }
 
 
     }
 
-    void setTile(int col, int row, int rotation, Image image) {
+    private void displayTileToBoard(int col, int row, int rotation, Image image) {
         fixedTile tile = new fixedTile();
         tile.setImage(image);
-        tile.setRotate(rotation);
+        tile.setRotate((rotation % 4) * 90);
+        tile.setScaleX((rotation < 4) ? 1 : -1);
         gridPane_board.add(tile, col, row);
     }
 
-    void setWarning(String string) {
+    private void displayWarning(String string) {
         warning.setText(string);
         if (string == defaultWarning) warning.setStyle("-fx-border-color: green; -fx-border-width: 2px; -fx-background-color: palegreen");
         else warning.setStyle("-fx-border-color: red; -fx-border-width: 2px; -fx-background-color: lightpink");
     }
 
-    void displayWallsAndExits() {
-        Image wallImage = new Image(Viewer.class.getResource("")+"assets/Wall.jpg");
-        Image railwayExitImage = new Image(Viewer.class.getResource("")+"assets/RailExit.jpg");
-        Image highwayExitImage = new Image(Viewer.class.getResource("")+"assets/HighExit.jpg");
+    private void displayWallsAndExits() {
+        Image wallImage = new Image(Viewer.class.getResource("")+imageURLPrefix+"Wall"+imageURLSuffix);
+        Image railwayExitImage = new Image(Viewer.class.getResource("")+imageURLPrefix+"RailExit"+imageURLSuffix);
+        Image highwayExitImage = new Image(Viewer.class.getResource("")+imageURLPrefix+"HighExit"+imageURLSuffix);
 
         for (int row=0; row<9; row++) {
             for (int col=0; col<9; col++) {
                 if (col == 0) {
                     if (row == 2 || row == 6) {
-                        setTile(col, row, 270, railwayExitImage);
+                        displayTileToBoard(col, row, 3, railwayExitImage);
                     }
                     else if (row == 4) {
-                        setTile(col, row, 270, highwayExitImage);
+                        displayTileToBoard(col, row, 3, highwayExitImage);
                     }
                     else {
-                        setTile(col, row, 0, wallImage);
+                        displayTileToBoard(col, row, 0, wallImage);
                     }
                 }
                 if (col == 8) {
                     if (row == 2 || row == 6) {
-                        setTile(col, row, 90, railwayExitImage);
+                        displayTileToBoard(col, row, 1, railwayExitImage);
                     }
                     else if (row == 4) {
-                        setTile(col, row, 90, highwayExitImage);
+                        displayTileToBoard(col, row, 1, highwayExitImage);
                     }
                     else {
-                        setTile(col, row, 0, wallImage);
+                        displayTileToBoard(col, row, 0, wallImage);
                     }
                 }
                 if (row == 0) {
                     if (col == 2 || col == 6) {
-                        setTile(col, row, 0, highwayExitImage);
+                        displayTileToBoard(col, row, 0, highwayExitImage);
                     }
                     else if (col == 4) {
-                        setTile(col, row, 0, railwayExitImage);
+                        displayTileToBoard(col, row, 0, railwayExitImage);
                     }
                     else {
-                        setTile(col, row, 0, wallImage);
+                        displayTileToBoard(col, row, 0, wallImage);
                     }
                 }
                 if (row == 8) {
                     if (col == 2 || col == 6) {
-                        setTile(col, row, 180, highwayExitImage);
+                        displayTileToBoard(col, row, 2, highwayExitImage);
                     }
                     else if (col == 4) {
-                        setTile(col, row, 180, railwayExitImage);
+                        displayTileToBoard(col, row, 2, railwayExitImage);
                     }
                     else {
-                        setTile(col, row, 0, wallImage);
+                        displayTileToBoard(col, row, 0, wallImage);
                     }
                 }
             }
         }
+    }
+
+    private void takeBackLastMovements() {
+        String boardString = StageManager.playerList.get(currentPlayer-1).getBoardString();
+        String newBoardString = boardString.substring(0, boardString.length() - (tilesPlacedThisTurn * 5));
+
+        StageManager.playerList.get(currentPlayer-1).setBoardString(newBoardString);
+        removeBoardDisplay();
+        loadPlayerBoard();
+        displayPlayerBoard();
+
+        tilesPlacedThisTurn = 0;
+    }
+
+    private void removeBoardDisplay() {
+        Node grid = gridPane_board.getChildren().get(0);
+        gridPane_board.getChildren().clear();
+        gridPane_board.getChildren().add(grid);
+        displayWallsAndExits();
+    }
+
+    private void savePlayerBoard() {
+        StageManager.playerList.get(currentPlayer-1).setBoard(board);
+    }
+
+    private void loadPlayerBoard() {
+        board = StageManager.playerList.get(currentPlayer-1).getBoard();
+    }
+
+    private void displayPlayerBoard() {
+        String playerBoardString = StageManager.playerList.get(currentPlayer-1).getBoardString();
+        System.out.println("displaying boardString :"+playerBoardString);
+
+        for (int i=0; i<playerBoardString.length(); i+=5) {
+            String placementString = playerBoardString.substring(i, i+5);
+            PositionPoint pp = board.getPositionFromPlacementString(placementString);
+            int rotation = Integer.parseInt(placementString.substring(4));
+            Image image = new Image(Viewer.class.getResource("")+imageURLPrefix+placementString.substring(0,2)+imageURLSuffix);
+
+            displayTileToBoard(pp.getY(), pp.getX(), rotation, image);
+        }
+        board.putPlacementStringToMap(playerBoardString);
+        board.printMap();
     }
 
     void setSTiles(){
@@ -442,7 +501,6 @@ public class GameStage implements Initializable {
         gridPane_special.add(tile_s5,1,2);
     }
 
-
     public void initialize(URL location, ResourceBundle resources){
         String name = StageManager.playerList.get(currentPlayer-1).playerName;
         num_player.setText(String.valueOf(currentPlayer));
@@ -452,11 +510,10 @@ public class GameStage implements Initializable {
         setSTiles();
         System.out.println(diceRoll);
         displayWallsAndExits();
-        setWarning(defaultWarning);
+        displayWarning(defaultWarning);
         gridPane_dice.toFront();
         gridPane_special.toFront();
+        System.out.println(gridPane_board.getChildren().toString());
     }
-
-
 
 }
