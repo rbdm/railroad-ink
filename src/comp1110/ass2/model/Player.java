@@ -29,6 +29,10 @@ public class Player
      */
     private Board board = new Board();
     /**
+     * the player's boardString.
+     */
+    private String boardString = "";
+    /**
      * the square player putted.
      * the element is a list which contains 3 String of placement :like A0B01,XXXXX,XXXXX
      */
@@ -91,6 +95,26 @@ public class Player
         StringBuilder sb = new StringBuilder();
         sb.append("id: "+id+"; playerName: "+playerName+"; playerType: "+playerType+"; difficulty: "+difficulty+" ; round: "+round+";");
         return sb.toString();
+    }
+
+    public String getBoardString() {
+        return this.boardString;
+    }
+
+    public void appendBoardString(String placementString) {
+        this.boardString += placementString;
+    }
+
+    public void setBoardString(String newBoardString) {
+        this.boardString = newBoardString;
+    }
+
+    public Board getBoard() {
+        return this.board;
+    }
+
+    public void setBoard(Board newBoard) {
+        this.board = newBoard;
     }
 
 
