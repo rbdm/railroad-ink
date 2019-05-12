@@ -85,7 +85,6 @@ public class GameStage implements Initializable {
         private void drag(double movementX, double movementY) {
             setLayoutX(mouseX - homeX);
             setLayoutY(mouseY - homeY);
-            System.out.println("dragging to"+ getLayoutX()+movementX + ", "+ getLayoutY()+movementY);
 
             this.setTranslateX(getLayoutX());
             this.setTranslateY(getLayoutY());
@@ -94,11 +93,8 @@ public class GameStage implements Initializable {
         }
 
         private void moveToHome() {
-            setLayoutX(0.0);
-            setLayoutY(0.0);
-
-            this.setTranslateX(getLayoutX());
-            this.setTranslateY(getLayoutY());
+            this.setTranslateX(0.0);
+            this.setTranslateY(0.0);
             this.setOpacity(1);
             this.toFront();
         }
@@ -118,6 +114,7 @@ public class GameStage implements Initializable {
             setOnMousePressed(event -> {
                 displayWarning(defaultWarning);
                 System.out.println("recording mouse coordinate");
+                System.out.println("home :"+event.getSceneX() + ", " + event.getSceneY());
                 if (roundST!=0 && this.tileName.substring(0,1).equals("S")){
                     displayWarning(specialTileTurnLimitWarning);
                 }
@@ -127,9 +124,6 @@ public class GameStage implements Initializable {
                     homeX = event.getSceneX();
                     homeY = event.getSceneY();
                 }
-
-                System.out.println("initial :"+event.getSceneX() + ", " + event.getSceneY());
-
             });
 
             setOnMouseDragged(event -> {
@@ -147,9 +141,6 @@ public class GameStage implements Initializable {
             });
 
             setOnMouseReleased(event -> {
-                System.out.println("gridPane layouts: "+gridPane_board.getLayoutX() + ", "+ gridPane_board.getLayoutY());
-                System.out.println("gridPane height: "+gridPane_board.getHeight());
-                System.out.println("gridPane width: "+gridPane_board.getWidth());
                 if (roundST!=0 && this.tileName.substring(0,1).equals("S")){
                     displayWarning(specialTileTurnLimitWarning);
                 }
@@ -157,9 +148,6 @@ public class GameStage implements Initializable {
                     this.setOpacity(1);
                     int boardCol = (int) (mouseX - gridPane_board.getLayoutX()) / SQUARE_SIZE;
                     int boardRow = (int) (mouseY - gridPane_board.getLayoutY()) / SQUARE_SIZE;
-
-                    System.out.println("board col: "+boardCol);
-                    System.out.println("board row: "+boardRow);
 
                     String boardSquareName = board.getBoardSquareNameFromPosition(boardCol, boardRow);
                     String placementString = this.tileName + boardSquareName + this.rotate;

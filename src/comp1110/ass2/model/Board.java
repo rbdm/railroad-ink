@@ -197,9 +197,6 @@ public class Board
         for (int i=0; i<boardString.length(); i+=5) {
             String placementString = boardString.substring(i, i+5);
             PositionPoint pp = getPositionFromPlacementString(placementString);
-            System.out.println(placementString);
-            System.out.println(pp.getX());
-            System.out.println(pp.getY());
             map[pp.getX()][pp.getY()] = new Square(EnumTypeTile.BLOCK, EnumTypeTile.BLOCK, EnumTypeTile.BLOCK, EnumTypeTile.BLOCK, false, "NUL", EnumTypeSquare.EMPTY);
         }
     }
