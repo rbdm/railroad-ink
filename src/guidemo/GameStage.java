@@ -236,7 +236,7 @@ public class GameStage implements Initializable {
         dice_3.setTileName(diceRoll.substring(4,6));
         dice_4.setTileName(diceRoll.substring(6,8));
         if (gridPane_dice.getChildren().size()>0){
-            gridPane_dice.getChildren().removeAll();
+            gridPane_dice.getChildren().clear();
         }
         gridPane_dice.add(dice_1,0,0);
         gridPane_dice.add(dice_2,1,0);
@@ -268,7 +268,7 @@ public class GameStage implements Initializable {
         dice_3.setTileName(diceRoll.substring(4,6));
         dice_4.setTileName(diceRoll.substring(6,8));
         if (gridPane_dice.getChildren().size()>0){
-            gridPane_dice.getChildren().removeAll();
+            gridPane_dice.getChildren().clear();
         }
         gridPane_dice.add(dice_1,0,0);
         gridPane_dice.add(dice_2,1,0);
@@ -285,6 +285,13 @@ public class GameStage implements Initializable {
             takeBackTilesPlacedThisTurn();
             setSTiles();
             setDTileAgain();
+            remainSTile+=roundST;
+            StageManager.playerList.get(currentPlayer-1).usedSpeicalTile=remainSTile;
+            num_remainST.setText(String.valueOf(remainSTile));
+            roundST=0;
+            remainDTile=4;
+            num_remainDT.setText(String.valueOf(remainDTile));
+
         }
     }
 
@@ -458,7 +465,7 @@ public class GameStage implements Initializable {
 
     void setSTiles(){
         if (gridPane_special.getChildren().size()<6&&gridPane_special.getChildren().size()>0){
-            gridPane_special.getChildren().removeAll();
+            gridPane_special.getChildren().clear();
         }
         draggableTiles tile_s0=new draggableTiles(0,0);
         draggableTiles tile_s1=new draggableTiles(1,0);
