@@ -283,6 +283,7 @@ public class GameStage implements Initializable {
         }
         else {
             takeBackTilesPlacedThisTurn();
+            roundST = 0;
             setSTiles();
             setDTileAgain();
         }
