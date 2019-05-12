@@ -277,7 +277,7 @@ public class Board
      * @param tilePlacementString tilteString like 'A0B00'
      * @return PositionPoint x,y
      */
-    public PositionPoint getPositionFromString(String tilePlacementString){
+    public PositionPoint getPositionFromPlacementString(String tilePlacementString){
         int row = tilePlacementString.charAt(2)-'A'+1;
         int col = tilePlacementString.charAt(3)-'0'+1;
         PositionPoint positionPoint = new PositionPoint(row,col);
@@ -334,7 +334,7 @@ public class Board
      * @param y row
      * @return boolean
      */
-    private boolean isEmptyPosition(int x, int y) {
+    public boolean isEmptyPosition(int x, int y) {
         return (map[x][y].type == EnumTypeSquare.EMPTY);
     }
 
