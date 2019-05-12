@@ -236,7 +236,9 @@ public class GameStage implements Initializable {
         dice_3.setTileName(diceRoll.substring(4,6));
         dice_4.setTileName(diceRoll.substring(6,8));
         if (gridPane_dice.getChildren().size()>0){
+            Node grid = gridPane_dice.getChildren().get(0);
             gridPane_dice.getChildren().clear();
+            gridPane_dice.getChildren().add(grid);
         }
         gridPane_dice.add(dice_1,0,0);
         gridPane_dice.add(dice_2,1,0);
@@ -268,7 +270,9 @@ public class GameStage implements Initializable {
         dice_3.setTileName(diceRoll.substring(4,6));
         dice_4.setTileName(diceRoll.substring(6,8));
         if (gridPane_dice.getChildren().size()>0){
+            Node grid = gridPane_dice.getChildren().get(0);
             gridPane_dice.getChildren().clear();
+            gridPane_dice.getChildren().add(grid);
         }
         gridPane_dice.add(dice_1,0,0);
         gridPane_dice.add(dice_2,1,0);
@@ -466,7 +470,9 @@ public class GameStage implements Initializable {
 
     void setSTiles(){
         if (gridPane_special.getChildren().size()<6&&gridPane_special.getChildren().size()>0){
+            Node grid = gridPane_special.getChildren().get(0);
             gridPane_special.getChildren().clear();
+            gridPane_special.getChildren().add(grid);
         }
         draggableTiles tile_s0=new draggableTiles(0,0);
         draggableTiles tile_s1=new draggableTiles(1,0);
