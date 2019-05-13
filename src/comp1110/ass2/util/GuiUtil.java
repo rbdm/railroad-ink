@@ -19,13 +19,14 @@ public class GuiUtil
 {
     /**
      * update the viewer window and the Board by Placement String
-     * @param mapPanel all the square's ImageView will place in this panel
-     * @param board the Board
+     *
+     * @param mapPanel        all the square's ImageView will place in this panel
+     * @param board           the Board
      * @param placementString the current placement in String
-     * @param rootImgUrl the root URI of Images.
+     * @param rootImgUrl      the root URI of Images.
      * @return
      */
-    public static BorderPane updateGuiByPlacementString(BorderPane mapPanel, Board board, String placementString,String rootImgUrl)
+    public static BorderPane updateGuiByPlacementString(BorderPane mapPanel, Board board, String placementString, String rootImgUrl)
     {
         initialEmptyBoardGui(mapPanel, board, rootImgUrl);
         //check placement
@@ -40,7 +41,7 @@ public class GuiUtil
             String squareString = placementString.substring(i, i + 5);
             Square square = board.getSquareFromSquareString(squareString);
 
-            Image image = new Image( rootImgUrl + squareString.substring(0, 2) + ".jpg");
+            Image image = new Image(rootImgUrl + squareString.substring(0, 2) + ".jpg");
             ImageView imageView = board.imageViews[square.positionPoint.getX()][square.positionPoint.getY()];
             imageView.setImage(image);
             imageView.setRotate(((squareString.charAt(4) - '0') % 4) * 90);
@@ -80,7 +81,7 @@ public class GuiUtil
                         name = rootImgUrl + "Board.jpg";
                         break;
                 }
-                Image image = new Image( name);
+                Image image = new Image(name);
                 ImageView imageView = new ImageView(image);
                 imageView.setX(j * 80);
                 imageView.setY(i * 80);
@@ -111,6 +112,7 @@ public class GuiUtil
 
     /**
      * clean the canvas
+     *
      * @param canvas canvas
      */
     public static void cleanCanvas(Group canvas)
@@ -124,5 +126,17 @@ public class GuiUtil
                 break;
             }
         }
+    }
+
+    public static boolean isNumber(String string)
+    {
+        for (char ch : string.toCharArray())
+        {
+            if (! (ch >= '0' && ch <= '9'))
+            {
+                return false;
+            }
+        }
+        return true;
     }
 }

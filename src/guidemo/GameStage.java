@@ -5,9 +5,13 @@ import comp1110.ass2.model.*;
 import comp1110.ass2.RailroadInk;
 import comp1110.ass2.util.PlacementUtil;
 import comp1110.ass2.util.StageManager;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -18,6 +22,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.*;
 
@@ -73,6 +78,8 @@ public class GameStage implements Initializable {
         int rotate;
         double mouseX; double mouseY;
         double homeX; double homeY;
+
+        String tilePlacementString;
         String tileName;
 
         DraggableTile(int homeCol, int homeRow){
@@ -80,6 +87,9 @@ public class GameStage implements Initializable {
             this.homeRow=homeRow;
 
             setOnMousePressed(event -> {
+                displayWarning(defaultWarning);
+                System.out.println("recording mouse coordinate");
+                System.out.println("home :"+event.getSceneX() + ", " + event.getSceneY());
                 if (roundST!=0 && this.tileName.substring(0,1).equals("S")){
                     displayWarning(specialTileTurnLimitWarning);
                 }
@@ -301,7 +311,8 @@ public class GameStage implements Initializable {
     }
 
     @FXML
-    void btn_endTurn_click() {
+    void btn_endTurn_click(MouseEvent event) throws IOException
+    {
 
         if (remainDTile>0 && StageManager.playerList.get(currentPlayer-1).playerType==EnumTypePlayer.HUMAN && isAbleToMove()){
             displayWarning(diceNotPlacedWarning);
@@ -319,6 +330,13 @@ public class GameStage implements Initializable {
                 //todo:  open the window(stage) of ending OR(And) show the scores
                 Stage curr = StageManager.stageMap.get("gameStage");
                 curr.hide();
+                Stage scoreFormStage = new Stage();
+                Parent root = FXMLLoader.load(ClassLoader.getSystemResource("resource/ScoreForm.fxml"));
+                Scene scene = new Scene(root);
+                scoreFormStage.setScene(scene);
+                scoreFormStage.setTitle("ScoreForm");
+                scoreFormStage.show();
+                StageManager.stageMap.put("ScoreFormStage",scoreFormStage);
             }
             else if (totalPlayerNum>currentPlayer){
                 currentPlayer++;
@@ -498,18 +516,8 @@ public class GameStage implements Initializable {
         board.putPlacementStringToMap(playerBoardString);
         player.setBoardString(playerBoardString);
         board.printMap();
-    }
 
-    private void moveTilesToFront() {
-        gridPane_dice.toFront();
-        gridPane_special.toFront();
-    }
 
-    private void displayGameInfo() {
-        String name = StageManager.playerList.get(currentPlayer-1).playerName;
-        num_player.setText(String.valueOf(currentPlayer));
-        this.name_player.setText(name);
-        num_round.setText(String.valueOf(round));
     }
 
     void setSTiles(){
@@ -551,13 +559,18 @@ public class GameStage implements Initializable {
     }
 
     public void initialize(URL location, ResourceBundle resources){
-        displayGameInfo();
-        displayWarning(defaultWarning);
-        displayWallsAndExits();
+        String name = StageManager.playerList.get(currentPlayer-1).playerName;
+        num_player.setText(String.valueOf(currentPlayer));
+        this.name_player.setText(name);
+        num_round.setText(String.valueOf(round));
         setDiceRoll();
         setSTiles();
-        moveTilesToFront();
         System.out.println(diceRoll);
-        displayPlayerBoard();
+        displayWallsAndExits();
+        displayWarning(defaultWarning);
+        gridPane_dice.toFront();
+        gridPane_special.toFront();
+        System.out.println(gridPane_board.getChildren().toString());
     }
+
 }

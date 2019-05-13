@@ -61,13 +61,13 @@ public class RouteUtil
      * to judge a square what directions can it goes next.
      *
      * @param square         current square
-     * @param enumTypeTile       choose typetile
+     * @param enumTypeTile   choose typetile
      * @param getInDirection how does the previous square get in.
      * @return the direction the square can approach next.
      */
     public static List<Direction> getAccessDirection(Square square, EnumTypeTile enumTypeTile, Direction getInDirection)
     {
-        if(square == null)
+        if (square == null)
         {
             return new ArrayList<>();
         }
@@ -116,14 +116,14 @@ public class RouteUtil
     /**
      * get the Direction list which is consist of choosen tile
      *
-     * @param square   square
+     * @param square       square
      * @param enumTypeTile highway or railway
      * @return same tile direction
      */
     private static List<Direction> getSameTileDirection(Square square, EnumTypeTile enumTypeTile)
     {
         List<Direction> sameTileDirections = new ArrayList<>();
-        if(square==null)
+        if (square == null)
         {
             return null;
         }
@@ -151,7 +151,7 @@ public class RouteUtil
      * to judge if the square can be get in by the getInDirection
      *
      * @param square         square
-     * @param enumTypeTile       highway or railway
+     * @param enumTypeTile   highway or railway
      * @param getInDirection get in direction
      * @return can get in?
      */
@@ -196,7 +196,7 @@ public class RouteUtil
      */
     public static boolean isLoop(PositionPoint curPositionPoint, List<PositionPoint> trackingList)
     {
-        if(trackingList == null || curPositionPoint == null)
+        if (trackingList == null || curPositionPoint == null)
         {
             return false;
         }
@@ -218,7 +218,7 @@ public class RouteUtil
      * @param x              current square x
      * @param y              current square y
      * @param deepth         last square's deepth(route length)
-     * @param enumTypeTile       choosen tile type
+     * @param enumTypeTile   choosen tile type
      * @param getInDirection how to get in current square? top ....
      * @param trackingList   tracking list
      * @return current square's deepth(route length)
@@ -247,7 +247,7 @@ public class RouteUtil
         List<Direction> accessDirections = getAccessDirection(square, enumTypeTile, getInDirection);
         int maxDepth = deepth;
 
-        int tmpDepth=0;
+        int tmpDepth = 0;
         for (Direction direction : accessDirections)
         {
             switch (direction)
