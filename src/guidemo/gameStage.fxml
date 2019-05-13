@@ -1,9 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -13,7 +9,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane fx:id="rootPane" prefHeight="768.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="guidemo.GameStage">
+<AnchorPane fx:id="rootPane" prefHeight="768.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="guidemo.GameStage">
    <children>
       <GridPane fx:id="gridPane_special" gridLinesVisible="true" layoutX="689.0" layoutY="126.0" AnchorPane.rightAnchor="160.0" AnchorPane.topAnchor="125.0">
         <columnConstraints>
@@ -36,7 +32,7 @@
             <RowConstraints minHeight="10.0" prefHeight="60.0" vgrow="SOMETIMES" />
          </rowConstraints>
       </GridPane>
-      <Button fx:id="btn_next" layoutX="745.0" layoutY="604.0" mnemonicParsing="false" onMouseClicked="#btn_nextTurn_click" prefHeight="27.0" prefWidth="121.0" text="End Turn" />
+      <Button fx:id="btn_next" layoutX="745.0" layoutY="604.0" mnemonicParsing="false" onMouseClicked="#btn_endTurn_click" prefHeight="27.0" prefWidth="121.0" text="End Turn" />
       <GridPane fx:id="gridPane_board" gridLinesVisible="true" layoutX="189.0" layoutY="240.0" AnchorPane.leftAnchor="78.0" AnchorPane.topAnchor="120.0">
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="60.0" />
