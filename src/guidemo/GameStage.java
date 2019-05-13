@@ -23,11 +23,8 @@ import java.util.*;
 
 public class GameStage implements Initializable {
 
-    @FXML private AnchorPane rootPane;
     @FXML private GridPane gridPane_special;
     @FXML private GridPane gridPane_dice;
-    @FXML private Button btn_next;
-    @FXML private Button btn_takeBack;
     @FXML private GridPane gridPane_board;
     @FXML private Label num_remainST;
     @FXML private Label num_player;
@@ -51,13 +48,15 @@ public class GameStage implements Initializable {
     private int tilesPlacedThisTurn = 0;
     private String imageURLPrefix = "assets/";
     private String imageURLSuffix = ".jpg";
+    private String remainingDiceRoll;
 
     private String defaultWarning = "Drag the available tiles to the board, then click End Turn button to end your turn.";
-    private String placementWarning = "Invalid tile placement.";
+    private String invalidPlacementWarning = "Invalid tile placement.";
     private String specialTileTurnLimitWarning = "You can only use Special Tile once per turn.";
     private String specialTileGameLimitWarning = "You can only use 3 Special Tiles in one game.";
     private String diceNotPlacedWarning = "You need to put all 4 Regular Tiles on the board first.";
     private String noTilesPlacedWarning = "You have not put any tile this turn";
+    private String noMoreMoveAvailableWarning = "No more Regular Tile can be placed, you are now allowed to click Next Turn";
 
     /* initialize game board */
     private Board board = new Board();
@@ -81,13 +80,18 @@ public class GameStage implements Initializable {
             this.homeRow=homeRow;
 
             setOnMousePressed(event -> {
-                displayWarning(defaultWarning);
-                System.out.println("recording mouse coordinate");
-                System.out.println("home :"+event.getSceneX() + ", " + event.getSceneY());
                 if (roundST!=0 && this.tileName.substring(0,1).equals("S")){
                     displayWarning(specialTileTurnLimitWarning);
                 }
+                else if ( ! isAbleToMove() && ( ! this.tileName.substring(0,1).equals("S"))) {
+                    displayWarning(noMoreMoveAvailableWarning);
+                    mouseX = event.getSceneX();
+                    mouseY = event.getSceneY();
+                    homeX = event.getSceneX();
+                    homeY = event.getSceneY();
+                }
                 else {
+                    displayWarning(defaultWarning);
                     mouseX = event.getSceneX();
                     mouseY = event.getSceneY();
                     homeX = event.getSceneX();
@@ -101,8 +105,6 @@ public class GameStage implements Initializable {
                 }
                 else {
                     this.toFront();
-                    double movementX = event.getSceneX() - mouseX;
-                    double movementY = event.getSceneY() - mouseY;
                     this.drag();
                     mouseX = event.getSceneX();
                     mouseY = event.getSceneY();
@@ -112,6 +114,10 @@ public class GameStage implements Initializable {
             setOnMouseReleased(event -> {
                 if (roundST!=0 && this.tileName.substring(0,1).equals("S")){
                     displayWarning(specialTileTurnLimitWarning);
+                }
+                else if ( ! isAbleToMove() && ( ! this.tileName.substring(0,1).equals("S"))) {
+                    displayWarning(noMoreMoveAvailableWarning);
+                    this.moveToHome();
                 }
                 else if (onBoard()) {
                     this.setOpacity(1);
@@ -125,6 +131,7 @@ public class GameStage implements Initializable {
                         StageManager.playerList.get(currentPlayer-1).appendBoardString(placementString);
                         displayTileToBoard(boardCol, boardRow, this.rotate, this.getImage());
                         tilesPlacedThisTurn++;
+                        useDiceRoll(this.tileName);
 
                         if (tileName.charAt(0) == 'S') {
                             if (roundST==0) {
@@ -146,12 +153,12 @@ public class GameStage implements Initializable {
                     }
                     else {
                         this.moveToHome();
-                        displayWarning(placementWarning);
+                        displayWarning(invalidPlacementWarning);
                     }
                 }
                 else {
                     this.moveToHome();
-                    displayWarning(placementWarning);
+                    displayWarning(invalidPlacementWarning);
                 }
             });
 
@@ -188,7 +195,7 @@ public class GameStage implements Initializable {
             this.toFront();
         }
 
-        boolean onBoard() {
+        private boolean onBoard() {
             return mouseX > (gridPane_board.getLayoutX() + SQUARE_SIZE)
                     && mouseX < (gridPane_board.getLayoutX() + gridPane_board.getWidth() - SQUARE_SIZE)
                     && mouseY > (gridPane_board.getLayoutY() + SQUARE_SIZE)
@@ -239,7 +246,7 @@ public class GameStage implements Initializable {
         gridPane_dice.add(dice_4,1,1);
 
         StageManager.diceRollList.add(diceRoll);
-
+        remainingDiceRoll = diceRoll;
     }
 
     void setDTileAgain(){  //set Tiles without changing the dice string
@@ -275,29 +282,28 @@ public class GameStage implements Initializable {
     }
 
     @FXML
-    void btn_takeBack_click(MouseEvent event) {
+    void btn_takeBack_click() {
         if (tilesPlacedThisTurn == 0) {
             displayWarning(noTilesPlacedWarning);
         }
         else {
             takeBackTilesPlacedThisTurn();
-            roundST = 0;
             setSTiles();
             setDTileAgain();
+            remainingDiceRoll = diceRoll;
             remainSTile+=roundST;
             StageManager.playerList.get(currentPlayer-1).usedSpeicalTile=remainSTile;
             num_remainST.setText(String.valueOf(remainSTile));
             roundST=0;
             remainDTile=4;
             num_remainDT.setText(String.valueOf(remainDTile));
-
         }
     }
 
     @FXML
-    void btn_nextTurn_click(MouseEvent event) {
+    void btn_endTurn_click() {
 
-        if (remainDTile>0 && StageManager.playerList.get(currentPlayer-1).playerType==EnumTypePlayer.HUMAN ){
+        if (remainDTile>0 && StageManager.playerList.get(currentPlayer-1).playerType==EnumTypePlayer.HUMAN && isAbleToMove()){
             displayWarning(diceNotPlacedWarning);
         }
         else {
@@ -306,6 +312,8 @@ public class GameStage implements Initializable {
             roundST=0;
             remainDTile=4;
             num_remainDT.setText("4");
+            remainingDiceRoll = diceRoll;
+            displayWarning(defaultWarning);
 
             if (round==7 && totalPlayerNum==currentPlayer){
                 //todo:  open the window(stage) of ending OR(And) show the scores
@@ -313,7 +321,6 @@ public class GameStage implements Initializable {
                 curr.hide();
             }
             else if (totalPlayerNum>currentPlayer){
-                //savePlayerBoard();
                 currentPlayer++;
                 num_player.setText(Integer.toString(currentPlayer));
                 name_player.setText(StageManager.playerList.get(currentPlayer-1).getPlayerName());
@@ -326,7 +333,6 @@ public class GameStage implements Initializable {
                 displayPlayerBoard();
             }
             else if (totalPlayerNum==currentPlayer){
-                //savePlayerBoard();
                 currentPlayer=1;
                 num_player.setText(Integer.toString(currentPlayer));
                 round++;
@@ -342,8 +348,30 @@ public class GameStage implements Initializable {
                 displayPlayerBoard();
             }
         }
+    }
 
+    private boolean isAbleToMove() {
+        System.out.println(StageManager.playerList.get(currentPlayer-1).getBoardString());
+        System.out.println(remainingDiceRoll);
+        System.out.println( ! RailroadInk.generateMove(StageManager.playerList.get(currentPlayer-1).getBoardString(), remainingDiceRoll).equals(""));
+        return ( ! RailroadInk.generateMove(StageManager.playerList.get(currentPlayer-1).getBoardString(), remainingDiceRoll).equals(""));
+    }
 
+    private void useDiceRoll(String dice) {
+        int usedDice = 0;
+        String newDiceRoll = diceRoll;
+        if ( ! dice.substring(0,1).equals("S")) {
+            for (int i=0; i<remainingDiceRoll.length() && usedDice == 0; i+=2) {
+                String diceInDiceRoll = remainingDiceRoll.substring(i, i+2);
+                if (diceInDiceRoll.equals(dice)) {
+                    String frontPart = remainingDiceRoll.substring(0, i);
+                    String rearPart = remainingDiceRoll.substring(i+2);
+                    newDiceRoll = frontPart + rearPart;
+                    usedDice++;
+                }
+            }
+        }
+        remainingDiceRoll = newDiceRoll;
     }
 
     private void displayTileToBoard(int col, int row, int rotation, Image image) {
@@ -354,9 +382,9 @@ public class GameStage implements Initializable {
         gridPane_board.add(tile, col, row);
     }
 
-    private void displayWarning(String string) {
-        warning.setText(string);
-        if (string == defaultWarning) warning.setStyle("-fx-border-color: green; -fx-border-width: 2px; -fx-background-color: palegreen");
+    private void displayWarning(String message) {
+        warning.setText(message);
+        if (message.equals(defaultWarning)) warning.setStyle("-fx-border-color: green; -fx-border-width: 2px; -fx-background-color: palegreen");
         else warning.setStyle("-fx-border-color: red; -fx-border-width: 2px; -fx-background-color: lightpink");
     }
 
@@ -423,7 +451,6 @@ public class GameStage implements Initializable {
         StageManager.playerList.get(currentPlayer-1).setBoardString(newBoardString);
         removeBoardDisplay();
         board.removeBoardStringFromBoard(removedPlacementString);
-        StageManager.playerList.get(currentPlayer-1).setBoard(board);
         displayPlayerBoard();
 
         tilesPlacedThisTurn = 0;
@@ -434,10 +461,6 @@ public class GameStage implements Initializable {
         gridPane_board.getChildren().clear();
         gridPane_board.getChildren().add(grid);
         displayWallsAndExits();
-    }
-
-    private void savePlayerBoard() {
-        StageManager.playerList.get(currentPlayer-1).setBoard(board);
     }
 
     private void loadPlayerBoard() {
