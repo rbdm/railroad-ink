@@ -483,6 +483,7 @@ public class GameStage implements Initializable {
 
 
         board.putPlacementStringToMap(playerBoardString);
+        player.setBoardString(playerBoardString);
         board.printMap();
 
 

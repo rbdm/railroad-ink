@@ -101,6 +101,7 @@ public class Player
         return this.boardString;
     }
 
+
     public void appendBoardString(String placementString) {
         this.boardString += placementString;
     }
