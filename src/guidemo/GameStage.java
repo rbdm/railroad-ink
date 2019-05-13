@@ -342,7 +342,7 @@ public class GameStage implements Initializable {
                 num_player.setText(Integer.toString(currentPlayer));
                 name_player.setText(StageManager.playerList.get(currentPlayer-1).getPlayerName());
                 remainSTile=3-StageManager.playerList.get(currentPlayer-1).usedSpeicalTile;
-                if (remainSTile==0){gridPane_special.getChildren().clear();}
+                if (remainSTile==0 && StageManager.playerList.get(currentPlayer-1).playerType==EnumTypePlayer.HUMAN){gridPane_special.getChildren().clear();}
                 num_remainST.setText(String.valueOf(remainSTile));
                 setDTileAgain();
 
@@ -352,13 +352,13 @@ public class GameStage implements Initializable {
             }
             else if (totalPlayerNum==currentPlayer){
                 currentPlayer=1;
-                if (remainSTile==0){gridPane_special.getChildren().clear();}
                 num_player.setText(Integer.toString(currentPlayer));
                 round++;
                 StageManager.playerList.get(currentPlayer-1).round++;
                 num_round.setText(String.valueOf(round));
                 name_player.setText(StageManager.playerList.get(currentPlayer-1).getPlayerName());
                 remainSTile=3-StageManager.playerList.get(currentPlayer-1).usedSpeicalTile;
+                if (remainSTile==0 && StageManager.playerList.get(currentPlayer-1).playerType==EnumTypePlayer.HUMAN){gridPane_special.getChildren().clear();}
                 num_remainST.setText(String.valueOf(remainSTile));
                 setDiceRoll();
 
