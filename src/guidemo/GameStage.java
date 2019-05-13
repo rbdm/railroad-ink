@@ -45,7 +45,7 @@ public class GameStage implements Initializable {
     public String boardString;
     public String roundString;
     public int roundST;
-    public int remainSTile;
+    public int remainSTile=3;
     public int remainDTile=4;
     public String diceRoll;
     private final int SQUARE_SIZE = 60;
@@ -93,6 +93,9 @@ public class GameStage implements Initializable {
                 if (roundST!=0 && this.tileName.substring(0,1).equals("S")){
                     displayWarning(specialTileTurnLimitWarning);
                 }
+                else if (remainSTile==0 && this.tileName.substring(0,1).equals("S")){
+                    displayWarning(specialTileGameLimitWarning);
+                }
                 else if ( ! isAbleToMove() && ( ! this.tileName.substring(0,1).equals("S"))) {
                     displayWarning(noMoreMoveAvailableWarning);
                     mouseX = event.getSceneX();
@@ -113,6 +116,9 @@ public class GameStage implements Initializable {
                 if (roundST!=0 && this.tileName.substring(0,1).equals("S")){
                     displayWarning(specialTileTurnLimitWarning);
                 }
+                else if (remainSTile==0 && this.tileName.substring(0,1).equals("S")){
+                    displayWarning(specialTileGameLimitWarning);
+                }
                 else {
                     this.toFront();
                     this.drag();
@@ -124,6 +130,9 @@ public class GameStage implements Initializable {
             setOnMouseReleased(event -> {
                 if (roundST!=0 && this.tileName.substring(0,1).equals("S")){
                     displayWarning(specialTileTurnLimitWarning);
+                }
+                else if (remainSTile==0 && this.tileName.substring(0,1).equals("S")){
+                    displayWarning(specialTileGameLimitWarning);
                 }
                 else if ( ! isAbleToMove() && ( ! this.tileName.substring(0,1).equals("S"))) {
                     displayWarning(noMoreMoveAvailableWarning);
@@ -342,7 +351,6 @@ public class GameStage implements Initializable {
                 num_player.setText(Integer.toString(currentPlayer));
                 name_player.setText(StageManager.playerList.get(currentPlayer-1).getPlayerName());
                 remainSTile=3-StageManager.playerList.get(currentPlayer-1).usedSpeicalTile;
-                if (remainSTile==0 && StageManager.playerList.get(currentPlayer-1).playerType==EnumTypePlayer.HUMAN){gridPane_special.getChildren().clear();}
                 num_remainST.setText(String.valueOf(remainSTile));
                 setDTileAgain();
 
@@ -358,7 +366,6 @@ public class GameStage implements Initializable {
                 num_round.setText(String.valueOf(round));
                 name_player.setText(StageManager.playerList.get(currentPlayer-1).getPlayerName());
                 remainSTile=3-StageManager.playerList.get(currentPlayer-1).usedSpeicalTile;
-                if (remainSTile==0 && StageManager.playerList.get(currentPlayer-1).playerType==EnumTypePlayer.HUMAN){gridPane_special.getChildren().clear();}
                 num_remainST.setText(String.valueOf(remainSTile));
                 setDiceRoll();
 
