@@ -54,9 +54,22 @@ public class PlacementUtil
             int bestScore = newBoard.getBonusScoring();
             placementToScoreMap.put(placement,bestScore);
         }
-
-        return softmax(placementToScoreMap);
+        String aiPlacement = softmax(placementToScoreMap);
+        updatePlayerUsedSp(player,aiPlacement);
+        return aiPlacement;
     }
+    private  static  void updatePlayerUsedSp(Player player,String aiPlacement)
+    {
+        for(int i=0;i<aiPlacement.length();i+=5)
+        {
+            char ch = aiPlacement.charAt(i);
+            if(ch=='S')
+            {
+                player.usedSpeicalTile++;
+            }
+        }
+    }
+
 
     private static String softmax(Map<String,Integer>placementToScoreMap)
     {
