@@ -49,6 +49,19 @@ public class Player
      * AI difficulty, only use in AI mode.
      */
     private EnumTypeDifficulty difficulty ;
+    /**
+     * final score.
+     */
+    private int finalScore;
+
+    public void setFinalScore(int finalScore)
+    {
+        this.finalScore = finalScore;
+    }
+    public int getFinalScore()
+    {
+        return this.finalScore;
+    }
 
     public String getPlayerName(){
         return playerName;

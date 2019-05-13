@@ -5,9 +5,13 @@ import comp1110.ass2.model.*;
 import comp1110.ass2.RailroadInk;
 import comp1110.ass2.util.PlacementUtil;
 import comp1110.ass2.util.StageManager;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -18,6 +22,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.*;
 
@@ -62,23 +67,52 @@ public class GameStage implements Initializable {
     /* initialize game board */
     private Board board = new Board();
 
-    public class TileImage extends ImageView {
-        TileImage(){
+    public class fixedTile extends ImageView{
+        fixedTile(){
             this.setFitHeight(SQUARE_SIZE);
             this.setFitWidth(SQUARE_SIZE);
         }
     }
 
-    public class DraggableTile extends TileImage {
+    public class draggableTiles extends ImageView{
+
         int homeCol; int homeRow;
         int rotate;
         double mouseX; double mouseY;
         double homeX; double homeY;
-        String tileName;
 
-        DraggableTile(int homeCol, int homeRow){
+        String tilePlacementString;
+        String tileName;
+        List<draggableTiles> availableTiles = new ArrayList<>();
+
+        private void drag(double movementX, double movementY) {
+            setLayoutX(mouseX - homeX);
+            setLayoutY(mouseY - homeY);
+
+            this.setTranslateX(getLayoutX());
+            this.setTranslateY(getLayoutY());
+            this.setOpacity(0.5);
+            this.toFront();
+        }
+
+        private void moveToHome() {
+            this.setTranslateX(0.0);
+            this.setTranslateY(0.0);
+            this.setOpacity(1);
+            this.toFront();
+        }
+
+        boolean onBoard() {
+            return mouseX > (gridPane_board.getLayoutX() + SQUARE_SIZE)
+                    && mouseX < (gridPane_board.getLayoutX() + gridPane_board.getWidth() - SQUARE_SIZE)
+                    && mouseY > (gridPane_board.getLayoutY() + SQUARE_SIZE)
+                    && mouseY < (gridPane_board.getLayoutY() + gridPane_board.getHeight() - SQUARE_SIZE);
+        }
+        draggableTiles(int homeCol, int homeRow){
             this.homeCol=homeCol;
             this.homeRow=homeRow;
+            this.setFitHeight(SQUARE_SIZE);
+            this.setFitWidth(SQUARE_SIZE);
 
             setOnMousePressed(event -> {
                 displayWarning(defaultWarning);
@@ -103,7 +137,7 @@ public class GameStage implements Initializable {
                     this.toFront();
                     double movementX = event.getSceneX() - mouseX;
                     double movementY = event.getSceneY() - mouseY;
-                    this.drag();
+                    this.drag(movementX, movementY);
                     mouseX = event.getSceneX();
                     mouseY = event.getSceneY();
                 }
@@ -117,9 +151,9 @@ public class GameStage implements Initializable {
                     this.setOpacity(1);
                     int boardCol = (int) (mouseX - gridPane_board.getLayoutX()) / SQUARE_SIZE;
                     int boardRow = (int) (mouseY - gridPane_board.getLayoutY()) / SQUARE_SIZE;
+
                     String boardSquareName = board.getBoardSquareNameFromPosition(boardCol, boardRow);
                     String placementString = this.tileName + boardSquareName + this.rotate;
-
                     if (board.isValidPlacement(board.getSquareFromSquareString(placementString))) {
                         board.putPlacementStringToMap(placementString);
                         StageManager.playerList.get(currentPlayer-1).appendBoardString(placementString);
@@ -168,37 +202,13 @@ public class GameStage implements Initializable {
                 this.setScaleX((rotate) < 4 ? 1 : - 1);
                 displayWarning(defaultWarning);
                 event.consume();
+
             });
-        }
-
-        private void drag() {
-            setLayoutX(mouseX - homeX);
-            setLayoutY(mouseY - homeY);
-
-            this.setTranslateX(getLayoutX());
-            this.setTranslateY(getLayoutY());
-            this.setOpacity(0.5);
-            this.toFront();
-        }
-
-        private void moveToHome() {
-            this.setTranslateX(0.0);
-            this.setTranslateY(0.0);
-            this.setOpacity(1);
-            this.toFront();
-        }
-
-        boolean onBoard() {
-            return mouseX > (gridPane_board.getLayoutX() + SQUARE_SIZE)
-                    && mouseX < (gridPane_board.getLayoutX() + gridPane_board.getWidth() - SQUARE_SIZE)
-                    && mouseY > (gridPane_board.getLayoutY() + SQUARE_SIZE)
-                    && mouseY < (gridPane_board.getLayoutY() + gridPane_board.getHeight() - SQUARE_SIZE);
         }
 
         public void setTileName(String tileName) {
             this.tileName = tileName;
         }
-
         public void setRotateToZero(){
             this.rotate=0;
             this.setRotate((rotate % 4) * 90);
@@ -207,10 +217,10 @@ public class GameStage implements Initializable {
     }
 
     private void setDiceRoll(){
-        DraggableTile dice_1=new DraggableTile(0,0);
-        DraggableTile dice_2=new DraggableTile(1,0);
-        DraggableTile dice_3=new DraggableTile(0,1);
-        DraggableTile dice_4=new DraggableTile(1,1);
+        draggableTiles dice_1=new draggableTiles(0,0);
+        draggableTiles dice_2=new draggableTiles(1,0);
+        draggableTiles dice_3=new draggableTiles(0,1);
+        draggableTiles dice_4=new draggableTiles(1,1);
         diceRoll=RailroadInk.generateDiceRoll();
         Image d1 = new Image(Viewer.class.getResource("")+"assets/"+diceRoll.substring(0,2)+".jpg");
         dice_1.setImage(d1);
@@ -243,10 +253,10 @@ public class GameStage implements Initializable {
     }
 
     void setDTileAgain(){  //set Tiles without changing the dice string
-        DraggableTile dice_1=new DraggableTile(0,0);
-        DraggableTile dice_2=new DraggableTile(1,0);
-        DraggableTile dice_3=new DraggableTile(0,1);
-        DraggableTile dice_4=new DraggableTile(1,1);
+        draggableTiles dice_1=new draggableTiles(0,0);
+        draggableTiles dice_2=new draggableTiles(1,0);
+        draggableTiles dice_3=new draggableTiles(0,1);
+        draggableTiles dice_4=new draggableTiles(1,1);
         Image d1 = new Image(Viewer.class.getResource("")+"assets/"+diceRoll.substring(0,2)+".jpg");
         dice_1.setImage(d1);
         Image d2 = new Image(Viewer.class.getResource("")+"assets/"+diceRoll.substring(2,4)+".jpg");
@@ -295,7 +305,8 @@ public class GameStage implements Initializable {
     }
 
     @FXML
-    void btn_nextTurn_click(MouseEvent event) {
+    void btn_nextTurn_click(MouseEvent event) throws IOException
+    {
 
         if (remainDTile>0 && StageManager.playerList.get(currentPlayer-1).playerType==EnumTypePlayer.HUMAN ){
             displayWarning(diceNotPlacedWarning);
@@ -307,13 +318,26 @@ public class GameStage implements Initializable {
             remainDTile=4;
             num_remainDT.setText("4");
 
-            if (round==7 && totalPlayerNum==currentPlayer){
+            if (totalPlayerNum==1 && round<7){
+                round++;
+                StageManager.playerList.get(currentPlayer-1).round++;
+                num_round.setText(String.valueOf(round));
+                setDiceRoll();
+            }
+            else if (round==7 && totalPlayerNum==currentPlayer){
                 //todo:  open the window(stage) of ending OR(And) show the scores
                 Stage curr = StageManager.stageMap.get("gameStage");
                 curr.hide();
+                Stage scoreFormStage = new Stage();
+                Parent root = FXMLLoader.load(ClassLoader.getSystemResource("resource/ScoreForm.fxml"));
+                Scene scene = new Scene(root);
+                scoreFormStage.setScene(scene);
+                scoreFormStage.setTitle("ScoreForm");
+                scoreFormStage.show();
+                StageManager.stageMap.put("ScoreFormStage",scoreFormStage);
             }
             else if (totalPlayerNum>currentPlayer){
-                //savePlayerBoard();
+                savePlayerBoard();
                 currentPlayer++;
                 num_player.setText(Integer.toString(currentPlayer));
                 name_player.setText(StageManager.playerList.get(currentPlayer-1).getPlayerName());
@@ -326,7 +350,7 @@ public class GameStage implements Initializable {
                 displayPlayerBoard();
             }
             else if (totalPlayerNum==currentPlayer){
-                //savePlayerBoard();
+                savePlayerBoard();
                 currentPlayer=1;
                 num_player.setText(Integer.toString(currentPlayer));
                 round++;
@@ -347,7 +371,7 @@ public class GameStage implements Initializable {
     }
 
     private void displayTileToBoard(int col, int row, int rotation, Image image) {
-        TileImage tile = new TileImage();
+        fixedTile tile = new fixedTile();
         tile.setImage(image);
         tile.setRotate((rotation % 4) * 90);
         tile.setScaleX((rotation < 4) ? 1 : -1);
@@ -449,17 +473,14 @@ public class GameStage implements Initializable {
         String playerBoardString = player.getBoardString();
         System.out.println("displaying boardString :"+playerBoardString);
 
+
         if(player.playerType== EnumTypePlayer.AI)
         {
             String diceRoll = StageManager.diceRollList.get(StageManager.diceRollList.size()-1);
             String aiPlacement = PlacementUtil.getResults(playerBoardString,diceRoll,player);
             playerBoardString += aiPlacement;
-            Node gridForDice = gridPane_dice.getChildren().get(0);
-            Node gridForSpecial = gridPane_special.getChildren().get(0);
             gridPane_dice.getChildren().clear();
             gridPane_special.getChildren().clear();
-            gridPane_dice.getChildren().add(gridForDice);
-            gridPane_special.getChildren().add(gridForSpecial);
             //TODO: clean the UI of ImageView
         }
 
@@ -472,35 +493,26 @@ public class GameStage implements Initializable {
             displayTileToBoard(pp.getY(), pp.getX(), rotation, image);
         }
 
+
         board.putPlacementStringToMap(playerBoardString);
         player.setBoardString(playerBoardString);
         board.printMap();
-    }
 
-    private void moveTilesToFront() {
-        gridPane_dice.toFront();
-        gridPane_special.toFront();
-    }
 
-    private void displayGameInfo() {
-        String name = StageManager.playerList.get(currentPlayer-1).playerName;
-        num_player.setText(String.valueOf(currentPlayer));
-        this.name_player.setText(name);
-        num_round.setText(String.valueOf(round));
     }
 
     void setSTiles(){
-        if (gridPane_special.getChildren().size()<=6 && gridPane_special.getChildren().size()>0){
+        if (gridPane_special.getChildren().size()<6&&gridPane_special.getChildren().size()>0){
             Node grid = gridPane_special.getChildren().get(0);
             gridPane_special.getChildren().clear();
             gridPane_special.getChildren().add(grid);
         }
-        DraggableTile tile_s0=new DraggableTile(0,0);
-        DraggableTile tile_s1=new DraggableTile(1,0);
-        DraggableTile tile_s2=new DraggableTile(0,1);
-        DraggableTile tile_s3=new DraggableTile(1,1);
-        DraggableTile tile_s4=new DraggableTile(0,2);
-        DraggableTile tile_s5=new DraggableTile(1,2);
+        draggableTiles tile_s0=new draggableTiles(0,0);
+        draggableTiles tile_s1=new draggableTiles(1,0);
+        draggableTiles tile_s2=new draggableTiles(0,1);
+        draggableTiles tile_s3=new draggableTiles(1,1);
+        draggableTiles tile_s4=new draggableTiles(0,2);
+        draggableTiles tile_s5=new draggableTiles(1,2);
         Image s0 = new Image(Viewer.class.getResource("")+"assets/S0.jpg");
         Image s1 = new Image(Viewer.class.getResource("")+"assets/S1.jpg");
         Image s2 = new Image(Viewer.class.getResource("")+"assets/S2.jpg");
@@ -528,13 +540,18 @@ public class GameStage implements Initializable {
     }
 
     public void initialize(URL location, ResourceBundle resources){
-        displayGameInfo();
-        displayWarning(defaultWarning);
-        displayWallsAndExits();
+        String name = StageManager.playerList.get(currentPlayer-1).playerName;
+        num_player.setText(String.valueOf(currentPlayer));
+        this.name_player.setText(name);
+        num_round.setText(String.valueOf(round));
         setDiceRoll();
         setSTiles();
-        moveTilesToFront();
         System.out.println(diceRoll);
-        displayPlayerBoard();
+        displayWallsAndExits();
+        displayWarning(defaultWarning);
+        gridPane_dice.toFront();
+        gridPane_special.toFront();
+        System.out.println(gridPane_board.getChildren().toString());
     }
+
 }
