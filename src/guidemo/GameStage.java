@@ -303,7 +303,7 @@ public class GameStage implements Initializable {
     @FXML
     void btn_nextTurn_click(MouseEvent event) {
 
-        if (remainDTile>0){
+        if (remainDTile>0 && StageManager.playerList.get(currentPlayer-1).playerType==EnumTypePlayer.HUMAN ){
             displayWarning(diceNotPlacedWarning);
         }
         else {
@@ -312,8 +312,10 @@ public class GameStage implements Initializable {
             roundST=0;
             remainDTile=4;
             num_remainDT.setText("4");
+
             if (totalPlayerNum==1 && round<7){
                 round++;
+                StageManager.playerList.get(currentPlayer-1).round++;
                 num_round.setText(String.valueOf(round));
                 setDiceRoll();
             }
@@ -340,6 +342,7 @@ public class GameStage implements Initializable {
                 currentPlayer=1;
                 num_player.setText(Integer.toString(currentPlayer));
                 round++;
+                StageManager.playerList.get(currentPlayer-1).round++;
                 num_round.setText(String.valueOf(round));
                 name_player.setText(StageManager.playerList.get(currentPlayer-1).getPlayerName());
                 remainSTile=3-StageManager.playerList.get(currentPlayer-1).usedSpeicalTile;
@@ -464,6 +467,8 @@ public class GameStage implements Initializable {
             String diceRoll = StageManager.diceRollList.get(StageManager.diceRollList.size()-1);
             String aiPlacement = PlacementUtil.getResults(playerBoardString,diceRoll,player);
             playerBoardString += aiPlacement;
+            gridPane_dice.getChildren().clear();
+            gridPane_special.getChildren().clear();
             //TODO: clean the UI of ImageView
         }
 
