@@ -41,7 +41,7 @@ public class ScoreFormController implements Initializable
     void backToWelcome(ActionEvent event)
     {
         Object obj = StageManager.stageMap.get("StartFormStage");
-        if(obj == null)
+        if (obj == null)
         {
             System.out.println("can't get StartFormStage from StageManager");
             return;
@@ -50,15 +50,15 @@ public class ScoreFormController implements Initializable
         Stage startFormstage = (Stage) obj;
         startFormstage.show();
 
-        for(Map.Entry<String,Stage> entry: StageManager.stageMap.entrySet())
+        for (Map.Entry<String, Stage> entry : StageManager.stageMap.entrySet())
         {
-            if(!entry.getKey().equals("StartFormStage"))
+            if (! entry.getKey().equals("StartFormStage"))
             {
                 entry.getValue().close();
                 StageManager.stageMap.remove(entry);
             }
         }
-        StageManager.playerNumber=1;
+        StageManager.playerNumber = 1;
         StageManager.playerList.clear();
         StageManager.diceRollList.clear();
         StageManager.controllerMap.clear();
@@ -70,11 +70,11 @@ public class ScoreFormController implements Initializable
 
         label_Score.setText("Score");
         label_Player.setText("Player");
-        String scoreText="Score\r\n\r\n";
-        String playerText="Player\r\n\r\n";
+        String scoreText = "Score\r\n\r\n";
+        String playerText = "Player\r\n\r\n";
 
 
-        for(Player player:StageManager.playerList)
+        for (Player player : StageManager.playerList)
         {
 
             Board board = new Board();
@@ -84,10 +84,10 @@ public class ScoreFormController implements Initializable
 
         StageManager.playerList.stream().sorted(Comparator.comparingInt(Player :: getFinalScore));
 
-        for(Player player:StageManager.playerList)
+        for (Player player : StageManager.playerList)
         {
-            scoreText+=(player.getFinalScore()+"\r\n\r\n");
-            playerText+=(player.playerName+"\r\n\r\n");
+            scoreText += (player.getFinalScore() + "\r\n\r\n");
+            playerText += (player.playerName + "\r\n\r\n");
         }
         label_Score.setText(scoreText);
         label_Player.setText(playerText);
