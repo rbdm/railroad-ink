@@ -79,8 +79,6 @@ public class GameStage implements Initializable {
         DraggableTile(int homeCol, int homeRow){
             this.homeCol=homeCol;
             this.homeRow=homeRow;
-            //this.setFitHeight(SQUARE_SIZE);
-            //this.setFitWidth(SQUARE_SIZE);
 
             setOnMousePressed(event -> {
                 displayWarning(defaultWarning);
@@ -309,19 +307,13 @@ public class GameStage implements Initializable {
             remainDTile=4;
             num_remainDT.setText("4");
 
-            if (totalPlayerNum==1 && round<7){
-                round++;
-                StageManager.playerList.get(currentPlayer-1).round++;
-                num_round.setText(String.valueOf(round));
-                setDiceRoll();
-            }
-            else if (round==7 && totalPlayerNum==currentPlayer){
+            if (round==7 && totalPlayerNum==currentPlayer){
                 //todo:  open the window(stage) of ending OR(And) show the scores
                 Stage curr = StageManager.stageMap.get("gameStage");
                 curr.hide();
             }
             else if (totalPlayerNum>currentPlayer){
-                savePlayerBoard();
+                //savePlayerBoard();
                 currentPlayer++;
                 num_player.setText(Integer.toString(currentPlayer));
                 name_player.setText(StageManager.playerList.get(currentPlayer-1).getPlayerName());
@@ -334,7 +326,7 @@ public class GameStage implements Initializable {
                 displayPlayerBoard();
             }
             else if (totalPlayerNum==currentPlayer){
-                savePlayerBoard();
+                //savePlayerBoard();
                 currentPlayer=1;
                 num_player.setText(Integer.toString(currentPlayer));
                 round++;
@@ -456,7 +448,7 @@ public class GameStage implements Initializable {
         Player player = StageManager.playerList.get(currentPlayer-1);
         String playerBoardString = player.getBoardString();
         System.out.println("displaying boardString :"+playerBoardString);
-        
+
         if(player.playerType== EnumTypePlayer.AI)
         {
             String diceRoll = StageManager.diceRollList.get(StageManager.diceRollList.size()-1);
@@ -537,13 +529,12 @@ public class GameStage implements Initializable {
 
     public void initialize(URL location, ResourceBundle resources){
         displayGameInfo();
+        displayWarning(defaultWarning);
+        displayWallsAndExits();
         setDiceRoll();
         setSTiles();
         moveTilesToFront();
         System.out.println(diceRoll);
-        displayWallsAndExits();
         displayPlayerBoard();
-        displayWarning(defaultWarning);
     }
-
 }
