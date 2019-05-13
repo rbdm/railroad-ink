@@ -23,7 +23,7 @@ public class Player
     /**
      * the round index.
      */
-    private int round = 0;
+    public int round = 0;
     /**
      * the player's board.
      */
