@@ -490,7 +490,7 @@ public class GameStage implements Initializable {
     }
 
     void setSTiles(){
-        if (gridPane_special.getChildren().size()<6&&gridPane_special.getChildren().size()>0){
+        if (gridPane_special.getChildren().size()<=6 && gridPane_special.getChildren().size()>0){
             Node grid = gridPane_special.getChildren().get(0);
             gridPane_special.getChildren().clear();
             gridPane_special.getChildren().add(grid);
