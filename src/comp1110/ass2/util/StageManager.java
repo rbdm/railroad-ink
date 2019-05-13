@@ -1,7 +1,6 @@
 package comp1110.ass2.util;
 
 import comp1110.ass2.model.Player;
-import guidemo.GameStage;
 import javafx.stage.Stage;
 
 import java.util.ArrayList;

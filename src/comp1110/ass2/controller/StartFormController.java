@@ -1,10 +1,7 @@
 package comp1110.ass2.controller;
 
-import comp1110.ass2.util.GuiUtil;
 import comp1110.ass2.util.StageManager;
-import guidemo.GameStage;
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableArray;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -15,7 +12,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
-import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -53,7 +49,7 @@ public class StartFormController implements Initializable
         Stage startFormStage = StageManager.stageMap.get("StartFormStage");
         startFormStage.hide();
         StageManager.playerNumber = Integer.valueOf(comboBox_PlayerNumber.getValue().toString());
-        GameStage.totalPlayerNum = Integer.valueOf(comboBox_PlayerNumber.getValue().toString());
+        GameStageController.totalPlayerNum = Integer.valueOf(comboBox_PlayerNumber.getValue().toString());
 
 
         //open a stage

@@ -1,32 +1,32 @@
-package guidemo;
+package comp1110.ass2.controller;
 
-import comp1110.ass2.gui.Viewer;
-import comp1110.ass2.model.*;
 import comp1110.ass2.RailroadInk;
+import comp1110.ass2.gui.Viewer;
+import comp1110.ass2.model.Board;
+import comp1110.ass2.model.EnumTypePlayer;
+import comp1110.ass2.model.Player;
+import comp1110.ass2.model.PositionPoint;
 import comp1110.ass2.util.PlacementUtil;
 import comp1110.ass2.util.StageManager;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.*;
+import java.util.ResourceBundle;
 
-public class GameStage implements Initializable {
+public class GameStageController implements Initializable {
 
     @FXML private GridPane gridPane_special;
     @FXML private GridPane gridPane_dice;
