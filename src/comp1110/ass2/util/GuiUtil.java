@@ -125,4 +125,16 @@ public class GuiUtil
             }
         }
     }
+
+    public static boolean isNumber(String string)
+    {
+        for(char ch : string.toCharArray())
+        {
+            if(!(ch>='0' && ch<='9'))
+            {
+                return false;
+            }
+        }
+        return true;
+    }
 }

@@ -52,6 +52,9 @@ public class OptionFormController implements Initializable
     private Label label_InputNumber;
 
     @FXML
+    private Label label_tip;
+
+    @FXML
     void btn_Clear_Click(ActionEvent event)
     {
         textFiled_PlayerName.setText("");
@@ -65,22 +68,27 @@ public class OptionFormController implements Initializable
     @FXML
     void btn_Next_Click(ActionEvent event) throws IOException
     {
+        if (! checkValid())
+        {
+            return;
+        }
+
         String playerType = "HUMAN";
-        if(radio_btn_AI.isSelected())
+        if (radio_btn_AI.isSelected())
         {
             playerType = "AI";
         }
         String difficulty = "Easy";
-        if(combox_Difficulty.getValue()!=null)
+        if (combox_Difficulty.getValue() != null)
         {
             difficulty = combox_Difficulty.getValue().toString();
         }
-        Player player = new Player(textFiled_PlayerName.getText(),playerType,difficulty);
+        Player player = new Player(textFiled_PlayerName.getText(), playerType, difficulty);
         System.out.println(player.toString());
         StageManager.playerList.add(player);
 
 
-        if(StageManager.playerNumber==0)
+        if (StageManager.playerNumber == 0)
         {
             System.out.println("finish option selection");
             //TODO get the new windows
@@ -89,7 +97,7 @@ public class OptionFormController implements Initializable
             Scene sceneOne = new Scene(rootOne);
             gameStageOne.setScene(sceneOne);
             gameStageOne.setTitle("gameStage");
-            StageManager.stageMap.put("gameStage",gameStageOne);
+            StageManager.stageMap.put("gameStage", gameStageOne);
 
             Stage optionFormStage = StageManager.stageMap.get("OptionFormStage");
             optionFormStage.hide();
@@ -99,15 +107,19 @@ public class OptionFormController implements Initializable
         }
         StageManager.playerNumber--;
         int number = Integer.valueOf(label_InputNumber.getText().toString());
-        label_InputNumber.setText(String.valueOf(number+1));
+        label_InputNumber.setText(String.valueOf(number + 1));
         btn_Clear_Click(event);
     }
+
     @FXML
-    void radio_btn_Human_Click(ActionEvent event) {
+    void radio_btn_Human_Click(ActionEvent event)
+    {
         combox_Difficulty.setDisable(true);
     }
+
     @FXML
-    void radio_btn_AI_Click(ActionEvent event) {
+    void radio_btn_AI_Click(ActionEvent event)
+    {
         combox_Difficulty.setDisable(false);
     }
 
@@ -118,9 +130,22 @@ public class OptionFormController implements Initializable
         //intialize the item of comboBox_PlayerNumber
         ObservableList<String> playerNumberList = FXCollections.observableArrayList("Easy", "Hard");
         combox_Difficulty.setItems(playerNumberList);
-        StageManager.controllerMap.put("OptionFormStage",this);
+        StageManager.controllerMap.put("OptionFormStage", this);
         label_InputNumber.setText("1");
 
+    }
+
+    private boolean checkValid()
+    {
+        String playerName = textFiled_PlayerName.getText();
+        if (! (playerName.length() > 0 && playerName.length() < 11))
+        {
+            label_tip.setText("the name of player should consist of 1-10 characters.");
+
+            return false;
+        }
+        label_tip.setText("");
+        return true;
     }
 
 }

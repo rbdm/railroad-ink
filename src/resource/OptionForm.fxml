@@ -68,6 +68,7 @@
                   <Font size="20.0" />
                </font>
             </Label>
+            <Label fx:id="label_tip" alignment="CENTER" layoutX="50.0" layoutY="359.0" prefHeight="27.0" prefWidth="540.0" textAlignment="JUSTIFY" textFill="RED" />
       </children>
     </AnchorPane>
   </children>

@@ -1,5 +1,6 @@
 package comp1110.ass2.controller;
 
+import comp1110.ass2.util.GuiUtil;
 import comp1110.ass2.util.StageManager;
 import guidemo.GameStage;
 import javafx.collections.FXCollections;
@@ -13,6 +14,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
@@ -36,9 +38,18 @@ public class StartFormController implements Initializable
 
     @FXML
     private ComboBox comboBox_PlayerNumber;
+    @FXML
+    private Label label_tip;
 
     public void btn_NewGame_Click(ActionEvent actionEvent) throws IOException
     {
+        if(comboBox_PlayerNumber.getValue()==null)
+        {
+            label_tip.setText("you should select the number of player");
+            return;
+        }
+
+
         Stage startFormStage = StageManager.stageMap.get("StartFormStage");
         startFormStage.hide();
         StageManager.playerNumber = Integer.valueOf(comboBox_PlayerNumber.getValue().toString());
