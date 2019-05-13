@@ -44,7 +44,7 @@ public class Player
     /**
      * player tpye: AI or HUMAN
      */
-    private EnumTypePlayer playerType ;
+    public EnumTypePlayer playerType ;
     /**
      * AI difficulty, only use in AI mode.
      */

@@ -1,10 +1,9 @@
 package guidemo;
 
 import comp1110.ass2.gui.Viewer;
-import comp1110.ass2.model.Board;
+import comp1110.ass2.model.*;
 import comp1110.ass2.RailroadInk;
-import comp1110.ass2.model.PositionPoint;
-import comp1110.ass2.model.Square;
+import comp1110.ass2.util.PlacementUtil;
 import comp1110.ass2.util.StageManager;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -213,7 +212,7 @@ public class GameStage implements Initializable {
         }
     }
 
-    void setDiceRoll(){
+    private void setDiceRoll(){
         draggableTiles dice_1=new draggableTiles(0,0);
         draggableTiles dice_2=new draggableTiles(1,0);
         draggableTiles dice_3=new draggableTiles(0,1);
@@ -245,6 +244,7 @@ public class GameStage implements Initializable {
         gridPane_dice.add(dice_3,0,1);
         gridPane_dice.add(dice_4,1,1);
 
+        StageManager.diceRollList.add(diceRoll);
 
     }
 
@@ -302,6 +302,7 @@ public class GameStage implements Initializable {
 
     @FXML
     void btn_nextTurn_click(MouseEvent event) {
+
         if (remainDTile>0){
             displayWarning(diceNotPlacedWarning);
         }
@@ -453,8 +454,18 @@ public class GameStage implements Initializable {
     }
 
     private void displayPlayerBoard() {
-        String playerBoardString = StageManager.playerList.get(currentPlayer-1).getBoardString();
+        Player player = StageManager.playerList.get(currentPlayer-1);
+        String playerBoardString = player.getBoardString();
         System.out.println("displaying boardString :"+playerBoardString);
+
+
+        if(player.playerType== EnumTypePlayer.AI)
+        {
+            String diceRoll = StageManager.diceRollList.get(StageManager.diceRollList.size()-1);
+            String aiPlacement = PlacementUtil.getResults(playerBoardString,diceRoll,player);
+            playerBoardString += aiPlacement;
+            //TODO: clean the UI of ImageView
+        }
 
         for (int i=0; i<playerBoardString.length(); i+=5) {
             String placementString = playerBoardString.substring(i, i+5);
@@ -464,8 +475,12 @@ public class GameStage implements Initializable {
 
             displayTileToBoard(pp.getY(), pp.getX(), rotation, image);
         }
+
+
         board.putPlacementStringToMap(playerBoardString);
         board.printMap();
+
+
     }
 
     void setSTiles(){
