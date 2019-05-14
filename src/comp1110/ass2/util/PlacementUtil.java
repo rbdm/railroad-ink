@@ -49,6 +49,10 @@ public class PlacementUtil
         for (int i = 0; i <= 5; i++)
         {
             String spDice = "S" + String.valueOf(i);
+            if(isSpUsed(player,spDice))
+            {
+                continue;
+            }
 
             String placement = getResult(currentPlacementString, diceRoll + spDice);
             Board newBoard = new Board();
@@ -58,7 +62,21 @@ public class PlacementUtil
         }
         String aiPlacement = softmax(placementToScoreMap);
         updatePlayerUsedSp(player, aiPlacement);
+
+        System.out.println(String.format("Player: %s's placement is: %s",player.playerName,aiPlacement));
         return aiPlacement;
+    }
+    private static boolean isSpUsed(Player player,String sp)
+    {
+        String currentPlacement = player.getBoardString();
+        for(int i=0;i<currentPlacement.length();i+=5)
+        {
+            if(currentPlacement.substring(i,i+2).equals(sp))
+            {
+                return true;
+            }
+        }
+        return false;
     }
 
     private static void updatePlayerUsedSp(Player player, String aiPlacement)
