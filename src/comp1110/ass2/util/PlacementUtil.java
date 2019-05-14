@@ -33,7 +33,7 @@ public class PlacementUtil
     public static String getResults(String currentPlacementString, String diceRoll, Player player)
     {
         int remainRound = 7 - player.round;
-        int remainSp = 4 - player.usedSpeicalTile;
+        int remainSp = 3 - player.usedSpeicalTile;
         Map<String, Integer> placementToScoreMap = new HashMap<>();
 
         String bestPlacement = getResult(currentPlacementString, diceRoll);

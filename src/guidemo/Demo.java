@@ -27,7 +27,7 @@ public class Demo extends Application
         Parent root = FXMLLoader.load(ClassLoader.getSystemResource("resource/StartForm.fxml"));
         Scene scene = new Scene(root);
         stage.setScene(scene);
-        stage.setTitle("StarForm");
+        stage.setTitle("StartForm");
         stage.show();
         StageManager.stageMap.put("StartFormStage",stage);
 
