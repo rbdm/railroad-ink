@@ -155,16 +155,9 @@ public class GameStageController implements Initializable {
                         useDiceRoll(this.tileName);
 
                         if (tileName.charAt(0) == 'S') {
-                            if (roundST==0) {
-                                gridPane_special.getChildren().remove(this);
-                                StageManager.playerList.get(currentPlayer - 1).usedSpeicalTile++;
-                                remainSTile = 3 - StageManager.playerList.get(currentPlayer - 1).usedSpeicalTile;
-                                num_remainST.setText(String.valueOf(remainSTile));
-                                roundST++;
-                            }
-                            else {
-                                this.moveToHome();
-                            }
+                            roundST=1;
+                            gridPane_special.getChildren().remove(this);
+                            num_remainST.setText(String.valueOf(remainSTile-1));
                         }
                         else {
                             gridPane_dice.getChildren().remove(this);
@@ -308,22 +301,27 @@ public class GameStageController implements Initializable {
             displayWarning(noTilesPlacedWarning);
         }
         else {
+            if (roundST==1){
+                roundST=0;
+                num_remainST.setText(String.valueOf(remainSTile));
+            }
+            remainDTile=4;
+            num_remainDT.setText(String.valueOf(4));
+
             takeBackTilesPlacedThisTurn();
             setSTiles();
             setDTileAgain();
             remainingDiceRoll = diceRoll;
-            remainSTile+=roundST;
-            StageManager.playerList.get(currentPlayer-1).usedSpeicalTile=remainSTile;
-            num_remainST.setText(String.valueOf(remainSTile));
-            roundST=0;
-            remainDTile=4;
-            num_remainDT.setText(String.valueOf(remainDTile));
         }
     }
 
     @FXML
     void btn_endTurn_click(MouseEvent event) throws IOException
     {
+        if (roundST==1){
+            StageManager.playerList.get(currentPlayer-1).usedSpeicalTile++;
+            roundST=0;
+        }
         if (remainDTile>0 && StageManager.playerList.get(currentPlayer-1).playerType==EnumTypePlayer.HUMAN && isAbleToMove()){
             displayWarning(diceNotPlacedWarning);
         }
