@@ -547,11 +547,11 @@ public class GameStageController implements Initializable {
     }
 
     void setSTiles(){
-        if (gridPane_special.getChildren().size()<=6 && gridPane_special.getChildren().size()>0){
+        //if (gridPane_special.getChildren().size()<=6 && gridPane_special.getChildren().size()>0){
             Node grid = gridPane_special.getChildren().get(0);
             gridPane_special.getChildren().clear();
             gridPane_special.getChildren().add(grid);
-        }
+        //}
         DraggableTile tile_s0=new DraggableTile(0,0);
         DraggableTile tile_s1=new DraggableTile(1,0);
         DraggableTile tile_s2=new DraggableTile(0,1);
@@ -625,6 +625,7 @@ public class GameStageController implements Initializable {
         displayWarning(defaultWarning);
         gridPane_dice.toFront();
         gridPane_special.toFront();
+        System.out.println(gridPane_special.getChildren());
         if (StageManager.playerList.get(currentPlayer-1).playerType==EnumTypePlayer.AI){
             Node gridForDice = gridPane_dice.getChildren().get(0);
             Node gridForSpecial = gridPane_special.getChildren().get(0);
