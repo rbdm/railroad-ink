@@ -3,6 +3,8 @@ package comp1110.ass2;
 import comp1110.ass2.model.Board;
 import comp1110.ass2.model.Square;
 
+import java.util.Random;
+
 public class RailroadInk {
     /**
      * Determine whether a tile placement string is well-formed:
@@ -110,16 +112,13 @@ public class RailroadInk {
      */
     public static String generateDiceRoll() {
         // FIXME Task 7: generate a dice roll
-        Double a1 = Math.random()*6;
-        int rollOne = a1.intValue();
-        Double a2 = Math.random()*6;
-        int rollTwo = a2.intValue();
-        Double a3 = Math.random()*6;
-        int rollThree = a3.intValue();
-        Double b = Math.random()*3;
-        int rollFour = b.intValue();
-        String roll = "A"+Integer.toString(rollOne)+"A"+Integer.toString(rollTwo)+
-                "A"+Integer.toString(rollThree)+"B"+Integer.toString(rollFour);
+        Random random = new Random();
+        int a1 = random.nextInt(6);
+        int a2 = random.nextInt(6);
+        int a3 = random.nextInt(6);
+        int rollFour = random.nextInt(3);
+        String roll = "A"+Integer.toString(a1)+"A"+Integer.toString(a2)+
+                "A"+Integer.toString(a3)+"B"+Integer.toString(rollFour);
         return roll;
     }
 
