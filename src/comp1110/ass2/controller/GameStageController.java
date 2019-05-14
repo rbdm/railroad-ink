@@ -24,6 +24,8 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class GameStageController implements Initializable {
@@ -534,6 +536,12 @@ public class GameStageController implements Initializable {
             gridPane_special.getChildren().clear();
             gridPane_special.getChildren().add(grid);
         }
+        String boardString = StageManager.playerList.get(currentPlayer-1).getBoardString();
+        List<String> list = new ArrayList<>();
+        int num = boardString.length();
+        for (int i=0;i<num;i+=5){
+            list.add(boardString.substring(i,i+2));
+        }
         DraggableTile tile_s0=new DraggableTile(0,0);
         DraggableTile tile_s1=new DraggableTile(1,0);
         DraggableTile tile_s2=new DraggableTile(0,1);
@@ -564,6 +572,25 @@ public class GameStageController implements Initializable {
         gridPane_special.add(tile_s3,1,1);
         gridPane_special.add(tile_s4,0,2);
         gridPane_special.add(tile_s5,1,2);
+        if (list.contains("S0")){
+            gridPane_special.getChildren().remove(tile_s0);
+        }
+        if (list.contains("S1")){
+            gridPane_special.getChildren().remove(tile_s1);
+        }
+        if (list.contains("S2")){
+            gridPane_special.getChildren().remove(tile_s2);
+        }
+        if (list.contains("S3")){
+            gridPane_special.getChildren().remove(tile_s3);
+        }
+        if (list.contains("S4")){
+            gridPane_special.getChildren().remove(tile_s4);
+        }
+        if (list.contains("S5")){
+            gridPane_special.getChildren().remove(tile_s5);
+        }
+
     }
 
     public void initialize(URL location, ResourceBundle resources){

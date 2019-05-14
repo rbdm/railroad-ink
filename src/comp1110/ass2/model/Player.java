@@ -41,6 +41,7 @@ public class Player
      * the number of used S tile
      */
     public int usedSpeicalTile = 0;
+
     /**
      * player tpye: AI or HUMAN
      */
