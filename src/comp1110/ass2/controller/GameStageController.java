@@ -594,18 +594,28 @@ public class GameStageController implements Initializable {
     }
 
     public void initialize(URL location, ResourceBundle resources){
-        String name = StageManager.playerList.get(currentPlayer-1).playerName;
+        //set name, round and player No.
         num_player.setText(String.valueOf(currentPlayer));
+        String name = StageManager.playerList.get(currentPlayer-1).playerName;
         this.name_player.setText(name);
         num_round.setText(String.valueOf(round));
         setDiceRoll();
         setSTiles();
-        System.out.println(diceRoll);
-        displayWallsAndExits();
         displayWarning(defaultWarning);
         gridPane_dice.toFront();
         gridPane_special.toFront();
-        System.out.println(gridPane_board.getChildren().toString());
+        displayWallsAndExits();
+        if (StageManager.playerList.get(currentPlayer-1).playerType==EnumTypePlayer.AI){
+            Node gridForDice = gridPane_dice.getChildren().get(0);
+            Node gridForSpecial = gridPane_special.getChildren().get(0);
+            gridPane_special.getChildren().clear();
+            gridPane_dice.getChildren().clear();
+            gridPane_dice.getChildren().add(gridForDice);
+            gridPane_special.getChildren().add(gridForSpecial);
+            displayPlayerBoard();
+        }
+
+
     }
 
 }
