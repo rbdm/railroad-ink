@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.shape.*?>
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -9,9 +14,9 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane fx:id="rootPane" prefHeight="768.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="comp1110.ass2.controller.GameStageController">
+<AnchorPane fx:id="rootPane" prefHeight="768.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="comp1110.ass2.controller.GameStageController">
    <children>
-      <GridPane fx:id="gridPane_special" gridLinesVisible="true" layoutX="689.0" layoutY="126.0" AnchorPane.rightAnchor="160.0" AnchorPane.topAnchor="125.0">
+      <GridPane fx:id="gridPane_special" gridLinesVisible="true" layoutX="744.0" layoutY="120.0" style="-fx-background-color: lightgoldenrodyellow;" AnchorPane.rightAnchor="160.0" AnchorPane.topAnchor="120.0">
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="60.0" />
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="60.0" />
@@ -22,7 +27,7 @@
           <RowConstraints minHeight="10.0" prefHeight="60.0" vgrow="SOMETIMES" />
         </rowConstraints>
       </GridPane>
-      <GridPane fx:id="gridPane_dice" gridLinesVisible="true" layoutX="699.0" layoutY="136.0" AnchorPane.rightAnchor="160.0" AnchorPane.topAnchor="370.0">
+      <GridPane fx:id="gridPane_dice" gridLinesVisible="true" layoutX="744.0" layoutY="396.0" style="-fx-background-color: lightgoldenrodyellow;" AnchorPane.rightAnchor="160.0" AnchorPane.topAnchor="396.0">
          <columnConstraints>
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="60.0" />
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="60.0" />
@@ -32,8 +37,8 @@
             <RowConstraints minHeight="10.0" prefHeight="60.0" vgrow="SOMETIMES" />
          </rowConstraints>
       </GridPane>
-      <Button fx:id="btn_next" layoutX="745.0" layoutY="604.0" mnemonicParsing="false" onMouseClicked="#btn_endTurn_click" prefHeight="27.0" prefWidth="121.0" text="End Turn" />
-      <GridPane fx:id="gridPane_board" gridLinesVisible="true" layoutX="189.0" layoutY="240.0" AnchorPane.leftAnchor="78.0" AnchorPane.topAnchor="120.0">
+      <Button fx:id="btn_next" layoutX="745.0" layoutY="612.0" mnemonicParsing="false" onMouseClicked="#btn_endTurn_click" prefHeight="27.0" prefWidth="121.0" text="End Turn" />
+      <GridPane fx:id="gridPane_board" gridLinesVisible="true" layoutX="82.0" layoutY="96.0" style="-fx-background-color: lightgoldenrodyellow;" AnchorPane.leftAnchor="82.0" AnchorPane.topAnchor="96.0">
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="60.0" />
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="60.0" />
@@ -56,45 +61,68 @@
             <RowConstraints minHeight="10.0" prefHeight="60.0" vgrow="SOMETIMES" />
             <RowConstraints minHeight="10.0" prefHeight="60.0" vgrow="SOMETIMES" />
         </rowConstraints>
+         <children>
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ffffea" height="180.0" scaleZ="1.0E22" stroke="RED" strokeType="INSIDE" strokeWidth="2.0" width="180.0" GridPane.columnIndex="3" GridPane.rowIndex="4" />
+         </children>
       </GridPane>
-      <Text layoutX="704.0" layoutY="90.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Remaining chance for special tiles: " />
-      <Label fx:id="num_remainST" layoutX="913.0" layoutY="74.0" text="3" textFill="#c40d0d">
+      <Text layoutX="697.0" layoutY="98.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Remaining chance for special tiles: " />
+      <Label fx:id="num_remainST" layoutX="913.0" layoutY="83.0" text="3" textFill="#c40d0d">
          <font>
             <Font name="System Bold Italic" size="16.0" />
          </font>
       </Label>
-      <Text layoutX="348.0" layoutY="90.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Round: ">
+      <Text layoutX="82.0" layoutY="83.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Round: ">
          <font>
             <Font size="16.0" />
          </font>
       </Text>
-      <Text layoutX="78.0" layoutY="90.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Player">
+      <Text layoutX="266.0" layoutY="83.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Player">
          <font>
             <Font size="16.0" />
          </font>
       </Text>
-      <Label fx:id="num_player" layoutX="130.0" layoutY="73.0" text="1" textFill="#d30f0f">
+      <Label fx:id="num_player" layoutX="320.0" layoutY="67.0" text="1" textFill="#d30f0f">
          <font>
             <Font name="System Bold Italic" size="16.0" />
          </font>
       </Label>
-      <Label fx:id="name_player" layoutX="160.0" layoutY="73.0" text="Name">
+      <Label fx:id="name_player" layoutX="337.0" layoutY="67.0" text="Name">
          <font>
             <Font size="17.0" />
          </font>
       </Label>
-      <Label fx:id="num_round" layoutX="407.0" layoutY="74.0" text="1" textFill="#cf1515">
+      <Label fx:id="num_round" layoutX="140.0" layoutY="67.0" text="1" textFill="#cf1515">
          <font>
             <Font name="System Bold Italic" size="16.0" />
          </font>
       </Label>
-      <Text layoutX="696.0" layoutY="348.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Remaining tiles that must be placed: " />
-      <Label fx:id="num_remainDT" layoutX="913.0" layoutY="333.0" text="4" textFill="#c40d0d">
+      <Text layoutX="692.0" layoutY="378.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Remaining tiles that must be placed: " />
+      <Label fx:id="num_remainDT" layoutX="919.0" layoutY="364.0" text="4" textFill="#c40d0d">
          <font>
             <Font name="System Bold Italic" size="16.0" />
          </font>
       </Label>
-      <Label fx:id="warning" layoutX="78.0" layoutY="672.0" prefHeight="27.0" prefWidth="540.0" style="-fx-border-color: green; -fx-border-width: 5px;" text="Drag the available tiles to the board, then click End Turn button to end your turn." />
-      <Button fx:id="btn_takeBack" layoutX="744.0" layoutY="562.0" mnemonicParsing="false" onMouseClicked="#btn_takeBack_click" prefHeight="27.0" prefWidth="120.0" text="Take Back" />
+      <Label fx:id="warning" layoutX="81.0" layoutY="648.0" prefHeight="27.0" prefWidth="540.0" style="-fx-border-color: green; -fx-border-width: 5px;" text="Drag the available tiles to the board, then click End Turn button to end your turn." />
+      <Button fx:id="btn_takeBack" layoutX="744.0" layoutY="569.0" mnemonicParsing="false" onMouseClicked="#btn_takeBack_click" prefHeight="27.0" prefWidth="120.0" text="Take Back" />
+      <Label layoutX="749.0" layoutY="60.0" text="Special Tile">
+         <font>
+            <Font size="21.0" />
+         </font>
+      </Label>
+      <Label layoutX="747.0" layoutY="337.0" text="Regular Tile">
+         <font>
+            <Font size="21.0" />
+         </font>
+      </Label>
+      <Label fx:id="player_type" layoutX="575.0" layoutY="69.0" text="Type" textFill="#d30f0f">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <Text layoutX="487.0" layoutY="83.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Player Type:">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Text>
    </children>
 </AnchorPane>

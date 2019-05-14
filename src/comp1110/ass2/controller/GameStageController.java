@@ -14,6 +14,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -36,9 +37,11 @@ public class GameStageController implements Initializable {
     @FXML private Label num_remainST;
     @FXML private Label num_player;
     @FXML public Label name_player;
+    @FXML public Label player_type;
     @FXML private Label num_round;
     @FXML private Label num_remainDT;
     @FXML private Label warning;
+    @FXML private Button btn_takeBack;
 
     public static int totalPlayerNum=1;
     public int currentPlayer=1;
@@ -64,7 +67,6 @@ public class GameStageController implements Initializable {
     private String diceNotPlacedWarning = "You need to put all 4 Regular Tiles on the board first.";
     private String noTilesPlacedWarning = "You have not put any tile this turn";
     private String noMoreMoveAvailableWarning = "No more Regular Tile can be placed, you are now allowed to click Next Turn";
-    private String takeBackAIWarning = "You can't take back on an AI's turn. Click end turn to continue";
 
     /* initialize game board */
     private Board board = new Board();
@@ -298,10 +300,7 @@ public class GameStageController implements Initializable {
 
     @FXML
     void btn_takeBack_click() {
-        if (getCurrentPlayer().playerType== EnumTypePlayer.AI) {
-            displayWarning(takeBackAIWarning);
-        }
-        else if (tilesPlacedThisTurn == 0) {
+        if (tilesPlacedThisTurn == 0) {
             displayWarning(noTilesPlacedWarning);
         }
         else {
@@ -326,7 +325,7 @@ public class GameStageController implements Initializable {
             StageManager.playerList.get(currentPlayer-1).usedSpeicalTile++;
             roundST=0;
         }
-        if (remainDTile>0 && StageManager.playerList.get(currentPlayer-1).playerType==EnumTypePlayer.HUMAN && isAbleToMove()){
+        if (remainDTile>0 && getCurrentPlayer().playerType==EnumTypePlayer.HUMAN && isAbleToMove()){
             displayWarning(diceNotPlacedWarning);
         }
         else {
@@ -355,6 +354,8 @@ public class GameStageController implements Initializable {
                 name_player.setText(StageManager.playerList.get(currentPlayer-1).getPlayerName());
                 remainSTile=3-StageManager.playerList.get(currentPlayer-1).usedSpeicalTile;
                 num_remainST.setText(String.valueOf(remainSTile));
+                player_type.setText(getCurrentPlayer().getPlayerType());
+                toggleTakeBackButton();
                 setDTileAgain();
                 setSTiles();
                 removeBoardDisplay();
@@ -371,7 +372,9 @@ public class GameStageController implements Initializable {
                 name_player.setText(StageManager.playerList.get(currentPlayer-1).getPlayerName());
                 remainSTile=3-StageManager.playerList.get(currentPlayer-1).usedSpeicalTile;
                 num_remainST.setText(String.valueOf(remainSTile));
+                player_type.setText(getCurrentPlayer().getPlayerType());
                 setDiceRoll();
+                toggleTakeBackButton();
                 removeBoardDisplay();
                 loadPlayerBoard();
                 displayPlayerBoard();
@@ -398,6 +401,14 @@ public class GameStageController implements Initializable {
             }
         }
         remainingDiceRoll = newDiceRoll;
+    }
+
+    private void toggleTakeBackButton() {
+        if (getCurrentPlayer().playerType == EnumTypePlayer.AI) {
+            btn_takeBack.setDisable(true);
+        } else {
+            btn_takeBack.setDisable(false);
+        }
     }
 
     private void displayTileToBoard(int col, int row, int rotation, Image image) {
@@ -488,8 +499,10 @@ public class GameStageController implements Initializable {
 
     private void removeBoardDisplay() {
         Node grid = gridPane_board.getChildren().get(0);
+        Node rectangle = gridPane_board.getChildren().get(1);
         gridPane_board.getChildren().clear();
         gridPane_board.getChildren().add(grid);
+        gridPane_board.getChildren().add(rectangle);
         displayWallsAndExits();
     }
 
@@ -501,6 +514,7 @@ public class GameStageController implements Initializable {
         Player player = StageManager.playerList.get(currentPlayer-1);
         String playerBoardString = player.getBoardString();
         System.out.println("displaying boardString :"+playerBoardString);
+
 
         if(player.playerType== EnumTypePlayer.AI)
         {
@@ -602,6 +616,8 @@ public class GameStageController implements Initializable {
         String name = StageManager.playerList.get(currentPlayer-1).playerName;
         this.name_player.setText(name);
         num_round.setText(String.valueOf(round));
+        player_type.setText(getCurrentPlayer().getPlayerType());
+        toggleTakeBackButton();
         setDiceRoll();
         setSTiles();
         displayWallsAndExits();

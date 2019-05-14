@@ -132,6 +132,12 @@ public class Player
         this.board = newBoard;
     }
 
+    public String getPlayerType() {
+        if (playerType == playerType.HUMAN) {
+            return "Human";
+        } else return "AI";
+    }
+
 
 
 }
