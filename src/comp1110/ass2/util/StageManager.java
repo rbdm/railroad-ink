@@ -22,5 +22,4 @@ public class StageManager
     public static Map<String, Object> controllerMap=new HashMap<String, Object>();
     public static List<String> diceRollList = new ArrayList<>();
 
-
 }
