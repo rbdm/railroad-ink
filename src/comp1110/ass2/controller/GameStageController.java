@@ -64,6 +64,7 @@ public class GameStageController implements Initializable {
     private String diceNotPlacedWarning = "You need to put all 4 Regular Tiles on the board first.";
     private String noTilesPlacedWarning = "You have not put any tile this turn";
     private String noMoreMoveAvailableWarning = "No more Regular Tile can be placed, you are now allowed to click Next Turn";
+    private String takeBackAIWarning = "You can't take back on an AI's turn. Click end turn to continue";
 
     /* initialize game board */
     private Board board = new Board();
@@ -149,7 +150,7 @@ public class GameStageController implements Initializable {
 
                     if (board.isValidPlacement(board.getSquareFromSquareString(placementString))) {
                         board.putPlacementStringToMap(placementString);
-                        StageManager.playerList.get(currentPlayer-1).appendBoardString(placementString);
+                        getCurrentPlayer().appendBoardString(placementString);
                         displayTileToBoard(boardCol, boardRow, this.rotate, this.getImage());
                         tilesPlacedThisTurn++;
                         useDiceRoll(this.tileName);
@@ -304,7 +305,10 @@ public class GameStageController implements Initializable {
 
     @FXML
     void btn_takeBack_click() {
-        if (tilesPlacedThisTurn == 0) {
+        if (getCurrentPlayer().playerType== EnumTypePlayer.AI) {
+            displayWarning(takeBackAIWarning);
+        }
+        else if (tilesPlacedThisTurn == 0) {
             displayWarning(noTilesPlacedWarning);
         }
         else {
@@ -313,7 +317,7 @@ public class GameStageController implements Initializable {
             setDTileAgain();
             remainingDiceRoll = diceRoll;
             remainSTile+=roundST;
-            StageManager.playerList.get(currentPlayer-1).usedSpeicalTile=remainSTile;
+            getCurrentPlayer().usedSpeicalTile=remainSTile;
             num_remainST.setText(String.valueOf(remainSTile));
             roundST=0;
             remainDTile=4;
@@ -324,7 +328,7 @@ public class GameStageController implements Initializable {
     @FXML
     void btn_endTurn_click(MouseEvent event) throws IOException
     {
-        if (remainDTile>0 && StageManager.playerList.get(currentPlayer-1).playerType==EnumTypePlayer.HUMAN && isAbleToMove()){
+        if (remainDTile>0 && getCurrentPlayer().playerType==EnumTypePlayer.HUMAN && isAbleToMove()){
             displayWarning(diceNotPlacedWarning);
         }
         else {
@@ -378,10 +382,7 @@ public class GameStageController implements Initializable {
     }
 
     private boolean isAbleToMove() {
-        System.out.println(StageManager.playerList.get(currentPlayer-1).getBoardString());
-        System.out.println(remainingDiceRoll);
-        System.out.println( ! RailroadInk.generateMove(StageManager.playerList.get(currentPlayer-1).getBoardString(), remainingDiceRoll).equals(""));
-        return ( ! RailroadInk.generateMove(StageManager.playerList.get(currentPlayer-1).getBoardString(), remainingDiceRoll).equals(""));
+        return ( ! RailroadInk.generateMove(getCurrentPlayer().getBoardString(), remainingDiceRoll).equals(""));
     }
 
     private void useDiceRoll(String dice) {
@@ -470,12 +471,16 @@ public class GameStageController implements Initializable {
         }
     }
 
+    private Player getCurrentPlayer() {
+        return StageManager.playerList.get(currentPlayer-1);
+    }
+
     private void takeBackTilesPlacedThisTurn() {
-        String boardString = StageManager.playerList.get(currentPlayer-1).getBoardString();
+        String boardString = getCurrentPlayer().getBoardString();
         String removedPlacementString = boardString.substring(boardString.length() - (tilesPlacedThisTurn * 5));
         String newBoardString = boardString.substring(0, boardString.length() - (tilesPlacedThisTurn * 5));
 
-        StageManager.playerList.get(currentPlayer-1).setBoardString(newBoardString);
+        getCurrentPlayer().setBoardString(newBoardString);
         removeBoardDisplay();
         board.removeBoardStringFromBoard(removedPlacementString);
         displayPlayerBoard();
@@ -491,7 +496,7 @@ public class GameStageController implements Initializable {
     }
 
     private void loadPlayerBoard() {
-        board = StageManager.playerList.get(currentPlayer-1).getBoard();
+        board = getCurrentPlayer().getBoard();
     }
 
     private void displayPlayerBoard() {
@@ -565,7 +570,7 @@ public class GameStageController implements Initializable {
         gridPane_special.add(tile_s3,1,1);
         gridPane_special.add(tile_s4,0,2);
         gridPane_special.add(tile_s5,1,2);
-        String boardString = StageManager.playerList.get(currentPlayer-1).getBoardString();
+        String boardString = getCurrentPlayer().getBoardString();
         List<String> list = new ArrayList<>();
         int num = boardString.length();
         for (int i=0;i<num;i+=5){
@@ -602,10 +607,10 @@ public class GameStageController implements Initializable {
         setSTiles();
         System.out.println(diceRoll);
         displayWallsAndExits();
+        displayPlayerBoard();
         displayWarning(defaultWarning);
         gridPane_dice.toFront();
         gridPane_special.toFront();
-        System.out.println(gridPane_board.getChildren().toString());
-    }
 
+    }
 }

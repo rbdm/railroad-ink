@@ -377,12 +377,12 @@ public class Board
     public String getPossibleDicePlacement(String dice) {
         String emptyString = "";
         for (char row='A'; row<='G'; row++) {
-            for (char col='1'; col<='6'; col++) {
+            for (char col='0'; col<='6'; col++) {
                 for (char orientation='0'; orientation<='7'; orientation++) {
                     String placementString = dice + row + col + orientation;
-                    if (getSquareFromSquareString(placementString) == null) {
+                    /*if (getSquareFromSquareString(placementString) == null) {
                         throw new IllegalArgumentException();
-                    }
+                    }*/
                     if (isValidPlacement(getSquareFromSquareString(placementString))) {
                         return placementString;
                     }
