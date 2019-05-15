@@ -23,6 +23,9 @@ public class IOUtil
         public int score;
     }
 
+    /**
+     * update the txt of bestGameScore
+     */
     public static void updateBestGameScore()
     {
         List<ScoreRecoder> list = readBestScoreFromFile();
@@ -48,6 +51,10 @@ public class IOUtil
 
     }
 
+    /**
+     * wirte the best game score to bestScore.txt
+     * @param list the scoreRecoder list
+     */
     private static void writeBestGameScore(List<ScoreRecoder> list)
     {
 
@@ -77,6 +84,10 @@ public class IOUtil
 
     }
 
+    /**
+     * read the best score from file.
+     * @return
+     */
     public static List<ScoreRecoder> readBestScoreFromFile()
     {
         //TODO; may change it with Json. but it will improt Gson.jar.

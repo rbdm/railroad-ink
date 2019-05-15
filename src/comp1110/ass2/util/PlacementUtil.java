@@ -19,6 +19,9 @@ public class PlacementUtil
     static Integer bestScore = Integer.MIN_VALUE;
     static Board board = new Board();
 
+    /**
+     * initialize all the static variable to original state.
+     */
     private static void initialize()
     {
         currentPlacment = null;
@@ -27,6 +30,13 @@ public class PlacementUtil
         board = new Board();
     }
 
+    /**
+     * get the placement result of a AI player.
+     * @param currentPlacementString
+     * @param diceRoll
+     * @param player
+     * @return
+     */
     public static String getResults(String currentPlacementString, String diceRoll, Player player)
     {
         int remainRound = 7 - player.round;
@@ -35,21 +45,25 @@ public class PlacementUtil
         //if is Easy model, just use random
         if(player.getDifficulty()== EnumTypeDifficulty.EASY)
         {
-            return getPlacementRandom(currentPlacementString,diceRoll,player, remainSp > 0);
+            String aiPlacement =getPlacementRandom(currentPlacementString,diceRoll,player, remainSp > 0);
+            System.out.println(String.format("Player: %s's placement is: %s",player.playerName,aiPlacement));
+            return aiPlacement;
         }
-
+        //if is Hard model, use Greedy method.
         Map<String, Integer> placementToScoreMap = new HashMap<>();
-
+        //get the best result with greedy method.
         String bestPlacement = getResult(currentPlacementString, diceRoll);
         Board board = new Board();
         board.putPlacementStringToMap(currentPlacementString + bestPlacement);
         placementToScoreMap.put(bestPlacement, board.getBonusScoring());
+
+        //check if we have remain Special tile.
         if (remainSp == 0)
         {
             return bestPlacement;
         }
 
-
+        //find the best Sp tile.
         for (int i = 0; i <= 5; i++)
         {
             String spDice = "S" + String.valueOf(i);
@@ -70,6 +84,15 @@ public class PlacementUtil
         System.out.println(String.format("Player: %s's placement is: %s",player.playerName,aiPlacement));
         return aiPlacement;
     }
+
+    /**
+     * get a placement radomly
+     * @param currentPlacementString the current placement
+     * @param diceRoll all dice roll ,like A0A2A3B0
+     * @param player the player
+     * @param canUseSp can we use sp tile
+     * @return a Ai placement lie A0D21A2C33A3B40B0C01
+     */
     private static String getPlacementRandom(String currentPlacementString, String diceRoll, Player player,boolean canUseSp)
     {
         StringBuilder sb = new StringBuilder();
@@ -92,6 +115,13 @@ public class PlacementUtil
         return sb.toString();
 
     }
+
+    /**
+     * get all possible placement of a dice
+     * @param currentPlacment currentplacement
+     * @param diceRoll a dice roll like A0
+     * @return the list of all possible placement.
+     */
     private static List<String> getAllPossiblePlacement(String currentPlacment,String diceRoll)
     {
 
@@ -119,7 +149,12 @@ public class PlacementUtil
 
     }
 
-
+    /**
+     * to check if the Special tile is used.
+     * @param player player
+     * @param sp the string of special tile
+     * @return is used?
+     */
     private static boolean isSpUsed(Player player,String sp)
     {
         String currentPlacement = player.getBoardString();
@@ -133,6 +168,11 @@ public class PlacementUtil
         return false;
     }
 
+    /**
+     * update the detail of usedSptile in player.
+     * @param player player
+     * @param aiPlacement the ai's placement.
+     */
     private static void updatePlayerUsedSp(Player player, String aiPlacement)
     {
         for (int i = 0; i < aiPlacement.length(); i += 5)
@@ -145,7 +185,12 @@ public class PlacementUtil
         }
     }
 
-
+    /**
+     * use softmax to avoid all ai make the same move.
+     * also it is a method to try to make the ai select the highest score placement (max possibility).
+     * @param placementToScoreMap the placement with their score map
+     * @return a softmax placement.
+     */
     private static String softmax(Map<String, Integer> placementToScoreMap)
     {
         double total = 0;
@@ -219,6 +264,11 @@ public class PlacementUtil
 
     }
 
+    /**
+     * find the highest score placement
+     * @param diceToScoreMap the dice and the socre map.
+     * @return the highest score placement.
+     */
     private static String findHighestScorePlacement(Map<String, Integer> diceToScoreMap)
     {
         int highestScore = Integer.MIN_VALUE;
@@ -233,6 +283,13 @@ public class PlacementUtil
         return highestScorePlacement;
     }
 
+    /**
+     * use greedy method to get placment.
+     * @param currentPlacementString the current placement.
+     * @param diceRoll the dice roll
+     * @param CanSpeicalTile can we use speical tile
+     * @return a placement.
+     */
     private static String getPlacementByGreedyAlgorithm(String currentPlacementString, String diceRoll, boolean CanSpeicalTile)
     {
         initialize();
@@ -252,6 +309,19 @@ public class PlacementUtil
         return bestPlacement;
     }
 
+    /**
+     * the recurison of 4 dice.
+     * but currently, I find with 4 dice it will cost to much time on recursion,
+     * so it just make 1 dice when the method is called.
+     * that means, i don't use the recursion.
+     * I try to cut some branch to fasten it .
+     * But it performance is still bad.
+     * I will learn the CSPs and try to use minium value method to solve it.
+     *
+     * @param deepth the deepth of recursion
+     * @param diceList the dicelist
+     * @param combination the placement combination we have selected.
+     */
     private static void oneStep(int deepth, List<String> diceList, String combination)
     {
         if (deepth == diceList.size())
@@ -283,6 +353,12 @@ public class PlacementUtil
         }
     }
 
+    /**
+     * to check if this position can be put a tile
+     * @param currentPlacementString currentPlacement
+     * @param positionString the position.
+     * @return can put?
+     */
     private static boolean isCorrectPosition(String currentPlacementString, String positionString)
     {
         for (int i = 0; i < currentPlacementString.length(); i += 5)
@@ -296,7 +372,11 @@ public class PlacementUtil
         return true;
     }
 
-
+    /**
+     * to evaluaton the combination's score
+     * @param combination the aiplacement
+     * @return the score.
+     */
     private static int evaluation(String combination)
     {
         if (! board.isValidBoardStringPlacement(combination))

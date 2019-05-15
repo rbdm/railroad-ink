@@ -76,6 +76,10 @@ public class ScoreFormController implements Initializable
             initializeCurrentGameScore();
         }
     }
+
+    /**
+     * to set the text of label if it shows the best score.
+     */
     private void initializeBestGameScore()
     {
         label_Score.setText("Score");
@@ -95,10 +99,11 @@ public class ScoreFormController implements Initializable
 
     }
 
+    /**
+     * to set the text of label if it shows the current score after a game.
+     */
     private void initializeCurrentGameScore()
     {
-
-
         label_Score.setText("Score");
         label_Player.setText("Player");
         String scoreText = "Score\r\n\r\n";

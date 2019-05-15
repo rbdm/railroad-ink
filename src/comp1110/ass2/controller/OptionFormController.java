@@ -134,6 +134,11 @@ public class OptionFormController implements Initializable
 
     }
 
+    /**
+     * to check if the input text of player name is vaild,
+     * the length should between 0-11
+     * @return is name valid
+     */
     private boolean checkValid()
     {
         String playerName = textFiled_PlayerName.getText();
