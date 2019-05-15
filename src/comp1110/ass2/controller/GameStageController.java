@@ -634,7 +634,7 @@ public class GameStageController implements Initializable {
             gridPane_dice.getChildren().clear();
             gridPane_dice.getChildren().add(gridForDice);
             gridPane_special.getChildren().add(gridForSpecial);
-            displayPlayerBoard();
+
         }
 
 
