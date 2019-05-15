@@ -107,7 +107,6 @@ public class PlacementUtil
                 for (int r = 0; r <= 7; r++)
                 {
                     Board board = new Board();
-                    System.out.println("xxx :"+currentPlacment +"  yyy:"+ diceRoll + String.valueOf(i) + String.valueOf(j) + String.valueOf(r));
                     if (board.isValidBoardStringPlacement(currentPlacment + diceRoll + String.valueOf(i) + String.valueOf(j) + String.valueOf(r)))
                     {
                         list.add(diceRoll + String.valueOf(i) + String.valueOf(j) + String.valueOf(r));
