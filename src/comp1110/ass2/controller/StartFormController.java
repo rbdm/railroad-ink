@@ -64,9 +64,19 @@ public class StartFormController implements Initializable
 
     }
 
-    public void btn_HighScore_Click(ActionEvent actionEvent)
+    public void btn_HighScore_Click(ActionEvent actionEvent) throws IOException
     {
-        btn_NewGame.setText("123");
+        StageManager.isShownBestScore = true;
+
+        Stage curr = StageManager.stageMap.get("StartFormStage");
+        curr.hide();
+        Stage scoreFormStage = new Stage();
+        Parent root = FXMLLoader.load(ClassLoader.getSystemResource("resource/ScoreForm.fxml"));
+        Scene scene = new Scene(root);
+        scoreFormStage.setScene(scene);
+        scoreFormStage.setTitle("BestScoreForm");
+        scoreFormStage.show();
+        StageManager.stageMap.put("ScoreFormStage",scoreFormStage);
     }
 
     @Override

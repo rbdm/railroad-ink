@@ -21,5 +21,6 @@ public class StageManager
     public static Map<String, Stage> stageMap=new HashMap<String, Stage>();
     public static Map<String, Object> controllerMap=new HashMap<String, Object>();
     public static List<String> diceRollList = new ArrayList<>();
+    public static boolean isShownBestScore = true;
 
 }

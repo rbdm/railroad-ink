@@ -1,9 +1,6 @@
 package comp1110.ass2.util;
 
-import comp1110.ass2.model.Board;
-import comp1110.ass2.model.Player;
-import comp1110.ass2.model.Square;
-import comp1110.ass2.model.Tile;
+import comp1110.ass2.model.*;
 
 import java.util.*;
 import java.util.regex.Matcher;
@@ -34,6 +31,13 @@ public class PlacementUtil
     {
         int remainRound = 7 - player.round;
         int remainSp = 3 - player.usedSpeicalTile;
+
+        //if is Easy model, just use random
+        if(player.getDifficulty()== EnumTypeDifficulty.EASY)
+        {
+            return getPlacementRandom(currentPlacementString,diceRoll,player, remainSp > 0);
+        }
+
         Map<String, Integer> placementToScoreMap = new HashMap<>();
 
         String bestPlacement = getResult(currentPlacementString, diceRoll);
@@ -66,6 +70,57 @@ public class PlacementUtil
         System.out.println(String.format("Player: %s's placement is: %s",player.playerName,aiPlacement));
         return aiPlacement;
     }
+    private static String getPlacementRandom(String currentPlacementString, String diceRoll, Player player,boolean canUseSp)
+    {
+        StringBuilder sb = new StringBuilder();
+        Random random = new Random();
+
+        for(int i=0;i<diceRoll.length();i+=2)
+        {
+            List<String> possibleList = getAllPossiblePlacement(currentPlacementString,diceRoll.substring(i,i+2));
+            int index = random.nextInt(possibleList.size());
+            currentPlacementString+=possibleList.get(index);
+            sb.append(possibleList.get(index));
+        }
+        if(random.nextInt(2)==1)
+        {
+            String sp = "S" + Integer.valueOf(random.nextInt(6));
+            List<String> possibleList = getAllPossiblePlacement(currentPlacementString,sp);
+            int index = random.nextInt(possibleList.size());
+            sb.append(possibleList.get(index));
+        }
+        return sb.toString();
+
+    }
+    private static List<String> getAllPossiblePlacement(String currentPlacment,String diceRoll)
+    {
+
+        List<String> list = new ArrayList<>();
+        for (char i = 'A'; i <= 'G'; i++)
+        {
+            for (int j = 0; j <= 6; j++)
+            {
+                if (! isCorrectPosition(currentPlacment, String.valueOf(i) + String.valueOf(j)))
+                {
+                    continue;
+                }
+                for (int r = 0; r <= 7; r++)
+                {
+                    Board board = new Board();
+                    System.out.println("xxx :"+currentPlacment +"  yyy:"+ diceRoll + String.valueOf(i) + String.valueOf(j) + String.valueOf(r));
+                    if (board.isValidBoardStringPlacement(currentPlacment + diceRoll + String.valueOf(i) + String.valueOf(j) + String.valueOf(r)))
+                    {
+                        list.add(diceRoll + String.valueOf(i) + String.valueOf(j) + String.valueOf(r));
+                    }
+                }
+            }
+        }
+
+        return list;
+
+    }
+
+
     private static boolean isSpUsed(Player player,String sp)
     {
         String currentPlacement = player.getBoardString();
