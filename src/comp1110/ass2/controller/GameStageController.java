@@ -53,7 +53,8 @@ public class GameStageController implements Initializable {
     public int remainSTile=3;
     public int remainDTile=4;
     public String diceRoll;
-    private final int SQUARE_SIZE = 60;
+    private final double UNPLACED_TILE_SQUARE_SIZE = 59.5;
+    private final double SQUARE_SIZE = 60;
     private String currentTurnBoardString = "";
     private int tilesPlacedThisTurn = 0;
     private String imageURLPrefix = "assets/";
@@ -73,8 +74,8 @@ public class GameStageController implements Initializable {
 
     public class TileImage extends ImageView {
         TileImage(){
-            this.setFitHeight(SQUARE_SIZE);
-            this.setFitWidth(SQUARE_SIZE);
+            this.setFitHeight(UNPLACED_TILE_SQUARE_SIZE);
+            this.setFitWidth(UNPLACED_TILE_SQUARE_SIZE);
         }
     }
 
@@ -145,8 +146,8 @@ public class GameStageController implements Initializable {
                 }
                 else if (onBoard()) {
                     this.setOpacity(1);
-                    int boardCol = (int) (mouseX - gridPane_board.getLayoutX()) / SQUARE_SIZE;
-                    int boardRow = (int) (mouseY - gridPane_board.getLayoutY()) / SQUARE_SIZE;
+                    int boardCol = (int) (mouseX - gridPane_board.getLayoutX()) / (int) SQUARE_SIZE;
+                    int boardRow = (int) (mouseY - gridPane_board.getLayoutY()) / (int) SQUARE_SIZE;
                     String boardSquareName = board.getBoardSquareNameFromPosition(boardCol, boardRow);
                     String placementString = this.tileName + boardSquareName + this.rotate;
 
@@ -215,10 +216,10 @@ public class GameStageController implements Initializable {
         }
 
         private boolean onBoard() {
-            return mouseX > (gridPane_board.getLayoutX() + SQUARE_SIZE)
-                    && mouseX < (gridPane_board.getLayoutX() + gridPane_board.getWidth() - SQUARE_SIZE)
-                    && mouseY > (gridPane_board.getLayoutY() + SQUARE_SIZE)
-                    && mouseY < (gridPane_board.getLayoutY() + gridPane_board.getHeight() - SQUARE_SIZE);
+            return mouseX > (gridPane_board.getLayoutX() + UNPLACED_TILE_SQUARE_SIZE)
+                    && mouseX < (gridPane_board.getLayoutX() + gridPane_board.getWidth() - UNPLACED_TILE_SQUARE_SIZE)
+                    && mouseY > (gridPane_board.getLayoutY() + UNPLACED_TILE_SQUARE_SIZE)
+                    && mouseY < (gridPane_board.getLayoutY() + gridPane_board.getHeight() - UNPLACED_TILE_SQUARE_SIZE);
         }
 
         public void setTileName(String tileName) {
@@ -415,6 +416,8 @@ public class GameStageController implements Initializable {
 
     private void displayTileToBoard(int col, int row, int rotation, Image image) {
         TileImage tile = new TileImage();
+        tile.setFitHeight(SQUARE_SIZE);
+        tile.setFitWidth(SQUARE_SIZE);
         tile.setImage(image);
         tile.setRotate((rotation % 4) * 90);
         tile.setScaleX((rotation < 4) ? 1 : -1);
