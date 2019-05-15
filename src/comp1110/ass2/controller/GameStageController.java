@@ -431,7 +431,7 @@ public class GameStageController implements Initializable {
     }
 
     private void displayWallsAndExits() {
-        Image wallImage = new Image(Viewer.class.getResource("")+imageURLPrefix+"Wall"+imageURLSuffix);
+        Image wallImage = new Image(Viewer.class.getResource("")+imageURLPrefix+"WALL"+imageURLSuffix);
         Image railwayExitImage = new Image(Viewer.class.getResource("")+imageURLPrefix+"RailExit"+imageURLSuffix);
         Image highwayExitImage = new Image(Viewer.class.getResource("")+imageURLPrefix+"HighExit"+imageURLSuffix);
 

@@ -63,7 +63,7 @@
                   <Font size="20.0" />
                </font>
             </Label>
-            <Label fx:id="label_InputNumber" layoutX="492.0" layoutY="28.0" prefHeight="27.0" prefWidth="40.0" text="1" textFill="RED">
+            <Label fx:id="label_InputNumber" layoutX="503.0" layoutY="28.0" prefHeight="27.0" prefWidth="40.0" text="1" textFill="RED">
                <font>
                   <Font size="20.0" />
                </font>
