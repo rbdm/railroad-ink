@@ -152,6 +152,8 @@ public class GameStageController implements Initializable {
 
                     if (board.isValidPlacement(board.getSquareFromSquareString(placementString))) {
                         board.putPlacementStringToMap(placementString);
+                        System.out.println("displaying boardString: "+getCurrentPlayer().getBoardString());
+                        board.printMap();
                         getCurrentPlayer().appendBoardString(placementString);
                         displayTileToBoard(boardCol, boardRow, this.rotate, this.getImage());
                         tilesPlacedThisTurn++;
@@ -388,7 +390,7 @@ public class GameStageController implements Initializable {
 
     private void useDiceRoll(String dice) {
         int usedDice = 0;
-        String newDiceRoll = diceRoll;
+        String newDiceRoll = remainingDiceRoll;
         if ( ! dice.substring(0,1).equals("S")) {
             for (int i=0; i<remainingDiceRoll.length() && usedDice == 0; i+=2) {
                 String diceInDiceRoll = remainingDiceRoll.substring(i, i+2);
@@ -513,8 +515,7 @@ public class GameStageController implements Initializable {
     private void displayPlayerBoard() {
         Player player = StageManager.playerList.get(currentPlayer-1);
         String playerBoardString = player.getBoardString();
-        System.out.println("displaying boardString :"+playerBoardString);
-
+        System.out.println("displaying boardString :"+getCurrentPlayer().getBoardString());
 
         if(player.playerType== EnumTypePlayer.AI)
         {
