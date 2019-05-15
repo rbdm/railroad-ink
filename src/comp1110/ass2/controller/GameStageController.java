@@ -642,7 +642,7 @@ public class GameStageController implements Initializable {
     }
 
     public void initialize(URL location, ResourceBundle resources){
-        //set name, round and player No. and place the tiles 
+        //set name, round and player No. and place the tiles
         num_player.setText(String.valueOf(currentPlayer));
         String name = StageManager.playerList.get(currentPlayer-1).playerName;
         this.name_player.setText(name);
