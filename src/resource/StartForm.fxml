@@ -16,7 +16,7 @@
                   <Font size="25.0" />
                </font>
             </Button>
-            <Button fx:id="btn_HighScore" disable="true" layoutX="231.0" layoutY="281.0" mnemonicParsing="false" onAction="#btn_HighScore_Click" text="High Score">
+            <Button fx:id="btn_HighScore" disable="false" layoutX="231.0" layoutY="281.0" mnemonicParsing="false" onAction="#btn_HighScore_Click" text="High Score">
                <font>
                   <Font size="25.0" />
                </font>

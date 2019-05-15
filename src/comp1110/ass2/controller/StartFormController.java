@@ -44,14 +44,10 @@ public class StartFormController implements Initializable
             label_tip.setText("you should select the number of player");
             return;
         }
-
-
         Stage startFormStage = StageManager.stageMap.get("StartFormStage");
         startFormStage.hide();
         StageManager.playerNumber = Integer.valueOf(comboBox_PlayerNumber.getValue().toString());
         GameStageController.totalPlayerNum = Integer.valueOf(comboBox_PlayerNumber.getValue().toString());
-
-
         //open a stage
         StageManager.playerNumber--;
         Stage stage = new Stage();
@@ -64,9 +60,23 @@ public class StartFormController implements Initializable
 
     }
 
-    public void btn_HighScore_Click(ActionEvent actionEvent)
+    /**
+     * show the highest score windows
+     * @param actionEvent actionEvent
+     * @throws IOException exception if read the bestScore.txt failed.
+     */
+    public void btn_HighScore_Click(ActionEvent actionEvent) throws IOException
     {
-        btn_NewGame.setText("123");
+        StageManager.isShownBestScore = true;
+        Stage curr = StageManager.stageMap.get("StartFormStage");
+        curr.hide();
+        Stage scoreFormStage = new Stage();
+        Parent root = FXMLLoader.load(ClassLoader.getSystemResource("resource/ScoreForm.fxml"));
+        Scene scene = new Scene(root);
+        scoreFormStage.setScene(scene);
+        scoreFormStage.setTitle("BestScoreForm");
+        scoreFormStage.show();
+        StageManager.stageMap.put("ScoreFormStage",scoreFormStage);
     }
 
     @Override

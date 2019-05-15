@@ -34,24 +34,18 @@ public class RouteUtil
     {
         //Intial map
         Square[][] squares = map.clone();
-        // find each square's longest highway
+        // find each square's longest highway and railway
         for (int i = 1; i < height - 1; i++)
         {
             for (int j = 1; j < width - 1; j++)
             {
-                ArrayList<PositionPoint> trackingList = new ArrayList<>();
-                int maxlength = oneStep(squares, i, j, 0, EnumTypeTile.HIGHWAY, Direction.NONE, trackingList);
-                squares[i][j].longestHighWayRouteLength = maxlength;
-            }
-        }
-        // find each square's longest railway
-        for (int i = 1; i < height - 1; i++)
-        {
-            for (int j = 1; j < width - 1; j++)
-            {
-                ArrayList<PositionPoint> trackingList = new ArrayList<>();
-                int maxlength = oneStep(squares, i, j, 0, EnumTypeTile.RAILWAY, Direction.NONE, trackingList);
-                squares[i][j].longestRailWayRouteLength = maxlength;
+                ArrayList<PositionPoint> HighywayTrackingList = new ArrayList<>();
+                int highWayMaxlength = oneStep(squares, i, j, 0, EnumTypeTile.HIGHWAY, Direction.NONE, HighywayTrackingList);
+                squares[i][j].longestHighWayRouteLength = highWayMaxlength;
+
+                ArrayList<PositionPoint> RailWayTrackingList = new ArrayList<>();
+                int railWayMaxlength = oneStep(squares, i, j, 0, EnumTypeTile.RAILWAY, Direction.NONE, RailWayTrackingList);
+                squares[i][j].longestRailWayRouteLength = railWayMaxlength;
             }
         }
         return squares;

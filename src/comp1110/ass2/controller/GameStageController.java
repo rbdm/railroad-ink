@@ -360,6 +360,7 @@ public class GameStageController implements Initializable {
 
             if (round==7 && totalPlayerNum==currentPlayer){
                 //todo:  open the window(stage) of ending OR(And) show the scores
+                StageManager.isShownBestScore = false;
                 Stage curr = StageManager.stageMap.get("gameStage");
                 curr.hide();
                 Stage scoreFormStage = new Stage();

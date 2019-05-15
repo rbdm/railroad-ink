@@ -2,6 +2,7 @@ package comp1110.ass2.controller;
 
 import comp1110.ass2.model.Board;
 import comp1110.ass2.model.Player;
+import comp1110.ass2.util.IOUtil;
 import comp1110.ass2.util.StageManager;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -11,11 +12,10 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
+import netscape.javascript.JSObject;
 
 import java.net.URL;
-import java.util.Comparator;
-import java.util.Map;
-import java.util.ResourceBundle;
+import java.util.*;
 
 /**
  * User: u6613739
@@ -67,13 +67,47 @@ public class ScoreFormController implements Initializable
     @Override
     public void initialize(URL location, ResourceBundle resources)
     {
+        if(StageManager.isShownBestScore)
+        {
+            initializeBestGameScore();
+        }
+        else
+        {
+            initializeCurrentGameScore();
+        }
+    }
 
+    /**
+     * to set the text of label if it shows the best score.
+     */
+    private void initializeBestGameScore()
+    {
         label_Score.setText("Score");
         label_Player.setText("Player");
         String scoreText = "Score\r\n\r\n";
         String playerText = "Player\r\n\r\n";
 
+        List<IOUtil.ScoreRecoder> list =  IOUtil.readBestScoreFromFile();
 
+        for(IOUtil.ScoreRecoder item : list)
+        {
+            scoreText += (item.score + "\r\n\r\n");
+            playerText += (item.playerName + "\r\n\r\n");
+        }
+        label_Score.setText(scoreText);
+        label_Player.setText(playerText);
+
+    }
+
+    /**
+     * to set the text of label if it shows the current score after a game.
+     */
+    private void initializeCurrentGameScore()
+    {
+        label_Score.setText("Score");
+        label_Player.setText("Player");
+        String scoreText = "Score\r\n\r\n";
+        String playerText = "Player\r\n\r\n";
         for (Player player : StageManager.playerList)
         {
 
@@ -91,8 +125,10 @@ public class ScoreFormController implements Initializable
         }
         label_Score.setText(scoreText);
         label_Player.setText(playerText);
-
+        IOUtil.updateBestGameScore();
     }
+
+
 
 }
 

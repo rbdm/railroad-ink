@@ -55,6 +55,12 @@ public class Player
      */
     private int finalScore;
 
+    public EnumTypeDifficulty getDifficulty()
+    {
+        return difficulty;
+    }
+
+
     public void setFinalScore(int finalScore)
     {
         this.finalScore = finalScore;
