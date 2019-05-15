@@ -78,16 +78,17 @@ public class GameStageController implements Initializable {
             this.setFitWidth(UNPLACED_TILE_SQUARE_SIZE);
         }
     }
-
+    /**
+    DraggableTile includes 4 normal tiles (decide by the dice) all the special tiles (which haven't been used yet)
+    it can be drag and rotate
+     */
     public class DraggableTile extends TileImage {
-        int homeCol; int homeRow;
-        int rotate;
+        int homeCol; int homeRow; // it's original position on gridPane
+        int rotate; // the last int of a 5 bit tilePlacementString
         double mouseX; double mouseY;
         double homeX; double homeY;
 
-        String tilePlacementString;
-        String tileName;
-
+        String tileName; // like A1, B2, S0
         DraggableTile(int homeCol, int homeRow){
             this.homeCol=homeCol;
             this.homeRow=homeRow;
@@ -233,6 +234,9 @@ public class GameStageController implements Initializable {
         }
     }
 
+    /**
+     * It would generate a new dice roll and place corresponding tiles on the gridPaneDice
+     */
     private void setDiceRoll(){
         DraggableTile dice_1=new DraggableTile(0,0);
         DraggableTile dice_2=new DraggableTile(1,0);
@@ -269,7 +273,10 @@ public class GameStageController implements Initializable {
         remainingDiceRoll = diceRoll;
     }
 
-    void setDTileAgain(){  //set Tiles without changing the dice string
+    /**
+     * without changing the dice string, put the 4 normal Tiles to the gridPane again
+     */
+    void setDTileAgain(){
         DraggableTile dice_1=new DraggableTile(0,0);
         DraggableTile dice_2=new DraggableTile(1,0);
         DraggableTile dice_3=new DraggableTile(0,1);
@@ -301,6 +308,11 @@ public class GameStageController implements Initializable {
         gridPane_dice.add(dice_4,1,1);
     }
 
+
+    /**
+     * when click the "take back" button, the tiles placed by the current player in this round
+     * would go back to home
+     */
     @FXML
     void btn_takeBack_click() {
         if (tilesPlacedThisTurn == 0) {
@@ -321,6 +333,13 @@ public class GameStageController implements Initializable {
         }
     }
 
+    /**
+     * When click the "end turn" button, if the user have placed all 4 regular tiles, the game would
+     * go to next player or(and) next round. If not, it won't be allowed and would show waring message.
+     * The only exception is that the remaining regular tile is not able to be placed on board according to the rules.
+     * @param event     mouse click
+     * @throws IOException
+     */
     @FXML
     void btn_endTurn_click(MouseEvent event) throws IOException
     {
@@ -385,6 +404,10 @@ public class GameStageController implements Initializable {
         }
     }
 
+    /**
+     * when there's regular tiles unplaced, judge if there is no valid placement can be made
+     * @return true if no valid placement can be made
+     */
     private boolean isAbleToMove() {
         return ( ! RailroadInk.generateMove(getCurrentPlayer().getBoardString(), remainingDiceRoll).equals(""));
     }
@@ -550,12 +573,16 @@ public class GameStageController implements Initializable {
 
     }
 
+    /**
+     * place the special tiles that can be used by the current player
+     */
+
     void setSTiles(){
-        //if (gridPane_special.getChildren().size()<=6 && gridPane_special.getChildren().size()>0){
-            Node grid = gridPane_special.getChildren().get(0);
-            gridPane_special.getChildren().clear();
-            gridPane_special.getChildren().add(grid);
-        //}
+
+        Node grid = gridPane_special.getChildren().get(0);
+        gridPane_special.getChildren().clear();
+        gridPane_special.getChildren().add(grid);
+
         DraggableTile tile_s0=new DraggableTile(0,0);
         DraggableTile tile_s1=new DraggableTile(1,0);
         DraggableTile tile_s2=new DraggableTile(0,1);
@@ -615,7 +642,7 @@ public class GameStageController implements Initializable {
     }
 
     public void initialize(URL location, ResourceBundle resources){
-        //set name, round and player No.
+        //set name, round and player No. and place the tiles 
         num_player.setText(String.valueOf(currentPlayer));
         String name = StageManager.playerList.get(currentPlayer-1).playerName;
         this.name_player.setText(name);
@@ -630,6 +657,8 @@ public class GameStageController implements Initializable {
         gridPane_dice.toFront();
         gridPane_special.toFront();
         System.out.println(gridPane_special.getChildren());
+
+        // if the first player is an AI , not place the draggable Tiles
         if (StageManager.playerList.get(currentPlayer-1).playerType==EnumTypePlayer.AI){
             Node gridForDice = gridPane_dice.getChildren().get(0);
             Node gridForSpecial = gridPane_special.getChildren().get(0);
