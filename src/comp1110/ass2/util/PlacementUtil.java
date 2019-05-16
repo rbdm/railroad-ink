@@ -32,6 +32,7 @@ public class PlacementUtil
 
     /**
      * get the placement result of a AI player.
+     *
      * @param currentPlacementString
      * @param diceRoll
      * @param player
@@ -43,10 +44,10 @@ public class PlacementUtil
         int remainSp = 3 - player.usedSpeicalTile;
 
         //if is Easy model, just use random
-        if(player.getDifficulty()== EnumTypeDifficulty.EASY)
+        if (player.getDifficulty() == EnumTypeDifficulty.EASY)
         {
-            String aiPlacement =getPlacementRandom(currentPlacementString,diceRoll,player, remainSp > 0);
-            System.out.println(String.format("Player: %s's placement is: %s",player.playerName,aiPlacement));
+            String aiPlacement = getPlacementRandom(currentPlacementString, diceRoll, player, remainSp > 0);
+            System.out.println(String.format("Player: %s's placement is: %s", player.playerName, aiPlacement));
             return aiPlacement;
         }
         //if is Hard model, use Greedy method.
@@ -67,7 +68,7 @@ public class PlacementUtil
         for (int i = 0; i <= 5; i++)
         {
             String spDice = "S" + String.valueOf(i);
-            if(isSpUsed(player,spDice))
+            if (isSpUsed(player, spDice))
             {
                 continue;
             }
@@ -81,36 +82,45 @@ public class PlacementUtil
         String aiPlacement = softmax(placementToScoreMap);
         updatePlayerUsedSp(player, aiPlacement);
 
-        System.out.println(String.format("Player: %s's placement is: %s",player.playerName,aiPlacement));
+        System.out.println(String.format("Player: %s's placement is: %s", player.playerName, aiPlacement));
         return aiPlacement;
     }
 
     /**
      * get a placement radomly
+     *
      * @param currentPlacementString the current placement
-     * @param diceRoll all dice roll ,like A0A2A3B0
-     * @param player the player
-     * @param canUseSp can we use sp tile
+     * @param diceRoll               all dice roll ,like A0A2A3B0
+     * @param player                 the player
+     * @param canUseSp               can we use sp tile
      * @return a Ai placement lie A0D21A2C33A3B40B0C01
      */
-    private static String getPlacementRandom(String currentPlacementString, String diceRoll, Player player,boolean canUseSp)
+    private static String getPlacementRandom(String currentPlacementString, String diceRoll, Player player, boolean canUseSp)
     {
         StringBuilder sb = new StringBuilder();
         Random random = new Random();
 
-        for(int i=0;i<diceRoll.length();i+=2)
+        for (int i = 0; i < diceRoll.length(); i += 2)
         {
-            List<String> possibleList = getAllPossiblePlacement(currentPlacementString,diceRoll.substring(i,i+2));
+            List<String> possibleList = getAllPossiblePlacement(currentPlacementString, diceRoll.substring(i, i + 2));
+            if (possibleList.size() == 0)
+            {
+                continue;
+            }
             int index = random.nextInt(possibleList.size());
-            currentPlacementString+=possibleList.get(index);
+            currentPlacementString += possibleList.get(index);
             sb.append(possibleList.get(index));
         }
-        if(random.nextInt(2)==1)
+        if (random.nextInt(2) == 1)
         {
             String sp = "S" + Integer.valueOf(random.nextInt(6));
-            List<String> possibleList = getAllPossiblePlacement(currentPlacementString,sp);
-            int index = random.nextInt(possibleList.size());
-            sb.append(possibleList.get(index));
+            List<String> possibleList = getAllPossiblePlacement(currentPlacementString, sp);
+            if (possibleList.size() != 0)
+            {
+                int index = random.nextInt(possibleList.size());
+                sb.append(possibleList.get(index));
+            }
+
         }
         return sb.toString();
 
@@ -118,11 +128,12 @@ public class PlacementUtil
 
     /**
      * get all possible placement of a dice
+     *
      * @param currentPlacment currentplacement
-     * @param diceRoll a dice roll like A0
+     * @param diceRoll        a dice roll like A0
      * @return the list of all possible placement.
      */
-    private static List<String> getAllPossiblePlacement(String currentPlacment,String diceRoll)
+    private static List<String> getAllPossiblePlacement(String currentPlacment, String diceRoll)
     {
 
         List<String> list = new ArrayList<>();
@@ -151,16 +162,17 @@ public class PlacementUtil
 
     /**
      * to check if the Special tile is used.
+     *
      * @param player player
-     * @param sp the string of special tile
+     * @param sp     the string of special tile
      * @return is used?
      */
-    private static boolean isSpUsed(Player player,String sp)
+    private static boolean isSpUsed(Player player, String sp)
     {
         String currentPlacement = player.getBoardString();
-        for(int i=0;i<currentPlacement.length();i+=5)
+        for (int i = 0; i < currentPlacement.length(); i += 5)
         {
-            if(currentPlacement.substring(i,i+2).equals(sp))
+            if (currentPlacement.substring(i, i + 2).equals(sp))
             {
                 return true;
             }
@@ -170,7 +182,8 @@ public class PlacementUtil
 
     /**
      * update the detail of usedSptile in player.
-     * @param player player
+     *
+     * @param player      player
      * @param aiPlacement the ai's placement.
      */
     private static void updatePlayerUsedSp(Player player, String aiPlacement)
@@ -188,6 +201,7 @@ public class PlacementUtil
     /**
      * use softmax to avoid all ai make the same move.
      * also it is a method to try to make the ai select the highest score placement (max possibility).
+     *
      * @param placementToScoreMap the placement with their score map
      * @return a softmax placement.
      */
@@ -266,6 +280,7 @@ public class PlacementUtil
 
     /**
      * find the highest score placement
+     *
      * @param diceToScoreMap the dice and the socre map.
      * @return the highest score placement.
      */
@@ -285,9 +300,10 @@ public class PlacementUtil
 
     /**
      * use greedy method to get placment.
+     *
      * @param currentPlacementString the current placement.
-     * @param diceRoll the dice roll
-     * @param CanSpeicalTile can we use speical tile
+     * @param diceRoll               the dice roll
+     * @param CanSpeicalTile         can we use speical tile
      * @return a placement.
      */
     private static String getPlacementByGreedyAlgorithm(String currentPlacementString, String diceRoll, boolean CanSpeicalTile)
@@ -318,8 +334,8 @@ public class PlacementUtil
      * But it performance is still bad.
      * I will learn the CSPs and try to use minium value method to solve it.
      *
-     * @param deepth the deepth of recursion
-     * @param diceList the dicelist
+     * @param deepth      the deepth of recursion
+     * @param diceList    the dicelist
      * @param combination the placement combination we have selected.
      */
     private static void oneStep(int deepth, List<String> diceList, String combination)
@@ -355,8 +371,9 @@ public class PlacementUtil
 
     /**
      * to check if this position can be put a tile
+     *
      * @param currentPlacementString currentPlacement
-     * @param positionString the position.
+     * @param positionString         the position.
      * @return can put?
      */
     private static boolean isCorrectPosition(String currentPlacementString, String positionString)
@@ -374,6 +391,7 @@ public class PlacementUtil
 
     /**
      * to evaluaton the combination's score
+     *
      * @param combination the aiplacement
      * @return the score.
      */
