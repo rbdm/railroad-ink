@@ -9,5 +9,8 @@ of our project implements the following features:
  - Generates basic starting piece placements (Task 8)
  - Implements hints (Task 10)
  - Implements interesting starting placements (Task 11)
-
+ 
 additional features...
+ - supports multiple human players and AIs.
+ - implements the stage of top 5 scores.
+ - implements label hints of illegal inputs.
