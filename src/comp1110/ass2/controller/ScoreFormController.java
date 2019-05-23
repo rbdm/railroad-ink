@@ -16,6 +16,7 @@ import netscape.javascript.JSObject;
 
 import java.net.URL;
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * User: u6613739
@@ -116,8 +117,8 @@ public class ScoreFormController implements Initializable
             player.setFinalScore(board.getBonusScoring());
         }
 
-        StageManager.playerList.stream().sorted(Comparator.comparingInt(Player :: getFinalScore));
-
+        StageManager.playerList = StageManager.playerList.stream().sorted(Comparator.comparingInt(Player :: getFinalScore)).collect(Collectors.toList());
+        Collections.reverse(StageManager.playerList);
         for (Player player : StageManager.playerList)
         {
             scoreText += (player.getFinalScore() + "\r\n\r\n");

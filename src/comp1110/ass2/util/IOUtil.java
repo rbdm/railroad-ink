@@ -5,6 +5,7 @@ import comp1110.ass2.model.Player;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -21,6 +22,11 @@ public class IOUtil
     {
         public String playerName;
         public int score;
+
+        public int getScore()
+        {
+            return score;
+        }
     }
 
     /**
@@ -31,9 +37,9 @@ public class IOUtil
         List<ScoreRecoder> list = readBestScoreFromFile();
 
 
-        for(Player player : StageManager.playerList)
+        for (Player player : StageManager.playerList)
         {
-            if(player.playerType== EnumTypePlayer.AI)
+            if (player.playerType == EnumTypePlayer.AI)
             {
                 continue;
             }
@@ -43,7 +49,7 @@ public class IOUtil
             list.add(scoreRecoder);
         }
         list = list.stream().sorted((Comparator.comparingInt(o -> o.score))).collect(Collectors.toList());
-        if(list.size()>5)
+        if (list.size() > 5)
         {
             list = list.subList(0, 5);
         }
@@ -53,6 +59,7 @@ public class IOUtil
 
     /**
      * wirte the best game score to bestScore.txt
+     *
      * @param list the scoreRecoder list
      */
     private static void writeBestGameScore(List<ScoreRecoder> list)
@@ -64,15 +71,15 @@ public class IOUtil
             file.delete();
         }
 
-        StringBuilder sb  = new StringBuilder();
-        for(ScoreRecoder item : list)
+        StringBuilder sb = new StringBuilder();
+        for (ScoreRecoder item : list)
         {
-            sb.append(item.playerName+"\t"+String.valueOf(item.score)+"\r\n");
+            sb.append(item.playerName + "\t" + String.valueOf(item.score) + "\r\n");
         }
         String result = sb.toString();
         try
         {
-            BufferedWriter out = new BufferedWriter(new OutputStreamWriter(new FileOutputStream("bestScore.txt"),"utf-8"));
+            BufferedWriter out = new BufferedWriter(new OutputStreamWriter(new FileOutputStream("bestScore.txt"), "utf-8"));
             out.write(result.trim());
             out.flush();
             out.close();
@@ -86,6 +93,7 @@ public class IOUtil
 
     /**
      * read the best score from file.
+     *
      * @return
      */
     public static List<ScoreRecoder> readBestScoreFromFile()
@@ -95,25 +103,26 @@ public class IOUtil
         try
         {
 
-        BufferedReader in = new BufferedReader(new InputStreamReader(new FileInputStream("bestScore.txt"),"utf-8"));
-        String str = null;
+            BufferedReader in = new BufferedReader(new InputStreamReader(new FileInputStream("bestScore.txt"), "utf-8"));
+            String str = null;
 
-        while((str = in.readLine())!=null)
-        {
+            while ((str = in.readLine()) != null)
+            {
 
-            String[] strs = str.split("\t");
-            ScoreRecoder scoreRecoder = new ScoreRecoder();
-            scoreRecoder.playerName = strs[0];
-            scoreRecoder.score = Integer.valueOf(strs[1]);
-            list.add(scoreRecoder);
-        }
-        in.close();
-        }
-        catch (Exception e)
+                String[] strs = str.split("\t");
+                ScoreRecoder scoreRecoder = new ScoreRecoder();
+                scoreRecoder.playerName = strs[0];
+                scoreRecoder.score = Integer.valueOf(strs[1]);
+                list.add(scoreRecoder);
+            }
+            in.close();
+        } catch (Exception e)
         {
             System.out.println("read bestScore.txt file error!");
             System.out.println(e.toString());
         }
+        list = list.stream().sorted(Comparator.comparingInt(ScoreRecoder::getScore)).collect(Collectors.toList());
+        Collections.reverse(list);
         return list;
     }
 }
