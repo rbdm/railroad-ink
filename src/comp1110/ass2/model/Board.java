@@ -8,6 +8,13 @@ import javafx.scene.image.ImageView;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * User:
+ * Zhehao_Chang (uid: u6613739)
+ * Mirhady Dorodjatun (uid: u6474009)
+ * Yue Zhang (uid: u6797258)
+ */
+
 public class Board
 {
     private static final int MAX_HEIGHT = 9;
@@ -202,7 +209,7 @@ public class Board
     }
 
     /**
-     * judge if two squaresa are connected?
+     * judge if two squares are connected?
      * @param tilePlacementA Square A
      * @param tilePlacementB Square B
      * @return are connected?

@@ -29,6 +29,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
+/**
+ * User:
+ * Mirhady Dorodjatun (uid: u6474009)
+ * Yue Zhang (uid: u6797258)
+ * Zhehao_Chang (uid: u6613739)
+ */
+
 public class GameStageController implements Initializable {
 
     @FXML private GridPane gridPane_special;

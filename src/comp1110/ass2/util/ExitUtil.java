@@ -6,6 +6,12 @@ import comp1110.ass2.model.EnumTypeSquare;
 
 import java.util.*;
 
+/**
+ * User: Yue Zhang
+ * Description: To get the basic score.
+ */
+
+
 public class ExitUtil {
 
     /**
