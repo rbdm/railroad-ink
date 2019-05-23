@@ -1,0 +1,5 @@
+John	7
+bb	10
+Bob	10
+Monica	12
+Kate	20
