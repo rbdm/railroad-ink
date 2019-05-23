@@ -15,14 +15,14 @@ of our project implements the following features:
  */
 
  - The game can be played by 1 human/computer player.(Task 9)
- - It also supports multiple human players and(or) AIs (user can select the difficulty of AI - Easy, Hard).
+ - It also supports multiple human players and(or) AIs (user can select the difficulty of AI - Easy, Hard). (Addition)
  - Allow the player to choose tiles from a generated dice roll(Task 9)
  - The tiles would snap to the nearest position if valid, otherwise snap to home position and show warning message "Invalid tile placement." at bottom. (Task 9)
  - The game ends either after 7 rounds, or there are no more valid moves.(Task 9 + Addition)
  - Compute the total score for the completed game(Task 9 + Addition)
  - Implement a smarter AI with DFS, Greedy algorithm and softmax. (Task 13)
 
- - (Additional features: )
+ * (Other additional features: )
  - In each turn, the player need to place all 4 tiles that generated from the dice roll, unless there are no more valid placements can be made.
  - The players can use special tiles at most once in one round and 3 times per game.
  - It implements a "Take Back" button that take back all the tiles just placed by the current player in current round.
