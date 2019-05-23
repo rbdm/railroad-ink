@@ -205,7 +205,7 @@ public class PlacementUtil
      * @param placementToScoreMap the placement with their score map
      * @return a softmax placement.
      */
-    private static String softmax(Map<String, Integer> placementToScoreMap)
+    public static String softmax(Map<String, Integer> placementToScoreMap)
     {
         double total = 0;
 
