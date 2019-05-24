@@ -86,30 +86,38 @@ public class GameStageController implements Initializable {
         }
     }
     /**
-    DraggableTile includes 4 normal tiles (decide by the dice) all the special tiles (which haven't been used yet)
-    it can be drag and rotate
+     DraggableTile includes 4 normal tiles (decide by the dice) and all the special tiles (which haven't been used yet)/
+     A DraggableTile can be dragged and rotate. All tiles all treated as draggable until they are placed on the board.
+     Extends from TileImage class, which is just an extension of imageView with fixed size.
      */
     public class DraggableTile extends TileImage {
-        int homeCol; int homeRow; // it's original position on gridPane
-        int rotate; // the last int of a 5 bit tilePlacementString
-        double mouseX; double mouseY;
-        double homeX; double homeY;
-
+        int homeCol; int homeRow; // its original position on gridPane (as row and col)
+        int rotate; // the rotation (last int of a 5 bit tilePlacementString)
+        double mouseX; double mouseY; // the mouse position (as coordinate x,y. used for comparing)
+        double homeX; double homeY; // the original position (as coordinate x,y)
         String tileName; // like A1, B2, S0
+
         DraggableTile(int homeCol, int homeRow){
             this.homeCol=homeCol;
             this.homeRow=homeRow;
 
+            // when mouse is pressed, it records current position unless it is against the rules.
+            // displays appropriate warning for several situations.
             setOnMousePressed(event -> {
                 displayWarning(defaultWarning);
                 System.out.println("recording mouse coordinate");
                 System.out.println("home :"+event.getSceneX() + ", " + event.getSceneY());
+
+                // if the number of special tiles used in this turn is not zero, display warning
                 if (roundST!=0 && this.tileName.substring(0,1).equals("S")){
                     displayWarning(specialTileTurnLimitWarning);
                 }
+                // if the all 3 special tiles are used, display warning
                 else if (remainSTile==0 && this.tileName.substring(0,1).equals("S")){
                     displayWarning(specialTileGameLimitWarning);
                 }
+                // if no invalid move, display warning but still allow dragging so the player can check
+                // (not that important but might be more natural/easy for the player)
                 else if ( ! isAbleToMove() && ( ! this.tileName.substring(0,1).equals("S"))) {
                     displayWarning(noMoreMoveAvailableWarning);
                     mouseX = event.getSceneX();
@@ -117,6 +125,7 @@ public class GameStageController implements Initializable {
                     homeX = event.getSceneX();
                     homeY = event.getSceneY();
                 }
+                // else, just record position and display default green warning
                 else {
                     displayWarning(defaultWarning);
                     mouseX = event.getSceneX();
@@ -126,13 +135,19 @@ public class GameStageController implements Initializable {
                 }
             });
 
+            // when mouse is dragged, it drags the tile accordingly
+            // displays appropriate warning for several situations
+            // some may seem to be redundant with above, but if removed, there will be bugs when tested
             setOnMouseDragged(event -> {
                 if (roundST!=0 && this.tileName.substring(0,1).equals("S")){
                     displayWarning(specialTileTurnLimitWarning);
                 }
+
                 else if (remainSTile==0 && this.tileName.substring(0,1).equals("S")){
                     displayWarning(specialTileGameLimitWarning);
                 }
+
+                // else runs the drag method
                 else {
                     this.toFront();
                     this.drag();
@@ -141,6 +156,9 @@ public class GameStageController implements Initializable {
                 }
             });
 
+            // when mouse is released, it will snap to nearest square in board, or return to original position if the placement is invalid.
+            // displays appropriate warning for several situations.
+            // some may seem to be redundant with above, but if removed, there will be bugs when tested.
             setOnMouseReleased(event -> {
                 if (roundST!=0 && this.tileName.substring(0,1).equals("S")){
                     displayWarning(specialTileTurnLimitWarning);
@@ -152,6 +170,9 @@ public class GameStageController implements Initializable {
                     displayWarning(noMoreMoveAvailableWarning);
                     this.moveToHome();
                 }
+
+                // if the tile is on the board, place it on the nearest square in board using displayTileOnBoard.
+                // judges onBoard using other method, and utilizes methods in Board class for the underlying calculation
                 else if (onBoard()) {
                     this.setOpacity(1);
                     int boardCol = (int) (mouseX - gridPane_board.getLayoutX()) / (int) SQUARE_SIZE;
@@ -206,6 +227,7 @@ public class GameStageController implements Initializable {
             });
         }
 
+        // moves the tile while dragged, according to the difference between mouse position and its original position
         private void drag() {
             setLayoutX(mouseX - homeX);
             setLayoutY(mouseY - homeY);
@@ -216,6 +238,7 @@ public class GameStageController implements Initializable {
             this.toFront();
         }
 
+        // returns to original position.
         private void moveToHome() {
             this.setTranslateX(0.0);
             this.setTranslateY(0.0);
@@ -223,6 +246,7 @@ public class GameStageController implements Initializable {
             this.toFront();
         }
 
+        // determines if the tile is dropped on the board (excluding the walls and exits area).
         private boolean onBoard() {
             return mouseX > (gridPane_board.getLayoutX() + UNPLACED_TILE_SQUARE_SIZE)
                     && mouseX < (gridPane_board.getLayoutX() + gridPane_board.getWidth() - UNPLACED_TILE_SQUARE_SIZE)
@@ -317,8 +341,9 @@ public class GameStageController implements Initializable {
 
 
     /**
-     * when click the "take back" button, the tiles placed by the current player in this round
-     * would go back to home
+     * when the user clicks the "take back" button, all the tiles placed by the current player in this round
+     * would go back to home.
+     * then, adjusts the game parameters accordingly
      */
     @FXML
     void btn_takeBack_click() {
@@ -413,8 +438,9 @@ public class GameStageController implements Initializable {
     }
 
     /**
-     * when there's regular tiles unplaced, judge if there is no valid placement can be made
-     * @return true if no valid placement can be made
+     * when there are still unplaced regular tiles, determines if there is no valid placement that can be made
+     * using generateMove method in RailroadInk class (task 10).
+     * @return true if there is still a valid placement
      */
     private boolean isAbleToMove() {
         return ( ! RailroadInk.generateMove(getCurrentPlayer().getBoardString(), remainingDiceRoll).equals(""));
@@ -437,6 +463,9 @@ public class GameStageController implements Initializable {
         remainingDiceRoll = newDiceRoll;
     }
 
+    /**
+     * sets the take back button disabled (for AI player) or not (for human player)
+     */
     private void toggleTakeBackButton() {
         if (getCurrentPlayer().playerType == EnumTypePlayer.AI) {
             btn_takeBack.setDisable(true);
@@ -445,6 +474,9 @@ public class GameStageController implements Initializable {
         }
     }
 
+    /**
+     * displays a tile on the gridPane board using the parameters of a placementString
+     */
     private void displayTileToBoard(int col, int row, int rotation, Image image) {
         TileImage tile = new TileImage();
         tile.setFitHeight(SQUARE_SIZE);
@@ -455,12 +487,19 @@ public class GameStageController implements Initializable {
         gridPane_board.add(tile, col, row);
     }
 
+    /**
+     * displays warning message to make it easy for the player to follow what is happening in the game.
+     * background is green for default message, otherwise red (to indicate real warning message).
+     */
     private void displayWarning(String message) {
         warning.setText(message);
         if (message.equals(defaultWarning)) warning.setStyle("-fx-border-color: green; -fx-border-width: 2px; -fx-background-color: palegreen");
         else warning.setStyle("-fx-border-color: red; -fx-border-width: 2px; -fx-background-color: lightpink");
     }
 
+    /**
+     * displays walls and exits to gridPane board
+     */
     private void displayWallsAndExits() {
         Image wallImage = new Image(Viewer.class.getResource("")+imageURLPrefix+"WALL"+imageURLSuffix);
         Image railwayExitImage = new Image(Viewer.class.getResource("")+imageURLPrefix+"RailExit"+imageURLSuffix);
@@ -516,10 +555,17 @@ public class GameStageController implements Initializable {
         }
     }
 
+    /**
+     * returns current player.
+     */
     private Player getCurrentPlayer() {
         return StageManager.playerList.get(currentPlayer-1);
     }
 
+    /**
+     * used when user clicks take back button. it removes the tiles placed this turn, both from the display
+     * and the underlying board (using methods in Board class).
+     */
     private void takeBackTilesPlacedThisTurn() {
         String boardString = getCurrentPlayer().getBoardString();
         String removedPlacementString = boardString.substring(boardString.length() - (tilesPlacedThisTurn * 5));
@@ -533,6 +579,9 @@ public class GameStageController implements Initializable {
         tilesPlacedThisTurn = 0;
     }
 
+    /**
+     * used when user clicks end turn. removes all tiles from the gridPane board.
+     */
     private void removeBoardDisplay() {
         Node grid = gridPane_board.getChildren().get(0);
         Node rectangle = gridPane_board.getChildren().get(1);
@@ -542,12 +591,30 @@ public class GameStageController implements Initializable {
         displayWallsAndExits();
     }
 
+    /**
+     * removes all tiles from the gridPane for regular and special tiles.
+     */
+    private void removeUnplacedTileDisplay() {
+        Node gridForDice = gridPane_dice.getChildren().get(0);
+        Node gridForSpecial = gridPane_special.getChildren().get(0);
+        gridPane_dice.getChildren().clear();
+        gridPane_special.getChildren().clear();
+        gridPane_dice.getChildren().add(gridForDice);
+        gridPane_special.getChildren().add(gridForSpecial);
+    }
+
+    /**
+     * used when user clicks end turn (player switch) or take back button. returns the player's board.
+     */
     private void loadPlayerBoard() {
         board = getCurrentPlayer().getBoard();
     }
 
+    /**
+     * displays the current player's board. if player type is AI, also displays all the AI's movement using PlacementUtil class
+     */
     private void displayPlayerBoard() {
-        Player player = StageManager.playerList.get(currentPlayer-1);
+        Player player = getCurrentPlayer();
         String playerBoardString = player.getBoardString();
         System.out.println("displaying boardString :"+getCurrentPlayer().getBoardString());
 
@@ -556,13 +623,7 @@ public class GameStageController implements Initializable {
             String diceRoll = StageManager.diceRollList.get(StageManager.diceRollList.size()-1);
             String aiPlacement = PlacementUtil.getResults(playerBoardString,diceRoll,player);
             playerBoardString += aiPlacement;
-            Node gridForDice = gridPane_dice.getChildren().get(0);
-            Node gridForSpecial = gridPane_special.getChildren().get(0);
-            gridPane_dice.getChildren().clear();
-            gridPane_special.getChildren().clear();
-            gridPane_dice.getChildren().add(gridForDice);
-            gridPane_special.getChildren().add(gridForSpecial);
-            //TODO: clean the UI of ImageView
+            removeUnplacedTileDisplay();
         }
 
         for (int i=0; i<playerBoardString.length(); i+=5) {
@@ -668,13 +729,7 @@ public class GameStageController implements Initializable {
 
         // if the first player is an AI , not place the draggable Tiles
         if (StageManager.playerList.get(currentPlayer-1).playerType==EnumTypePlayer.AI){
-            Node gridForDice = gridPane_dice.getChildren().get(0);
-            Node gridForSpecial = gridPane_special.getChildren().get(0);
-            gridPane_special.getChildren().clear();
-            gridPane_dice.getChildren().clear();
-            gridPane_dice.getChildren().add(gridForDice);
-            gridPane_special.getChildren().add(gridForSpecial);
-
+            removeUnplacedTileDisplay();
         }
 
 
